@@ -1,3 +1,9 @@
+Here is your complete, fully updated index.html file.
+
+This version includes the anti-race-condition fix (lastSaveTime) so when you
+post an offer, the background auto-refresh won't accidentally wipe it out before
+it finishes saving to your npoint cloud bin.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -586,6 +592,7 @@
         let currentSellerViewing = null;
         let activeChatSession = null;
         let currentAdminTab = 'offers';
+        let lastSaveTime = 0;
 
         const translations = {
             en: {
@@ -686,11 +693,13 @@
         };
 
         async function fetchCloudData() {
+            if (Date.now() - lastSaveTime < 4000) return;
+
             try {
                 const res = await fetch(CLOUD_SYNC_URL);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data && data.offers) {
+                    if (data && data.offers && Date.now() - lastSaveTime > 4000) {
                         globalCloudData = data;
                         renderOffers();
                         updateInboxBadge();
@@ -704,6 +713,7 @@
         }
 
         async function saveCloudData() {
+            lastSaveTime = Date.now();
             localStorage.setItem('sm_offers', JSON.stringify(globalCloudData.offers));
             localStorage.setItem('sm_users_db', JSON.stringify(globalCloudData.users));
             localStorage.setItem('sm_chats', JSON.stringify(globalCloudData.chats));
@@ -749,7 +759,7 @@
 
             setInterval(() => {
                 fetchCloudData();
-            }, 2500);
+            }, 3000);
         }
 
         function toggleLangDropdown() {
