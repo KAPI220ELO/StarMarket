@@ -372,6 +372,7 @@
         let activeCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
         let currentLang = localStorage.getItem('sm_lang') || 'en';
+        const STORAGE_KEY = 'sm_market_offers_v2'; // Clean slate key
 
         const translations = {
             en: {
@@ -391,7 +392,7 @@
                 modalSelectGame: "Select Game",
                 modalTitle: "Listing Title",
                 modalPrice: "Price ($ USD)",
-                modalScreenshots: "Account Screenshots (Multiple)",
+                modalScreenshots: "Account Screenshots (Select Multiple)",
                 uploadPrompt: "Click to upload multiple photos",
                 modalDesc: "Account Details & Contact Info",
                 modalPublishBtn: "Publish Offer",
@@ -442,8 +443,6 @@
             }
         };
 
-        const defaultOffers = []; // Blank as requested
-
         function getUsers() {
             const saved = localStorage.getItem('sm_users_db');
             return saved ? JSON.parse(saved) : {};
@@ -454,17 +453,17 @@
         }
 
         function getOffers() {
-            const saved = localStorage.getItem('sm_offers');
-            return saved ? JSON.parse(saved) : defaultOffers;
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
         }
 
         function saveOffers(offers) {
-            localStorage.setItem('sm_offers', JSON.stringify(offers));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(offers));
         }
 
         function init() {
-            if (!localStorage.getItem('sm_offers')) {
-                saveOffers(defaultOffers);
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                saveOffers([]);
             }
             applyLanguage(currentLang);
             updateAuthUI();
