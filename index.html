@@ -151,8 +151,10 @@
 
                     <!-- Auth State: Logged In -->
                     <div id="user-profile-btn" class="hidden flex items-center space-x-2">
-                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3.5 py-2 rounded-xl transition">
-                            <i class="fas fa-user-circle text-purple-400 text-lg"></i>
+                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3 py-1.5 rounded-xl transition">
+                            <div id="navUserAvatar" class="w-7 h-7 rounded-full bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-400 text-xs overflow-hidden shrink-0">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <span id="username-display" class="font-semibold text-sm">User</span>
                         </button>
                         <button onclick="logout()" class="text-slate-400 hover:text-red-400 p-2 transition" title="Log Out"><i class="fas fa-sign-out-alt"></i></button>
@@ -225,7 +227,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal (Max 10 Photos + Buy Later option) -->
+    <!-- Create Offer Modal -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -290,7 +292,7 @@
         </div>
     </div>
 
-    <!-- Checkout / Offer Details Modal (Full Gallery + Description + Payment Methods) -->
+    <!-- Checkout / Offer Details Modal -->
     <div id="checkoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -346,6 +348,25 @@
         </div>
     </div>
 
+    <!-- Seller Profile Modal -->
+    <div id="sellerProfileModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('sellerProfileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
+            <div class="flex items-center space-x-4 mb-5">
+                <div id="sellerModalAvatar" class="w-14 h-14 rounded-full bg-purple-950 border-2 border-purple-500/50 flex items-center justify-center text-purple-400 text-2xl shrink-0 shadow-md overflow-hidden">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h3 id="sellerModalUsername" class="text-xl font-bold text-white">Seller</h3>
+                    <p class="text-xs text-purple-400 font-semibold" data-i18n="verifiedSeller">Verified Star Market Seller</p>
+                </div>
+            </div>
+            <div id="sellerModalSocials" class="bg-[#060812] border border-purple-900/40 rounded-xl p-4 mb-5 space-y-2 text-xs text-slate-300"></div>
+            <h4 data-i18n="sellerActiveListings" class="font-semibold text-sm mb-3 border-b border-purple-900/40 pb-2 text-slate-300">Seller Active Listings</h4>
+            <div id="sellerModalOffers" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
+        </div>
+    </div>
+
     <!-- Auth Modal (Login & Signup) -->
     <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
@@ -393,18 +414,25 @@
         </div>
     </div>
 
-    <!-- Profile Modal -->
+    <!-- Profile Modal (With Avatar Upload) -->
     <div id="profileModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
             
-            <div class="flex items-center space-x-3 mb-5">
-                <div class="w-12 h-12 rounded-full bg-purple-950 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl shrink-0 shadow-md">
-                    <i class="fas fa-user"></i>
+            <div class="flex items-center space-x-4 mb-5">
+                <div class="relative group cursor-pointer" onclick="document.getElementById('avatarInput').click()" title="Change Profile Picture">
+                    <div id="profileAvatarPreview" class="w-14 h-14 rounded-full bg-purple-950 border-2 border-purple-500/50 flex items-center justify-center text-purple-400 text-2xl shrink-0 shadow-md overflow-hidden">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition text-white text-xs">
+                        <i class="fas fa-camera"></i>
+                    </div>
                 </div>
+                <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
                 <div>
                     <h3 id="profileUsername" class="text-xl font-bold text-white">User</h3>
                     <p id="profileEmail" class="text-xs text-slate-400">email@example.com</p>
+                    <span class="text-[10px] text-purple-400 font-semibold cursor-pointer hover:underline" onclick="document.getElementById('avatarInput').click()" data-i18n="changeAvatar">Change profile picture</span>
                 </div>
             </div>
 
@@ -487,7 +515,10 @@
                 msgGotIt: "Got it",
                 viewAndBuy: "View",
                 selectPayment: "Choose Your Payment Method",
-                payNowBtn: "Proceed to Secure Payment"
+                payNowBtn: "Proceed to Secure Payment",
+                changeAvatar: "Change profile picture",
+                verifiedSeller: "Verified Star Market Seller",
+                sellerActiveListings: "Seller Active Listings"
             },
             pl: {
                 announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani pośrednicy | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
@@ -524,7 +555,10 @@
                 msgGotIt: "Rozumiem",
                 viewAndBuy: "Zobacz",
                 selectPayment: "Wybierz metodę płatności",
-                payNowBtn: "Przejdź do bezpiecznej płatności"
+                payNowBtn: "Przejdź do bezpiecznej płatności",
+                changeAvatar: "Zmień zdjęcie profilowe",
+                verifiedSeller: "Zweryfikowany sprzedawca Star Market",
+                sellerActiveListings: "Aktywne oferty sprzedawcy"
             }
         };
 
@@ -593,14 +627,40 @@
                 
                 const users = getUsers();
                 if (users[currentUser]) {
-                    document.getElementById('profileEmail').innerText = users[currentUser].email || 'No email set';
-                    document.getElementById('profileDiscord').value = users[currentUser].discord || '';
-                    document.getElementById('profileTelegram').value = users[currentUser].telegram || '';
+                    const u = users[currentUser];
+                    document.getElementById('profileEmail').innerText = u.email || 'No email set';
+                    document.getElementById('profileDiscord').value = u.discord || '';
+                    document.getElementById('profileTelegram').value = u.telegram || '';
+
+                    // Update Avatar Previews
+                    const avatarHtml = u.avatar ? `<img src="${u.avatar}" class="w-full h-full object-cover">` : `<i class="fas fa-user"></i>`;
+                    document.getElementById('profileAvatarPreview').innerHTML = avatarHtml;
+                    document.getElementById('navUserAvatar').innerHTML = avatarHtml;
                 }
             } else {
                 document.getElementById('auth-buttons').classList.remove('hidden');
                 document.getElementById('user-profile-btn').classList.add('hidden');
             }
+        }
+
+        function handleAvatarUpload(e) {
+            if (!currentUser) return;
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                const base64Avatar = uploadEvent.target.result;
+                let users = getUsers();
+                if (users[currentUser]) {
+                    users[currentUser].avatar = base64Avatar;
+                    saveUsers(users);
+                    updateAuthUI();
+                    renderOffers();
+                    showMsg("Success", currentLang === 'pl' ? "Zdjęcie profilowe zostało zaktualizowane!" : "Profile picture updated successfully!", "fa-check-circle");
+                }
+            };
+            reader.readAsDataURL(file);
         }
 
         function openAuthTab(tab) {
@@ -642,7 +702,7 @@
                 return;
             }
 
-            users[username] = { email, dob, password, discord: '', telegram: '' };
+            users[username] = { email, dob, password, discord: '', telegram: '', avatar: '' };
             saveUsers(users);
 
             currentUser = username;
@@ -757,6 +817,7 @@
             const grid = document.getElementById('offersGrid');
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const offers = getOffers();
+            const users = getUsers();
             const t = translations[currentLang];
 
             const filtered = offers.filter(o => {
@@ -779,6 +840,11 @@
                 const mainImg = images[0];
                 const photoBadge = images.length > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-lg"><i class="fas fa-images"></i> ${images.length}</div>` : '';
 
+                const sellerUser = users[offer.seller];
+                const sellerAvatarHtml = sellerUser && sellerUser.avatar 
+                    ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">`
+                    : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
+
                 return `
                 <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 group cursor-pointer" onclick="openCheckoutModal('${offer.id}')">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
@@ -791,7 +857,9 @@
                     <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs text-slate-400 flex items-center gap-1.5"><i class="fas fa-user-circle text-purple-400/90 text-sm"></i> ${offer.seller}</span>
+                                <span onclick="event.stopPropagation(); openSellerProfile('${offer.seller}')" class="text-xs text-slate-300 hover:text-purple-400 font-semibold flex items-center gap-2 transition">
+                                    ${sellerAvatarHtml} ${offer.seller}
+                                </span>
                             </div>
                             <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1 group-hover:text-purple-300 transition">${offer.title}</h3>
                             <p class="text-slate-400 text-xs mb-4 line-clamp-2 leading-relaxed">${offer.desc}</p>
@@ -806,6 +874,39 @@
                     </div>
                 </div>
             `}).join('');
+        }
+
+        function openSellerProfile(username) {
+            const users = getUsers();
+            const u = users[username] || {};
+            document.getElementById('sellerModalUsername').innerText = username;
+
+            const avatarHtml = u.avatar ? `<img src="${u.avatar}" class="w-full h-full object-cover">` : `<i class="fas fa-user"></i>`;
+            document.getElementById('sellerModalAvatar').innerHTML = avatarHtml;
+
+            let socialsHtml = `<p><strong class="text-slate-200"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord:</strong> ${u.discord || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
+            socialsHtml += `<p><strong class="text-slate-200"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram:</strong> ${u.telegram || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
+            document.getElementById('sellerModalSocials').innerHTML = socialsHtml;
+
+            const offers = getOffers().filter(o => o.seller === username);
+            const offersList = document.getElementById('sellerModalOffers');
+            if (offers.length === 0) {
+                offersList.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">${currentLang === 'pl' ? 'Brak aktywnych ofert.' : 'No active listings.'}</p>`;
+            } else {
+                offersList.innerHTML = offers.map(o => {
+                    const imgs = o.images || [o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
+                    return `
+                    <div onclick="closeModal('sellerProfileModal'); openCheckoutModal('${o.id}')" class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3 cursor-pointer hover:border-purple-500 transition">
+                        <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-white truncate">${o.title}</p>
+                            <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
+                        </div>
+                    </div>
+                `;}).join('');
+            }
+
+            openModal('sellerProfileModal');
         }
 
         function selectPayment(method) {
@@ -827,10 +928,15 @@
             document.getElementById('checkoutDesc').innerText = offer.desc;
 
             let users = getUsers();
-            let sellerHtml = `<p><strong class="text-slate-300">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}:</strong> ${offer.seller}</p>`;
-            if (users[offer.seller]) {
-                if (users[offer.seller].discord) sellerHtml += `<p><strong class="text-slate-300">Discord:</strong> ${users[offer.seller].discord}</p>`;
-                if (users[offer.seller].telegram) sellerHtml += `<p><strong class="text-slate-300">Telegram:</strong> ${users[offer.seller].telegram}</p>`;
+            const sellerUser = users[offer.seller];
+            const sellerAvatarHtml = sellerUser && sellerUser.avatar 
+                ? `<img src="${sellerUser.avatar}" class="w-5 h-5 rounded-full object-cover inline-block mr-1.5 border border-purple-500/40">`
+                : `<i class="fas fa-user-circle text-purple-400 mr-1.5"></i>`;
+
+            let sellerHtml = `<p class="cursor-pointer hover:text-purple-300 transition" onclick="closeModal('checkoutModal'); openSellerProfile('${offer.seller}')"><strong class="text-slate-300">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}:</strong> ${sellerAvatarHtml} <span class="underline">${offer.seller}</span></p>`;
+            if (sellerUser) {
+                if (sellerUser.discord) sellerHtml += `<p><strong class="text-slate-300">Discord:</strong> ${sellerUser.discord}</p>`;
+                if (sellerUser.telegram) sellerHtml += `<p><strong class="text-slate-300">Telegram:</strong> ${sellerUser.telegram}</p>`;
             }
             document.getElementById('checkoutSellerInfo').innerHTML = sellerHtml;
 
