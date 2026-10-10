@@ -156,6 +156,12 @@
 
                     <!-- Auth State: Logged In -->
                     <div id="user-profile-btn" class="hidden flex items-center space-x-2">
+                        <!-- Messages / Inbox Button -->
+                        <button onclick="openModal('inboxModal')" class="relative bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 p-2.5 rounded-xl border border-purple-900/50 transition" title="Messages & Orders">
+                            <i class="fas fa-envelope text-purple-400"></i>
+                            <span id="inboxBadge" class="absolute -top-1 -right-1 w-4 h-4 bg-purple-600 text-white rounded-full text-[9px] font-bold flex items-center justify-center hidden">0</span>
+                        </button>
+
                         <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3 py-1.5 rounded-xl transition">
                             <div id="navUserAvatar" class="w-7 h-7 rounded-full bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-400 text-xs overflow-hidden shrink-0">
                                 <i class="fas fa-user"></i>
@@ -232,7 +238,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal (Max 10 Photos + Correct Crypto Options) -->
+    <!-- Create Offer Modal (Max 10 Photos + Precise Crypto Options) -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -334,7 +340,7 @@
         </div>
     </div>
 
-    <!-- Dedicated Full-Page Offer View (Redesigned & Beautiful) -->
+    <!-- Dedicated Full-Page Offer View -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-500/20 bg-[#060812]/90 backdrop-blur-xl sticky top-0 z-40 shadow-xl shadow-purple-950/20">
             <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2.5 font-bold text-xs sm:text-sm bg-purple-950/50 border border-purple-500/30 px-4 py-2 rounded-xl transition hover:border-purple-400 shadow-md">
@@ -397,7 +403,7 @@
         </div>
     </div>
 
-    <!-- Live Order Chat Modal -->
+    <!-- Live Order / Direct Chat Modal (Enhanced & Modern) -->
     <div id="chatModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
             <div class="bg-[#060812] p-4 border-b border-purple-900/40 flex justify-between items-center shrink-0">
@@ -410,23 +416,42 @@
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
             </div>
-            <div class="bg-[#060812]/70 px-4 py-2 border-b border-purple-900/30 flex items-center gap-3 shrink-0 text-xs">
-                <span class="text-slate-400 font-semibold">Roles:</span>
-                <div id="chatParticipantsRoles" class="flex flex-wrap gap-2">
-                    <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">👤 Buyer</span>
-                    <span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">📦 Seller</span>
-                    <span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">🛡️ Verified Middleman</span>
+            
+            <!-- Participants Bar with Clickable Middleman -->
+            <div class="bg-[#060812]/90 px-4 py-2.5 border-b border-purple-900/30 flex items-center justify-between shrink-0 text-xs">
+                <span class="text-slate-400 font-semibold">Participants:</span>
+                <div class="flex flex-wrap gap-2 items-center">
+                    <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1">👤 Buyer</span>
+                    <span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2.5 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1">📦 Seller</span>
+                    <button onclick="openPrivateMiddlemanChat()" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/60 px-3 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition shadow-sm cursor-pointer" title="Click to chat privately with Middleman">
+                        <i class="fas fa-shield-halved text-emerald-400"></i> 🛡️ StarMarket_Official <span class="text-[9px] bg-emerald-800 px-1.5 py-0.2 rounded text-white ml-1">Private Chat</span>
+                    </button>
                 </div>
             </div>
-            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#030409]/60"></div>
-            <div class="bg-[#060812] p-3 border-t border-purple-900/40 shrink-0">
-                <form onsubmit="sendChatMessage(event)" class="flex gap-2">
-                    <input type="text" id="chatMessageInput" placeholder="Type message to middleman, seller & buyer..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500">
-                    <button type="submit" class="gradient-btn font-bold px-5 py-2.5 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
+
+            <!-- Message Feed -->
+            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-5 space-y-4 bg-[#030409]/60"></div>
+
+            <!-- Message Input Form -->
+            <div class="bg-[#060812] p-4 border-t border-purple-900/40 shrink-0">
+                <form onsubmit="sendChatMessage(event)" class="flex gap-2.5">
+                    <input type="text" id="chatMessageInput" placeholder="Type secure message..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500">
+                    <button type="submit" class="gradient-btn font-bold px-6 py-3 rounded-xl text-xs transition shadow-md flex items-center gap-2">
                         <i class="fas fa-paper-plane"></i> Send
                     </button>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <!-- Inbox / Messages Modal -->
+    <div id="inboxModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeModal('inboxModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
+            <div class="flex items-center gap-2 mb-6">
+                <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-2"><i class="fas fa-envelope text-purple-400"></i> Your Messages & Orders</span>
+            </div>
+            <div id="inboxChatsList" class="space-y-3"></div>
         </div>
     </div>
 
@@ -566,7 +591,6 @@
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         const STORAGE_KEY = 'sm_market_offers_v3';
 
-        // Real-time cross-tab & global simulation sync channel
         const syncChannel = new BroadcastChannel('star_market_global_sync');
         syncChannel.onmessage = (event) => {
             if (event.data.type === 'OFFERS_UPDATED') {
@@ -575,13 +599,14 @@
                 if (activeChatSession === event.data.chatId) {
                     renderChatMessages();
                 }
+                updateInboxBadge();
             }
         };
 
-        // Storage listener for full cross-tab synchronization across the same browser profile
         window.addEventListener('storage', (event) => {
-            if (event.key === STORAGE_KEY) {
+            if (event.key === STORAGE_KEY || event.key === 'sm_chats') {
                 renderOffers();
+                updateInboxBadge();
             }
         });
 
@@ -735,10 +760,10 @@
 
         const paymentOptionsDetails = {
             'PayPal': { name: 'PayPal', icon: '<i class="fab fa-paypal text-sky-400 text-lg"></i>' },
-            'USDT': { name: 'USDT (Tether)', icon: '<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/40">₮</span>' },
+            'USDT': { name: 'USDT (Tether)', icon: '<div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs border border-emerald-500/40">₮</div>' },
             'Bitcoin': { name: 'Bitcoin (BTC)', icon: '<i class="fab fa-bitcoin text-amber-400 text-lg"></i>' },
             'Ethereum': { name: 'Ethereum (ETH)', icon: '<i class="fab fa-ethereum text-indigo-400 text-lg"></i>' },
-            'Solana': { name: 'Solana (SOL)', icon: '<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs border border-purple-500/40">◎</span>' },
+            'Solana': { name: 'Solana (SOL)', icon: '<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-extrabold text-xs border border-purple-500/40">◎</div>' },
             'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>' }
         };
 
@@ -776,10 +801,11 @@
             applyLanguage(currentLang);
             updateAuthUI();
             renderOffers();
+            updateInboxBadge();
 
-            // Background polling for global multi-tab sync reliability
             setInterval(() => {
                 renderOffers();
+                updateInboxBadge();
             }, 2000);
         }
 
@@ -838,11 +864,25 @@
                     document.getElementById('profileAvatarPreview').innerHTML = avatarHtml;
                     document.getElementById('navUserAvatar').innerHTML = avatarHtml;
                 }
+                updateInboxBadge();
             } else {
                 document.getElementById('auth-buttons').classList.remove('hidden');
                 document.getElementById('user-profile-btn').classList.add('hidden');
                 document.getElementById('admin-panel-btn').classList.add('hidden');
                 document.getElementById('admin-panel-btn').classList.remove('flex');
+            }
+        }
+
+        function updateInboxBadge() {
+            if (!currentUser) return;
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            let userChatsCount = Object.values(chats).filter(c => c.buyer === currentUser || c.seller === currentUser || c.buyer === 'Support_' + currentUser).length;
+            const badge = document.getElementById('inboxBadge');
+            if (userChatsCount > 0) {
+                badge.innerText = userChatsCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
             }
         }
 
@@ -1236,8 +1276,8 @@
                 return `
                 <div class="flex items-center justify-between bg-[#060812] p-3.5 rounded-xl border border-purple-900/40 text-xs gap-3">
                     <div class="flex-1 min-w-0">
-                        <p class="font-bold text-white">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</p>
-                        <p class="text-purple-300">Buyer: ${c.buyer} | Seller: ${c.seller} | Price: $${c.price}</p>
+                        <p class="font-bold text-white">Order #${c.orderId.slice(-6)}: ${c.offerTitle || c.title || 'Direct Support Ticket'}</p>
+                        <p class="text-purple-300">Participants: ${c.buyer} | ${c.seller || c.middleman}</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="closeModal('adminPanelModal'); openChatModal('${chatId}')" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700/40 px-3 py-1.5 rounded-lg transition font-bold"><i class="fas fa-comments mr-1"></i> View Chat</button>
@@ -1307,27 +1347,58 @@
         }
 
         function startChatWithSeller() {
+            if (!currentUser) {
+                openAuthTab('login');
+                return;
+            }
             closeModal('offerPageModal');
             
-            const chatId = `chat_${currentActiveOffer.id}`;
+            const chatId = `chat_${currentActiveOffer.id}_${currentUser}`;
             let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
             
             if (!chats[chatId]) {
-                const buyerName = currentUser || 'Guest_' + Math.floor(Math.random() * 9000 + 1000);
                 chats[chatId] = {
                     orderId: currentActiveOffer.id,
                     offerTitle: currentActiveOffer.title,
                     price: currentActiveOffer.price,
-                    buyer: buyerName,
+                    buyer: currentUser,
                     seller: currentActiveOffer.seller,
                     middleman: 'StarMarket_Official',
                     messages: [
-                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Order #${currentActiveOffer.id.slice(-6)} initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Buyer (${buyerName}), Seller (${currentActiveOffer.seller}), and Official Middleman are now connected.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Order #${currentActiveOffer.id.slice(-6)} initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Buyer (${currentUser}), Seller (${currentActiveOffer.seller}), and Official Middleman are now connected.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
                     ]
                 };
                 localStorage.setItem('sm_chats', JSON.stringify(chats));
             }
             
+            activeChatSession = chatId;
+            syncChannel.postMessage({ type: 'CHAT_UPDATED', chatId: chatId });
+            openChatModal(chatId);
+        }
+
+        function openPrivateMiddlemanChat() {
+            if (!currentUser) {
+                openAuthTab('login');
+                return;
+            }
+            const chatId = `private_support_${currentUser}`;
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+
+            if (!chats[chatId]) {
+                chats[chatId] = {
+                    orderId: 'SUPP-' + Math.floor(Math.random() * 90000 + 10000),
+                    offerTitle: 'Direct Middleman Support Ticket',
+                    price: '0.00',
+                    buyer: currentUser,
+                    seller: 'StarMarket_Official',
+                    middleman: 'StarMarket_Official',
+                    messages: [
+                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Hello ${currentUser}! You are connected directly with Star Market Official Support & Middleman team. How can we assist you securely today?`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+                    ]
+                };
+                localStorage.setItem('sm_chats', JSON.stringify(chats));
+            }
+
             activeChatSession = chatId;
             syncChannel.postMessage({ type: 'CHAT_UPDATED', chatId: chatId });
             openChatModal(chatId);
@@ -1353,26 +1424,26 @@
 
             const feed = document.getElementById('chatMessageFeed');
             feed.innerHTML = chat.messages.map(m => {
+                const isMe = m.sender === currentUser;
                 let roleBadge = '';
-                let bubbleBg = 'bg-[#0d0f1c] border-purple-900/40 text-slate-200';
+                let bubbleBg = isMe ? 'bg-purple-950/70 border-purple-500/40 text-white ml-auto' : 'bg-[#0d0f1c] border-purple-900/40 text-slate-200 mr-auto';
                 
                 if (m.role === 'Verified Middleman') {
-                    roleBadge = '<span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">🛡️ Middleman</span>';
-                    bubbleBg = 'bg-emerald-950/20 border-emerald-500/30 text-emerald-100';
+                    roleBadge = '<span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">🛡️ Middleman</span>';
+                    bubbleBg = 'bg-emerald-950/30 border-emerald-500/40 text-emerald-100 mx-auto w-full';
                 } else if (m.role === 'Seller') {
-                    roleBadge = '<span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">📦 Seller</span>';
-                    bubbleBg = 'bg-blue-950/20 border-blue-500/30 text-blue-100';
+                    roleBadge = '<span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">📦 Seller</span>';
                 } else {
-                    roleBadge = '<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">👤 Buyer</span>';
+                    roleBadge = '<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">👤 Buyer</span>';
                 }
 
                 return `
-                <div class="flex flex-col space-y-1 bg-[#0b0e1b] border ${bubbleBg} rounded-2xl p-3 text-xs shadow-md">
-                    <div class="flex items-center justify-between">
+                <div class="flex flex-col space-y-1 border rounded-2xl p-3.5 text-xs shadow-md max-w-[85%] ${bubbleBg}">
+                    <div class="flex items-center justify-between gap-4">
                         <span class="font-bold text-white flex items-center">${m.sender} ${roleBadge}</span>
-                        <span class="text-[10px] text-slate-500">${m.time}</span>
+                        <span class="text-[10px] text-slate-400">${m.time}</span>
                     </div>
-                    <p class="leading-relaxed text-slate-300 mt-1">${m.text}</p>
+                    <p class="leading-relaxed text-slate-200 mt-1">${m.text}</p>
                 </div>
             `;}).join('');
             feed.scrollTop = feed.scrollHeight;
@@ -1404,6 +1475,40 @@
             syncChannel.postMessage({ type: 'CHAT_UPDATED', chatId: activeChatSession });
             input.value = '';
             renderChatMessages();
+            updateInboxBadge();
+        }
+
+        function renderInboxChats() {
+            const list = document.getElementById('inboxChatsList');
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            const userChats = Object.keys(chats).filter(chatId => {
+                const c = chats[chatId];
+                return c.buyer === currentUser || c.seller === currentUser;
+            });
+
+            if (userChats.length === 0) {
+                list.innerHTML = `<div class="text-center py-10 text-slate-500">
+                    <i class="fas fa-inbox text-4xl mb-3 block opacity-40"></i>
+                    ${currentLang === 'pl' ? 'Brak wiadomości lub zamówień.' : 'No messages or order chats found.'}
+                </div>`;
+                return;
+            }
+
+            list.innerHTML = userChats.map(chatId => {
+                const c = chats[chatId];
+                const lastMsg = c.messages[c.messages.length - 1] || { text: 'Started conversation', time: '' };
+                return `
+                <div onclick="closeModal('inboxModal'); openChatModal('${chatId}')" class="bg-[#060812] hover:bg-purple-950/40 p-4 rounded-2xl border border-purple-900/50 cursor-pointer transition flex items-center justify-between gap-3 shadow-md">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-white text-sm truncate">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</span>
+                            <span class="text-[10px] text-purple-400 font-semibold">${lastMsg.time}</span>
+                        </div>
+                        <p class="text-xs text-slate-400 truncate"><strong class="text-slate-300">${lastMsg.sender}:</strong> ${lastMsg.text}</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-purple-400 text-xs"></i>
+                </div>
+            `;}).join('');
         }
 
         function handleCreateOffer(e) {
@@ -1455,6 +1560,8 @@
                 closeModal('createOfferModal');
                 renderOffers();
                 showMsg("Success", currentLang === 'pl' ? "Twoja oferta została pomyślnie opublikowana!" : "Your offer has been published successfully!", "fa-check-circle");
+            }).catch(err => {
+                showMsg("Error", "Failed to process images. Please try smaller files.", "fa-triangle-exclamation");
             });
         }
 
@@ -1490,6 +1597,7 @@
 
         function openModal(id) {
             if (id === 'profileModal') renderUserOffers();
+            if (id === 'inboxModal') renderInboxChats();
             document.getElementById(id).classList.remove('hidden');
         }
 
