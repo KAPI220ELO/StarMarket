@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameMarket - Roblox, Fortnite, Brawl Stars & Clash Royale Marketplace</title>
+    <title>Star Market - Roblox, Fortnite, Brawl Stars & Clash Royale Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -20,8 +20,10 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCategory('All')">
-                    <div class="bg-yellow-500 text-slate-900 p-2 rounded-lg font-black text-xl">GM</div>
-                    <span class="font-extrabold text-xl tracking-wider bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">GAMEMARKET</span>
+                    <div class="bg-yellow-500 text-slate-900 p-2 rounded-lg font-black text-xl flex items-center justify-center w-10 h-10">
+                        <i class="fas fa-star text-slate-900 text-lg"></i>
+                    </div>
+                    <span class="font-extrabold text-xl tracking-wider bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">STAR MARKET</span>
                 </div>
 
                 <!-- Navigation Links / Actions -->
@@ -53,7 +55,7 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
         <!-- Hero Banner -->
         <div class="bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 mb-8 shadow-xl">
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">Buy & Sell Game Accounts Securely</h1>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">Buy & Sell Game Accounts Securely on <span class="text-yellow-400">Star Market</span></h1>
             <p class="text-slate-400 max-w-2xl text-sm sm:text-base">Trade Roblox, Fortnite, Brawl Stars, and Clash Royale accounts safely with direct seller contact.</p>
         </div>
 
@@ -63,4 +65,244 @@
             <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Roblox</button>
             <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Fortnite</button>
             <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Brawl Stars</button>
-            <button onclick="filterCategory('Clash Royale')" id="
+            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Clash Royale</button>
+        </div>
+
+        <!-- Offers Grid -->
+        <div id="offersGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamically populated offer cards -->
+        </div>
+    </main>
+
+    <!-- Create Offer Modal -->
+    <div id="createOfferModal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-md w-full shadow-2xl relative">
+            <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+            <h3 class="text-xl font-bold mb-4 text-yellow-400">Post New Offer</h3>
+            <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Select Game</label>
+                    <select id="offerGame" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                        <option value="Roblox">Roblox</option>
+                        <option value="Fortnite">Fortnite</option>
+                        <option value="Brawl Stars">Brawl Stars</option>
+                        <option value="Clash Royale">Clash Royale</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Title</label>
+                    <input type="text" id="offerTitle" placeholder="e.g. Stacked Fortnite Account OG Skins" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Price ($ USD)</label>
+                    <input type="number" step="0.01" id="offerPrice" placeholder="25.00" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Account Details & Contact Info (Discord/Telegram)</label>
+                    <textarea id="offerDescription" rows="3" placeholder="Level, items, skins, and how buyers can reach you..." required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold py-2.5 rounded-lg transition">Publish Offer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login/Signup Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-sm w-full shadow-2xl relative">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+            <h3 class="text-xl font-bold mb-4 text-yellow-400">Account Access</h3>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Username</label>
+                    <input type="text" id="loginUsername" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Password</label>
+                    <input type="password" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold py-2.5 rounded-lg transition">Log In / Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-md w-full shadow-2xl relative">
+            <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+            <div class="flex items-center space-x-3 mb-6">
+                <i class="fas fa-user-circle text-4xl text-yellow-400"></i>
+                <div>
+                    <h3 id="profileUsername" class="text-xl font-bold text-white">User</h3>
+                    <p class="text-xs text-slate-400">Star Market Member</p>
+                </div>
+            </div>
+            <h4 class="font-semibold text-sm mb-3 border-b border-slate-800 pb-2">Your Listings</h4>
+            <div id="userOffersList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                <!-- User's offers list -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        let activeCategory = 'All';
+        let currentUser = localStorage.getItem('gm_user') || null;
+
+        const defaultOffers = [
+            { id: '1', game: 'Roblox', title: 'Korblox + Headless Account', price: '45.00', seller: 'RobloxKing', desc: 'Full access with original email. 50k+ Robux spent.' },
+            { id: '2', game: 'Fortnite', title: 'Renegade Raider OG Account', price: '120.00', seller: 'FN_Trader', desc: 'Chapter 1 Season 1 skins included. PC/Console linkable.' },
+            { id: '3', game: 'Brawl Stars', title: '50k Trophies + 70 Brawlers', price: '35.00', seller: 'StarPro', desc: 'Includes multiple hypercharges and legendary skins.' },
+            { id: '4', game: 'Clash Royale', title: 'Level 15 Account All Cards', price: '30.00', seller: 'RoyaleMaster', desc: 'Maxed out main deck with 10k gems.' }
+        ];
+
+        function getOffers() {
+            const saved = localStorage.getItem('gm_offers');
+            return saved ? JSON.parse(saved) : defaultOffers;
+        }
+
+        function saveOffers(offers) {
+            localStorage.setItem('gm_offers', JSON.stringify(offers));
+        }
+
+        function init() {
+            if (!localStorage.getItem('gm_offers')) {
+                saveOffers(defaultOffers);
+            }
+            updateAuthUI();
+            renderOffers();
+        }
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('auth-buttons').classList.add('hidden');
+                document.getElementById('user-profile-btn').classList.remove('hidden');
+                document.getElementById('username-display').innerText = currentUser;
+                document.getElementById('profileUsername').innerText = currentUser;
+            } else {
+                document.getElementById('auth-buttons').classList.remove('hidden');
+                document.getElementById('user-profile-btn').classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            if (username) {
+                currentUser = username;
+                localStorage.setItem('gm_user', username);
+                updateAuthUI();
+                closeModal('loginModal');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('gm_user');
+            updateAuthUI();
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active-tab');
+                btn.classList.add('text-slate-400');
+            });
+            const selectedBtn = document.getElementById(`btn-${cat}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active-tab');
+                selectedBtn.classList.remove('text-slate-400');
+            }
+            renderOffers();
+        }
+
+        function renderOffers() {
+            const grid = document.getElementById('offersGrid');
+            const offers = getOffers();
+            const filtered = activeCategory === 'All' ? offers : offers.filter(o => o.game === activeCategory);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No active offers in this category yet.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(offer => `
+                <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-lg transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs px-2 py-0.5 rounded font-bold bg-slate-800 text-yellow-400 border border-slate-700">${offer.game}</span>
+                            <span class="text-xs text-slate-400"><i class="fas fa-user text-slate-500 mr-1"></i>${offer.seller}</span>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 line-clamp-1">${offer.title}</h3>
+                        <p class="text-slate-400 text-xs mb-4 line-clamp-2">${offer.desc}</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+                        <span class="text-lg font-black text-yellow-400">$${offer.price}</span>
+                        <button onclick="alert('Contact Seller on Discord/Telegram:\\n\\n${offer.desc}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-3 py-2 rounded-lg transition">Buy Offer</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleCreateOffer(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                closeModal('createOfferModal');
+                openModal('loginModal');
+                return;
+            }
+
+            const game = document.getElementById('offerGame').value;
+            const title = document.getElementById('offerTitle').value.trim();
+            const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
+            const desc = document.getElementById('offerDescription').value.trim();
+
+            const newOffer = { id: Date.now().toString(), game, title, price, desc, seller: currentUser };
+            const offers = getOffers();
+            offers.unshift(newOffer);
+            saveOffers(offers);
+
+            document.getElementById('offerForm').reset();
+            closeModal('createOfferModal');
+            renderOffers();
+        }
+
+        function renderUserOffers() {
+            const list = document.getElementById('userOffersList');
+            const offers = getOffers().filter(o => o.seller === currentUser);
+
+            if (offers.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-500 py-2">You haven't posted any offers yet.</p>`;
+                return;
+            }
+
+            list.innerHTML = offers.map(o => `
+                <div class="flex items-center justify-between bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-xs">
+                    <div>
+                        <p class="font-bold text-white">${o.title}</p>
+                        <p class="text-yellow-400">$${o.price} • ${o.game}</p>
+                    </div>
+                    <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-1"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function deleteOffer(id) {
+            let offers = getOffers().filter(o => o.id !== id);
+            saveOffers(offers);
+            renderOffers();
+            renderUserOffers();
+        }
+
+        function openModal(id) {
+            if (id === 'profileModal') renderUserOffers();
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
