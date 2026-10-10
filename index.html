@@ -19,6 +19,7 @@
             overflow-x: hidden;
         }
 
+        /* Banner Background Overlay Layout */
         .hero-banner-bg {
             position: relative;
             background: linear-gradient(180deg, rgba(3, 4, 9, 0.6) 0%, rgba(3, 4, 9, 0.9) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
@@ -69,6 +70,7 @@
             box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); 
         }
 
+        /* Continuous Scrolling Announcement Bar Animation */
         @keyframes scrollRight {
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0%); }
@@ -102,7 +104,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center gap-4">
                 
-                <!-- Logo -->
+                <!-- Logo with starmarket.png -->
                 <div class="flex items-center space-x-3 cursor-pointer shrink-0 group" onclick="filterCategory('All')">
                     <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
                     <span class="font-extrabold text-2xl tracking-wider gradient-text">STAR MARKET</span>
@@ -118,13 +120,19 @@
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
-                    <!-- Language Selector -->
+                    <!-- Admin Panel Button (Hidden unless logged in as Admin) -->
+                    <button id="admin-panel-btn" onclick="openAdminPanel()" class="hidden bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/50 px-3.5 py-2 rounded-xl text-xs font-bold items-center gap-1.5 transition shadow-md">
+                        <i class="fas fa-shield-halved text-purple-400"></i> Admin Panel
+                    </button>
+
+                    <!-- Big Language Selector Button (Flag + Code) -->
                     <div class="relative">
                         <button onclick="toggleLangDropdown()" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-purple-900/50 flex items-center gap-2 transition shadow-md">
                             <span id="currentLangFlag" class="text-base">🇺🇸</span>
                             <span id="currentLangCode" class="tracking-wide">ENG</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-70 ml-0.5"></i>
                         </button>
+                        <!-- Dropdown Menu -->
                         <div id="langDropdown" class="absolute right-0 mt-2 w-36 bg-[#0b0e1b] border border-purple-900/50 rounded-xl shadow-2xl hidden z-50 overflow-hidden backdrop-blur-md">
                             <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2.5 font-semibold transition">
                                 <span class="text-sm">🇺🇸</span> English
@@ -260,7 +268,6 @@
                         <span class="text-[10px] text-slate-500 mt-0.5">PNG, JPG, WEBP supported</span>
                         <input type="file" id="offerImageFiles" accept="image/*" multiple class="hidden" onchange="previewImages(event)">
                     </label>
-                    <!-- Preview Container -->
                     <div id="imagePreviewGrid" class="flex flex-wrap gap-2.5 mt-3"></div>
                 </div>
                 <div>
@@ -293,14 +300,40 @@
         </div>
     </div>
 
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('adminPanelModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
+            <div class="flex items-center gap-2 mb-6">
+                <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Star Market Admin Dashboard</span>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="flex border-b border-purple-900/40 mb-6 gap-6">
+                <button id="adminTabOffersBtn" onclick="switchAdminTab('offers')" class="pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition">Manage Offers</button>
+                <button id="adminTabTicketsBtn" onclick="switchAdminTab('tickets')" class="pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Middleman Tickets</button>
+            </div>
+
+            <!-- Tab 1: Offers -->
+            <div id="adminOffersSection" class="space-y-3">
+                <div id="adminOffersList" class="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Tab 2: Tickets -->
+            <div id="adminTicketsSection" class="space-y-3 hidden">
+                <div id="adminTicketsList" class="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Dedicated Full-Page Offer View -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center border-b border-purple-900/40 bg-[#060812]/95 backdrop-blur-md sticky top-0 z-40">
-            <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2 font-semibold text-sm transition">
-                <i class="fas fa-arrow-left"></i> <span data-i18n="backToMarket">Back to Marketplace</span>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-500/20 bg-[#060812]/90 backdrop-blur-xl sticky top-0 z-40 shadow-xl shadow-purple-950/20">
+            <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2.5 font-bold text-xs sm:text-sm bg-purple-950/50 border border-purple-500/30 px-4 py-2 rounded-xl transition hover:border-purple-400 shadow-md">
+                <i class="fas fa-arrow-left text-purple-400"></i> <span data-i18n="backToMarket">Back to Marketplace</span>
             </button>
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCategory('All'); closeModal('offerPageModal');">
-                <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-8 h-8 object-contain">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="filterCategory('All'); closeModal('offerPageModal');">
+                <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
                 <span class="font-extrabold text-xl tracking-wider gradient-text">STAR MARKET</span>
             </div>
         </div>
@@ -378,19 +411,33 @@
         </div>
     </div>
 
-    <!-- Seller Profile Modal -->
+    <!-- Seller Profile Modal (With Rep + / Rep -) -->
     <div id="sellerProfileModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('sellerProfileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
-            <div class="flex items-center space-x-4 mb-5">
+            <div class="flex items-center space-x-4 mb-4">
                 <div id="sellerModalAvatar" class="w-14 h-14 rounded-full bg-purple-950 border-2 border-purple-500/50 flex items-center justify-center text-purple-400 text-2xl shrink-0 shadow-md overflow-hidden">
                     <i class="fas fa-user"></i>
                 </div>
                 <div>
                     <h3 id="sellerModalUsername" class="text-xl font-bold text-white">Seller</h3>
-                    <p class="text-xs text-purple-400 font-semibold" data-i18n="verifiedSeller">Verified Star Market Seller</p>
+                    <div id="sellerModalRatingBadge" class="mt-1"></div>
                 </div>
             </div>
+
+            <!-- Reputation Voting Buttons -->
+            <div class="bg-[#060812] border border-purple-900/40 rounded-xl p-3 mb-4 flex items-center justify-between text-xs">
+                <span class="text-slate-300 font-semibold" data-i18n="rateSeller">Rate Seller:</span>
+                <div class="flex gap-2">
+                    <button onclick="giveRep(currentSellerViewing, 'pos')" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1">
+                        <i class="fas fa-thumbs-up"></i> Rep +
+                    </button>
+                    <button onclick="giveRep(currentSellerViewing, 'neg')" class="bg-red-950/80 hover:bg-red-900 text-red-300 border border-red-500/40 px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1">
+                        <i class="fas fa-thumbs-down"></i> Rep -
+                    </button>
+                </div>
+            </div>
+
             <div id="sellerModalSocials" class="bg-[#060812] border border-purple-900/40 rounded-xl p-4 mb-5 space-y-2 text-xs text-slate-300"></div>
             <h4 data-i18n="sellerActiveListings" class="font-semibold text-sm mb-3 border-b border-purple-900/40 pb-2 text-slate-300">Seller Active Listings</h4>
             <div id="sellerModalOffers" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
@@ -500,9 +547,65 @@
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         const STORAGE_KEY = 'sm_market_offers_v3';
 
+        // Default starter listings so offers show for everyone entering the site immediately
+        const defaultOffers = [
+            {
+                id: '101',
+                game: 'Roblox',
+                title: 'Korblox + Headless + 50k Robux Account',
+                price: '49.99',
+                seller: 'RobloxProShop',
+                desc: 'Full access account with original email. Korblox Deathspeaker, Headless Horseman, and 50k+ Robux spent on gamepasses and limiteds.',
+                images: [
+                    'https://images.unsplash.com/photo-1612287233202-b51b36619dfc?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'
+                ],
+                acceptedPayment: 'PayPal'
+            },
+            {
+                id: '102',
+                game: 'Fortnite',
+                title: 'OG Renegade Raider + Black Knight Account',
+                price: '149.99',
+                seller: 'OG_FortniteStore',
+                desc: 'Season 1 Chapter 1 account. Includes Renegade Raider, Black Knight, Travis Scott, and 120+ wins. Linkable to PC, Xbox, and PlayStation.',
+                images: [
+                    'https://images.unsplash.com/photo-1589241062272-c0a000071dfa?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80'
+                ],
+                acceptedPayment: 'Crypto'
+            },
+            {
+                id: '103',
+                game: 'Brawl Stars',
+                title: '75k Trophies • 80 Brawlers • 50 Maxed',
+                price: '39.99',
+                seller: 'StarBrawler',
+                desc: 'Stacked Brawl Stars account with 75k trophies, all legendary brawlers unlocked, multiple hypercharges and exclusive skins.',
+                images: [
+                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80'
+                ],
+                acceptedPayment: 'Cash App'
+            },
+            {
+                id: '104',
+                game: 'Clash Royale',
+                title: 'Level 15 Maxed Deck • 10k Gems',
+                price: '29.99',
+                seller: 'RoyaleKing',
+                desc: 'Maxed out level 15 account with all cards unlocked, 10,000 gems, and top 1000 global finish badges.',
+                images: [
+                    'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'
+                ],
+                acceptedPayment: 'Bank Transfer'
+            }
+        ];
+
         let selectedOfferFiles = [];
         let currentActiveOffer = null;
+        let currentSellerViewing = null;
         let activeChatSession = null;
+        let currentAdminTab = 'offers';
 
         const translations = {
             en: {
@@ -545,7 +648,8 @@
                 chatWithSellerBtn: "Chat with seller",
                 changeAvatar: "Change profile picture",
                 verifiedSeller: "Verified Star Market Seller",
-                sellerActiveListings: "Seller Active Listings"
+                sellerActiveListings: "Seller Active Listings",
+                rateSeller: "Rate Seller:"
             },
             pl: {
                 announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani pośrednicy | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
@@ -587,7 +691,8 @@
                 chatWithSellerBtn: "Czat ze sprzedawcą",
                 changeAvatar: "Zmień zdjęcie profilowe",
                 verifiedSeller: "Zweryfikowany sprzedawca Star Market",
-                sellerActiveListings: "Aktywne oferty sprzedawcy"
+                sellerActiveListings: "Aktywne oferty sprzedawcy",
+                rateSeller: "Oceń sprzedawcę:"
             }
         };
 
@@ -600,7 +705,12 @@
 
         function getUsers() {
             const saved = localStorage.getItem('sm_users_db');
-            return saved ? JSON.parse(saved) : {};
+            let users = saved ? JSON.parse(saved) : {};
+            // Preconfigure default Admin account for testing (Username: Admin, Password: adminpassword)
+            if (!users['Admin']) {
+                users['Admin'] = { email: 'admin@starmarket.com', password: 'adminpassword', role: 'admin', discord: 'Admin#0001', telegram: '@admin', avatar: '', reputation: { pos: 5, neg: 0, voters: [] } };
+            }
+            return users;
         }
 
         function saveUsers(users) {
@@ -609,7 +719,11 @@
 
         function getOffers() {
             const saved = localStorage.getItem(STORAGE_KEY);
-            return saved ? JSON.parse(saved) : [];
+            if (!saved) {
+                saveOffers(defaultOffers);
+                return defaultOffers;
+            }
+            return JSON.parse(saved);
         }
 
         function saveOffers(offers) {
@@ -618,7 +732,7 @@
 
         function init() {
             if (!localStorage.getItem(STORAGE_KEY)) {
-                saveOffers([]);
+                saveOffers(defaultOffers);
             }
             applyLanguage(currentLang);
             updateAuthUI();
@@ -655,13 +769,22 @@
         }
 
         function updateAuthUI() {
+            const users = getUsers();
             if (currentUser) {
                 document.getElementById('auth-buttons').classList.add('hidden');
                 document.getElementById('user-profile-btn').classList.remove('hidden');
                 document.getElementById('username-display').innerText = currentUser;
                 document.getElementById('profileUsername').innerText = currentUser;
+
+                // Check Admin role
+                if (users[currentUser] && users[currentUser].role === 'admin') {
+                    document.getElementById('admin-panel-btn').classList.remove('hidden');
+                    document.getElementById('admin-panel-btn').classList.add('flex');
+                } else {
+                    document.getElementById('admin-panel-btn').classList.add('hidden');
+                    document.getElementById('admin-panel-btn').classList.remove('flex');
+                }
                 
-                const users = getUsers();
                 if (users[currentUser]) {
                     const u = users[currentUser];
                     document.getElementById('profileEmail').innerText = u.email || 'No email set';
@@ -675,6 +798,8 @@
             } else {
                 document.getElementById('auth-buttons').classList.remove('hidden');
                 document.getElementById('user-profile-btn').classList.add('hidden');
+                document.getElementById('admin-panel-btn').classList.add('hidden');
+                document.getElementById('admin-panel-btn').classList.remove('flex');
             }
         }
 
@@ -737,7 +862,7 @@
                 return;
             }
 
-            users[username] = { email, dob, password, discord: '', telegram: '', avatar: '' };
+            users[username] = { email, dob, password, discord: '', telegram: '', avatar: '', role: 'user', reputation: { pos: 0, neg: 0, voters: [] } };
             saveUsers(users);
 
             currentUser = username;
@@ -817,6 +942,49 @@
                 case 'Clash Royale': return 'text-blue-300 bg-blue-950/80 border-blue-500/40';
                 default: return 'text-slate-300 bg-slate-950/80 border-slate-500/40';
             }
+        }
+
+        function getSellerRatingBadgeHtml(username) {
+            const users = getUsers();
+            const u = users[username];
+            if (!u || !u.reputation || (u.reputation.pos === 0 && u.reputation.neg === 0)) {
+                return `<span class="text-slate-400 font-semibold text-xs bg-slate-900/90 border border-slate-700/50 px-2.5 py-1 rounded-lg">★ New Seller</span>`;
+            }
+            const total = u.reputation.pos + u.reputation.neg;
+            const score = total > 0 ? (3 + (u.reputation.pos / total) * 2).toFixed(1) : '5.0';
+            return `<span class="text-amber-400 font-bold text-xs bg-amber-950/60 border border-amber-500/30 px-2.5 py-1 rounded-lg">★ ${score} (${u.reputation.pos} positive)</span>`;
+        }
+
+        function giveRep(username, type) {
+            if (!currentUser) {
+                openAuthTab('login');
+                return;
+            }
+            if (currentUser === username) {
+                showMsg("Error", currentLang === 'pl' ? "Nie możesz wystawić opinii samemu sobie." : "You cannot rate yourself.", "fa-triangle-exclamation");
+                return;
+            }
+
+            let users = getUsers();
+            if (!users[username]) return;
+
+            if (!users[username].reputation) {
+                users[username].reputation = { pos: 0, neg: 0, voters: [] };
+            }
+
+            if (users[username].reputation.voters.includes(currentUser)) {
+                showMsg("Notice", currentLang === 'pl' ? "Już oceniłeś tego użytkownika." : "You have already voted for this seller.", "fa-info-circle");
+                return;
+            }
+
+            if (type === 'pos') users[username].reputation.pos++;
+            else users[username].reputation.neg++;
+
+            users[username].reputation.voters.push(currentUser);
+            saveUsers(users);
+            openSellerProfile(username);
+            renderOffers();
+            showMsg("Success", currentLang === 'pl' ? "Opinia została dodana!" : "Reputation updated successfully!", "fa-check-circle");
         }
 
         function previewImages(event) {
@@ -919,12 +1087,14 @@
         }
 
         function openSellerProfile(username) {
+            currentSellerViewing = username;
             const users = getUsers();
             const u = users[username] || {};
             document.getElementById('sellerModalUsername').innerText = username;
 
             const avatarHtml = u.avatar ? `<img src="${u.avatar}" class="w-full h-full object-cover">` : `<i class="fas fa-user"></i>`;
             document.getElementById('sellerModalAvatar').innerHTML = avatarHtml;
+            document.getElementById('sellerModalRatingBadge').innerHTML = getSellerRatingBadgeHtml(username);
 
             let socialsHtml = `<p><strong class="text-slate-200"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord:</strong> ${u.discord || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
             socialsHtml += `<p><strong class="text-slate-200"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram:</strong> ${u.telegram || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
@@ -949,6 +1119,96 @@
             }
 
             openModal('sellerProfileModal');
+        }
+
+        // Admin Panel Functions
+        function openAdminPanel() {
+            renderAdminOffers();
+            renderAdminTickets();
+            openModal('adminPanelModal');
+        }
+
+        function switchAdminTab(tab) {
+            currentAdminTab = tab;
+            const offersBtn = document.getElementById('adminTabOffersBtn');
+            const ticketsBtn = document.getElementById('adminTabTicketsBtn');
+            const offersSec = document.getElementById('adminOffersSection');
+            const ticketsSec = document.getElementById('adminTicketsSection');
+
+            if (tab === 'offers') {
+                offersBtn.className = "pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
+                ticketsBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+                offersSec.classList.remove('hidden');
+                ticketsSec.classList.add('hidden');
+            } else {
+                ticketsBtn.className = "pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
+                offersBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+                ticketsSec.classList.remove('hidden');
+                offersSec.classList.add('hidden');
+            }
+        }
+
+        function renderAdminOffers() {
+            const list = document.getElementById('adminOffersList');
+            const offers = getOffers();
+            if (offers.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No active listings.</p>`;
+                return;
+            }
+            list.innerHTML = offers.map(o => {
+                const imgs = o.images || [o.image || ''];
+                return `
+                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
+                    <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-white truncate">${o.title}</p>
+                        <p class="text-purple-400 font-semibold">$${o.price} • ${o.game} • Seller: ${o.seller}</p>
+                    </div>
+                    <button onclick="adminDeleteOffer('${o.id}')" class="bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-500/40 px-3 py-1.5 rounded-lg transition shrink-0 font-bold"><i class="fas fa-trash mr-1"></i> Delete</button>
+                </div>
+            `;}).join('');
+        }
+
+        function adminDeleteOffer(id) {
+            let offers = getOffers().filter(o => o.id !== id);
+            saveOffers(offers);
+            renderAdminOffers();
+            renderOffers();
+            showMsg("Success", "Offer deleted successfully by Admin.", "fa-check-circle");
+        }
+
+        function renderAdminTickets() {
+            const list = document.getElementById('adminTicketsList');
+            const chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            const chatIds = Object.keys(chats);
+
+            if (chatIds.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No middleman tickets opened yet.</p>`;
+                return;
+            }
+
+            list.innerHTML = chatIds.map(chatId => {
+                const c = chats[chatId];
+                return `
+                <div class="flex items-center justify-between bg-[#060812] p-3.5 rounded-xl border border-purple-900/40 text-xs gap-3">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-white">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</p>
+                        <p class="text-purple-300">Buyer: ${c.buyer} | Seller: ${c.seller} | Price: $${c.price}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="closeModal('adminPanelModal'); openChatModal('${chatId}')" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700/40 px-3 py-1.5 rounded-lg transition font-bold"><i class="fas fa-comments mr-1"></i> View Chat</button>
+                        <button onclick="adminDeleteTicket('${chatId}')" class="bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-500/40 px-3 py-1.5 rounded-lg transition font-bold"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;}).join('');
+        }
+
+        function adminDeleteTicket(chatId) {
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            delete chats[chatId];
+            localStorage.setItem('sm_chats', JSON.stringify(chats));
+            renderAdminTickets();
+            showMsg("Success", "Ticket deleted successfully.", "fa-check-circle");
         }
 
         function openOfferPage(offerId) {
@@ -979,7 +1239,7 @@
                         <span class="text-sm font-bold text-white hover:text-purple-300 transition">${offer.seller}</span>
                     </div>
                 </div>
-                <span class="text-amber-400 font-bold text-xs bg-amber-950/60 border border-amber-500/30 px-2.5 py-1 rounded-lg">★ 4.9 Verified</span>
+                <div>${getSellerRatingBadgeHtml(offer.seller)}</div>
             `;
 
             const paymentMethod = offer.acceptedPayment || 'PayPal';
@@ -1110,9 +1370,13 @@
 
             const game = document.getElementById('offerGame').value;
             const title = document.getElementById('offerTitle').value.trim();
-            const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
+            const priceStr = document.getElementById('offerPrice').value;
             const desc = document.getElementById('offerDescription').value.trim();
-            const selectedPayment = document.querySelector('input[name="offerPaymentRadio"]:checked').value;
+            const paymentRadio = document.querySelector('input[name="offerPaymentRadio"]:checked');
+            const selectedPayment = paymentRadio ? paymentRadio.value : 'PayPal';
+
+            if (!title || !priceStr || !desc) return;
+            const price = parseFloat(priceStr).toFixed(2);
 
             if (selectedOfferFiles.length === 0) {
                 selectedOfferFiles = [null];
@@ -1189,6 +1453,7 @@
         function closeModal(id) {
             document.getElementById(id).classList.add('hidden');
             if (id === 'offerPageModal') document.getElementById('offerPageModal').classList.add('hidden');
+            if (id === 'adminPanelModal') document.getElementById('adminPanelModal').classList.add('hidden');
         }
 
         function showMsg(title, body, iconClass = "fa-info") {
