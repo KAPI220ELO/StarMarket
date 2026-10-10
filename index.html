@@ -326,7 +326,7 @@
         </div>
     </div>
 
-    <!-- Dedicated Full-Page Offer View -->
+    <!-- Dedicated Full-Page Offer View (Main picture first, then thumbnails) -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-500/20 bg-[#060812]/90 backdrop-blur-xl sticky top-0 z-40 shadow-xl shadow-purple-950/20">
             <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2.5 font-bold text-xs sm:text-sm bg-purple-950/50 border border-purple-500/30 px-4 py-2 rounded-xl transition hover:border-purple-400 shadow-md">
@@ -340,7 +340,7 @@
 
         <div class="max-w-6xl mx-auto px-4 py-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Left Column: Image Gallery -->
+                <!-- Left Column: Main Picture First, Then Thumbnails -->
                 <div class="lg:col-span-7 space-y-4">
                     <div class="aspect-video bg-[#060812] rounded-3xl overflow-hidden border border-purple-900/50 shadow-2xl">
                         <img id="offerPageMainImage" src="" class="w-full h-full object-cover">
@@ -348,7 +348,7 @@
                     <div id="offerPageThumbnails" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none"></div>
                 </div>
 
-                <!-- Right Column: Details, Seller & Chat Button -->
+                <!-- Right Column: Details, Seller & Proceed Button -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-[#0b0e1b] border border-purple-500/35 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
                         <div>
@@ -369,8 +369,8 @@
                             <p id="offerPageDesc" class="text-xs text-slate-300 leading-relaxed bg-[#060812] p-4 rounded-2xl border border-purple-900/40 max-h-48 overflow-y-auto whitespace-pre-line"></p>
                         </div>
 
-                        <button onclick="startChatWithSeller()" data-i18n="chatWithSellerBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5">
-                            <i class="fas fa-comments"></i> Chat with seller
+                        <button onclick="startChatWithSeller()" data-i18n="proceedBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5">
+                            <i class="fas fa-arrow-right"></i> Proceed
                         </button>
                     </div>
                 </div>
@@ -547,7 +547,18 @@
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         const STORAGE_KEY = 'sm_market_offers_v3';
 
-        // Default starter listings so offers show for everyone entering the site immediately
+        // Real-time tab sync channel
+        const syncChannel = new BroadcastChannel('star_market_sync');
+        syncChannel.onmessage = (event) => {
+            if (event.data.type === 'OFFERS_UPDATED') {
+                renderOffers();
+            } else if (event.data.type === 'CHAT_UPDATED') {
+                if (activeChatSession === event.data.chatId) {
+                    renderChatMessages();
+                }
+            }
+        };
+
         const defaultOffers = [
             {
                 id: '101',
@@ -645,7 +656,7 @@
                 backToMarket: "Back to Marketplace",
                 acceptedPayment: "Accepted Payment Method",
                 accountDesc: "Account Description",
-                chatWithSellerBtn: "Chat with seller",
+                proceedBtn: "Proceed",
                 changeAvatar: "Change profile picture",
                 verifiedSeller: "Verified Star Market Seller",
                 sellerActiveListings: "Seller Active Listings",
@@ -688,7 +699,7 @@
                 backToMarket: "Powrót do rynku",
                 acceptedPayment: "Akceptowana metoda płatności",
                 accountDesc: "Opis konta",
-                chatWithSellerBtn: "Czat ze sprzedawcą",
+                proceedBtn: "Przejdź dalej",
                 changeAvatar: "Zmień zdjęcie profilowe",
                 verifiedSeller: "Zweryfikowany sprzedawca Star Market",
                 sellerActiveListings: "Aktywne oferty sprzedawcy",
@@ -706,7 +717,6 @@
         function getUsers() {
             const saved = localStorage.getItem('sm_users_db');
             let users = saved ? JSON.parse(saved) : {};
-            // Preconfigure default Admin account for testing (Username: Admin, Password: adminpassword)
             if (!users['Admin']) {
                 users['Admin'] = { email: 'admin@starmarket.com', password: 'adminpassword', role: 'admin', discord: 'Admin#0001', telegram: '@admin', avatar: '', reputation: { pos: 5, neg: 0, voters: [] } };
             }
@@ -728,6 +738,7 @@
 
         function saveOffers(offers) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(offers));
+            syncChannel.postMessage({ type: 'OFFERS_UPDATED' });
         }
 
         function init() {
@@ -776,7 +787,6 @@
                 document.getElementById('username-display').innerText = currentUser;
                 document.getElementById('profileUsername').innerText = currentUser;
 
-                // Check Admin role
                 if (users[currentUser] && users[currentUser].role === 'admin') {
                     document.getElementById('admin-panel-btn').classList.remove('hidden');
                     document.getElementById('admin-panel-btn').classList.add('flex');
@@ -1249,6 +1259,7 @@
                 <span>${payDetails.name}</span>
             `;
 
+            // Images: Main picture first, then thumbnails for rest
             const images = offer.images || [offer.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
             document.getElementById('offerPageMainImage').src = images[0];
 
@@ -1285,6 +1296,7 @@
             }
             
             activeChatSession = chatId;
+            syncChannel.postMessage({ type: 'CHAT_UPDATED', chatId: chatId });
             openChatModal(chatId);
         }
 
@@ -1356,6 +1368,7 @@
             });
 
             localStorage.setItem('sm_chats', JSON.stringify(chats));
+            syncChannel.postMessage({ type: 'CHAT_UPDATED', chatId: activeChatSession });
             input.value = '';
             renderChatMessages();
         }
