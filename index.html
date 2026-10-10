@@ -120,18 +120,20 @@
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
-                    <!-- Language Selector Button (Circular Flag) -->
+                    <!-- Big Language Selector Button (Flag + Code) -->
                     <div class="relative">
-                        <button onclick="toggleLangDropdown()" class="w-10 h-10 rounded-full bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 flex items-center justify-center text-xs font-bold text-slate-200 transition shadow-md" title="Change Language">
-                            <span id="currentLangFlag">🇺🇸</span>
+                        <button onclick="toggleLangDropdown()" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-purple-900/50 flex items-center gap-2 transition shadow-md">
+                            <span id="currentLangFlag" class="text-base">🇺🇸</span>
+                            <span id="currentLangCode" class="tracking-wide">ENG</span>
+                            <i class="fas fa-chevron-down text-[10px] opacity-70 ml-0.5"></i>
                         </button>
                         <!-- Dropdown Menu -->
-                        <div id="langDropdown" class="absolute right-0 mt-2 w-32 bg-[#0b0e1b] border border-purple-900/50 rounded-xl shadow-2xl hidden z-50 overflow-hidden backdrop-blur-md">
-                            <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2 font-semibold transition">
-                                <span>🇺🇸</span> English
+                        <div id="langDropdown" class="absolute right-0 mt-2 w-36 bg-[#0b0e1b] border border-purple-900/50 rounded-xl shadow-2xl hidden z-50 overflow-hidden backdrop-blur-md">
+                            <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2.5 font-semibold transition">
+                                <span class="text-sm">🇺🇸</span> English
                             </button>
-                            <button onclick="setLanguage('pl')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2 font-semibold transition">
-                                <span>🇵🇱</span> Polski
+                            <button onclick="setLanguage('pl')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2.5 font-semibold transition">
+                                <span class="text-sm">🇵🇱</span> Polski
                             </button>
                         </div>
                     </div>
@@ -223,38 +225,47 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal -->
-    <div id="createOfferModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
-            <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
-            <h3 data-i18n="modalPostTitle" class="text-xl font-bold mb-4 gradient-text flex items-center gap-2"><i class="fas fa-plus-circle"></i> Post New Offer</h3>
+    <!-- Create Offer Modal (Redesigned with Multiple Photo Support) -->
+    <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
+            <h3 data-i18n="modalPostTitle" class="text-xl font-bold mb-5 gradient-text flex items-center gap-2"><i class="fas fa-plus-circle text-purple-400"></i> Post New Offer</h3>
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-4">
-                <div>
-                    <label data-i18n="modalSelectGame" class="block text-xs font-semibold text-slate-400 mb-1">Select Game</label>
-                    <select id="offerGame" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
-                        <option value="Roblox">Roblox</option>
-                        <option value="Fortnite">Fortnite</option>
-                        <option value="Brawl Stars">Brawl Stars</option>
-                        <option value="Clash Royale">Clash Royale</option>
-                    </select>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label data-i18n="modalSelectGame" class="block text-xs font-semibold text-slate-300 mb-1.5">Select Game</label>
+                        <select id="offerGame" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                            <option value="Roblox">Roblox</option>
+                            <option value="Fortnite">Fortnite</option>
+                            <option value="Brawl Stars">Brawl Stars</option>
+                            <option value="Clash Royale">Clash Royale</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label data-i18n="modalPrice" class="block text-xs font-semibold text-slate-300 mb-1.5">Price ($ USD)</label>
+                        <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                    </div>
                 </div>
                 <div>
-                    <label data-i18n="modalTitle" class="block text-xs font-semibold text-slate-400 mb-1">Listing Title</label>
-                    <input type="text" id="offerTitle" placeholder="e.g. Korblox + Headless 50k Robux Spent" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                    <label data-i18n="modalTitle" class="block text-xs font-semibold text-slate-300 mb-1.5">Listing Title</label>
+                    <input type="text" id="offerTitle" placeholder="e.g. Korblox + Headless 50k Robux Spent" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
-                    <label data-i18n="modalPrice" class="block text-xs font-semibold text-slate-400 mb-1">Price ($ USD)</label>
-                    <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                    <label data-i18n="modalScreenshots" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Screenshots (Select Multiple)</label>
+                    <label class="flex flex-col items-center justify-center border-2 border-dashed border-purple-900/60 rounded-xl p-5 bg-[#060812] hover:border-purple-500 cursor-pointer transition group">
+                        <i class="fas fa-cloud-arrow-up text-purple-400 text-2xl mb-2 group-hover:scale-110 transition"></i>
+                        <span class="text-xs text-slate-300 font-semibold" data-i18n="uploadPrompt">Click to upload multiple photos</span>
+                        <span class="text-[10px] text-slate-500 mt-0.5">PNG, JPG, WEBP supported</span>
+                        <input type="file" id="offerImageFiles" accept="image/*" multiple class="hidden" onchange="previewImages(event)">
+                    </label>
+                    <!-- Preview Container -->
+                    <div id="imagePreviewGrid" class="flex flex-wrap gap-2.5 mt-3"></div>
                 </div>
                 <div>
-                    <label data-i18n="modalScreenshot" class="block text-xs font-semibold text-slate-400 mb-1">Account Screenshot / Proof</label>
-                    <input type="file" id="offerImageFile" accept="image/*" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-2.5 text-slate-300 text-xs file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-900 file:text-purple-200 hover:file:bg-purple-800 cursor-pointer">
+                    <label data-i18n="modalDesc" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Details & Contact Info</label>
+                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500"></textarea>
                 </div>
-                <div>
-                    <label data-i18n="modalDesc" class="block text-xs font-semibold text-slate-400 mb-1">Account Details & Contact Info</label>
-                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500"></textarea>
-                </div>
-                <button type="submit" data-i18n="modalPublishBtn" class="w-full gradient-btn font-bold py-3 rounded-xl transition">Publish Offer</button>
+                <button type="submit" data-i18n="modalPublishBtn" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-lg">Publish Offer</button>
             </form>
         </div>
     </div>
@@ -342,15 +353,17 @@
         </div>
     </div>
 
-    <!-- Notification Modal -->
-    <div id="msgModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl relative">
+    <!-- Notification / Details Modal with Gallery Support -->
+    <div id="msgModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 max-w-lg w-full text-center shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('msgModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
             <div id="msgIcon" class="w-12 h-12 rounded-full bg-purple-950 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl mx-auto mb-3">
                 <i class="fas fa-info"></i>
             </div>
             <h3 id="msgTitle" class="text-lg font-bold text-white mb-2">Notice</h3>
-            <p id="msgBody" class="text-xs text-slate-300 mb-5 leading-relaxed whitespace-pre-line">Message text...</p>
-            <button onclick="closeModal('msgModal')" data-i18n="msgGotIt" class="w-full gradient-btn font-bold py-2.5 rounded-xl text-xs transition">Got it</button>
+            <p id="msgBody" class="text-xs text-slate-300 mb-4 leading-relaxed whitespace-pre-line text-left bg-[#060812] p-4 rounded-xl border border-purple-900/40"></p>
+            <div id="msgGallery" class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5"></div>
+            <button onclick="closeModal('msgModal')" data-i18n="msgGotIt" class="w-full gradient-btn font-bold py-2.5 rounded-xl text-xs transition shadow-md">Got it</button>
         </div>
     </div>
 
@@ -378,7 +391,8 @@
                 modalSelectGame: "Select Game",
                 modalTitle: "Listing Title",
                 modalPrice: "Price ($ USD)",
-                modalScreenshot: "Account Screenshot / Proof",
+                modalScreenshots: "Account Screenshots (Multiple)",
+                uploadPrompt: "Click to upload multiple photos",
                 modalDesc: "Account Details & Contact Info",
                 modalPublishBtn: "Publish Offer",
                 loginUserLabel: "Username or Email",
@@ -410,7 +424,8 @@
                 modalSelectGame: "Wybierz grę",
                 modalTitle: "Tytuł ogłoszenia",
                 modalPrice: "Cena ($ USD)",
-                modalScreenshot: "Zrzut ekranu / Dowód konta",
+                modalScreenshots: "Zrzuty ekranu konta (Wiele)",
+                uploadPrompt: "Kliknij, aby przesłać wiele zdjęć",
                 modalDesc: "Szczegóły konta i informacje kontaktowe",
                 modalPublishBtn: "Opublikuj ofertę",
                 loginUserLabel: "Nazwa użytkownika lub e-mail",
@@ -427,12 +442,7 @@
             }
         };
 
-        const defaultOffers = [
-            { id: '1', game: 'Roblox', title: 'Korblox + Headless Account', price: '45.00', seller: 'RobloxKing', desc: 'Full access with original email. 50k+ Robux spent. Contact Discord: RobloxKing#1234', image: 'https://images.unsplash.com/photo-1612287233202-b51b36619dfc?w=600&auto=format&fit=crop&q=80' },
-            { id: '2', game: 'Fortnite', title: 'Renegade Raider OG Account', price: '120.00', seller: 'FN_Trader', desc: 'Chapter 1 Season 1 skins included. PC/Console linkable. Telegram: @FNTrader', image: 'https://images.unsplash.com/photo-1589241062272-c0a000071dfa?w=600&auto=format&fit=crop&q=80' },
-            { id: '3', game: 'Brawl Stars', title: '50k Trophies + 70 Brawlers', price: '35.00', seller: 'StarPro', desc: 'Includes multiple hypercharges and legendary skins. Discord: StarPro#0001', image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80' },
-            { id: '4', game: 'Clash Royale', title: 'Level 15 Account All Cards', price: '30.00', seller: 'RoyaleMaster', desc: 'Maxed out main deck with 10k gems. Telegram: @RoyaleMaster', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80' }
-        ];
+        const defaultOffers = []; // Blank as requested
 
         function getUsers() {
             const saved = localStorage.getItem('sm_users_db');
@@ -477,6 +487,7 @@
         function applyLanguage(lang) {
             const t = translations[lang];
             document.getElementById('currentLangFlag').innerText = lang === 'pl' ? '🇵🇱' : '🇺🇸';
+            document.getElementById('currentLangCode').innerText = lang === 'pl' ? 'PL' : 'ENG';
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -629,6 +640,23 @@
             }
         }
 
+        function previewImages(event) {
+            const previewGrid = document.getElementById('imagePreviewGrid');
+            previewGrid.innerHTML = '';
+            const files = Array.from(event.target.files);
+
+            files.forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'relative w-14 h-14 rounded-xl overflow-hidden border border-purple-500/40 shadow-md bg-[#060812]';
+                    div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    previewGrid.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
         function renderOffers() {
             const grid = document.getElementById('offersGrid');
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
@@ -644,21 +672,25 @@
             if (filtered.length === 0) {
                 grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500">
                     <i class="fas fa-box-open text-5xl mb-3 block opacity-40"></i>
-                    ${currentLang === 'pl' ? 'Nie znaleziono aktywnych ofert.' : 'No active offers found.'}
+                    ${currentLang === 'pl' ? 'Brak aktywnych ofert. Bądź pierwszy i wystaw ogłoszenie!' : 'No active offers found. Be the first to post an offer!'}
                 </div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(offer => {
                 const badgeStyle = getGameBadgeColor(offer.game);
-                const imgSrc = offer.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80';
+                const images = offer.images || (offer.image ? [offer.image] : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80']);
+                const mainImg = images[0];
+                const photoBadge = images.length > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><i class="fas fa-images"></i> ${images.length}</div>` : '';
+
                 return `
                 <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 group">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
-                        <img src="${imgSrc}" alt="${offer.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="${mainImg}" alt="${offer.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         <div class="absolute top-3 left-3">
                             <span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border backdrop-blur-md shadow-lg ${badgeStyle}">${offer.game}</span>
                         </div>
+                        ${photoBadge}
                     </div>
                     <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
@@ -673,21 +705,28 @@
                                 <span class="text-[10px] text-slate-500 uppercase font-semibold block">${currentLang === 'pl' ? 'Cena' : 'Price'}</span>
                                 <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
                             </div>
-                            <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="gradient-btn font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md hover:scale-105 active:scale-95">${t.viewAndBuy}</button>
+                            <button onclick='viewOfferDetails("${offer.seller}", "${encodeURIComponent(offer.title)}", "${encodeURIComponent(offer.desc)}", ${JSON.stringify(images)})' class="gradient-btn font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md hover:scale-105 active:scale-95">${t.viewAndBuy}</button>
                         </div>
                     </div>
                 </div>
             `}).join('');
         }
 
-        function viewOfferDetails(seller, title, desc) {
+        function viewOfferDetails(seller, title, desc, images) {
             let users = getUsers();
             let contactInfo = `${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}: ${seller}\n\n${currentLang === 'pl' ? 'Szczegóły' : 'Details'}:\n${decodeURIComponent(desc)}`;
             if (users[seller]) {
                 if (users[seller].discord) contactInfo += `\n\nDiscord: ${users[seller].discord}`;
                 if (users[seller].telegram) contactInfo += `\nTelegram: ${users[seller].telegram}`;
             }
-            showMsg(`${currentLang === 'pl' ? 'Oferta' : 'Offer'}: ${decodeURIComponent(title)}`, contactInfo, "fa-store");
+
+            let galleryHtml = images && images.length > 0 ? images.map(img => `
+                <a href="${img}" target="_blank" class="aspect-video rounded-xl overflow-hidden border border-purple-900/40 block hover:border-purple-500 transition shadow-md bg-[#060812]">
+                    <img src="${img}" class="w-full h-full object-cover">
+                </a>
+            `).join('') : '';
+
+            showMsgWithGallery(`${currentLang === 'pl' ? 'Oferta' : 'Offer'}: ${decodeURIComponent(title)}`, contactInfo, galleryHtml, "fa-store");
         }
 
         function handleCreateOffer(e) {
@@ -702,9 +741,9 @@
             const title = document.getElementById('offerTitle').value.trim();
             const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
             const desc = document.getElementById('offerDescription').value.trim();
-            const imageFile = document.getElementById('offerImageFile').files[0];
+            const filesInput = document.getElementById('offerImageFiles');
 
-            const createOfferObj = (imageUrl) => {
+            const saveWithImages = (imageUrls) => {
                 const newOffer = { 
                     id: Date.now().toString(), 
                     game, 
@@ -712,26 +751,33 @@
                     price, 
                     desc, 
                     seller: currentUser,
-                    image: imageUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'
+                    images: imageUrls
                 };
                 const offers = getOffers();
                 offers.unshift(newOffer);
                 saveOffers(offers);
 
                 document.getElementById('offerForm').reset();
+                document.getElementById('imagePreviewGrid').innerHTML = '';
                 closeModal('createOfferModal');
                 renderOffers();
                 showMsg("Success", currentLang === 'pl' ? "Twoja oferta została pomyślnie opublikowana!" : "Your offer has been posted successfully!", "fa-check-circle");
             };
 
-            if (imageFile) {
-                const reader = new FileReader();
-                reader.onload = function(uploadEvent) {
-                    createOfferObj(uploadEvent.target.result);
-                };
-                reader.readAsDataURL(imageFile);
+            if (filesInput.files && filesInput.files.length > 0) {
+                let promises = Array.from(filesInput.files).map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.readAsDataURL(file);
+                    });
+                });
+
+                Promise.all(promises).then(base64Array => {
+                    saveWithImages(base64Array);
+                });
             } else {
-                createOfferObj(null);
+                saveWithImages(['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80']);
             }
         }
 
@@ -744,16 +790,18 @@
                 return;
             }
 
-            list.innerHTML = offers.map(o => `
+            list.innerHTML = offers.map(o => {
+                const imgs = o.images || [o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
+                return `
                 <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
-                    <img src="${o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
+                    <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
                     <div class="flex-1 min-w-0">
                         <p class="font-bold text-white truncate">${o.title}</p>
                         <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
                     </div>
                     <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-2 rounded-lg hover:bg-red-950/30 transition shrink-0"><i class="fas fa-trash"></i></button>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function deleteOffer(id) {
@@ -773,8 +821,13 @@
         }
 
         function showMsg(title, body, iconClass = "fa-info") {
+            showMsgWithGallery(title, body, "", iconClass);
+        }
+
+        function showMsgWithGallery(title, body, galleryHtml, iconClass = "fa-info") {
             document.getElementById('msgTitle').innerText = title;
             document.getElementById('msgBody').innerText = body;
+            document.getElementById('msgGallery').innerHTML = galleryHtml;
             document.getElementById('msgIcon').innerHTML = `<i class="fas ${iconClass}"></i>`;
             openModal('msgModal');
         }
