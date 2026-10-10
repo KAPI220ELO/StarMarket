@@ -225,11 +225,14 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal (Multiple Photos + Payment Preferences with Icons) -->
+    <!-- Create Offer Modal (Max 10 Photos + Buy Later option) -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
-            <h3 data-i18n="modalPostTitle" class="text-xl font-bold mb-5 gradient-text flex items-center gap-2"><i class="fas fa-plus-circle text-purple-400"></i> Post New Offer</h3>
+            <div class="flex justify-between items-center mb-5">
+                <h3 data-i18n="modalPostTitle" class="text-xl font-bold gradient-text flex items-center gap-2"><i class="fas fa-plus-circle text-purple-400"></i> Post New Offer</h3>
+                <button type="button" onclick="closeModal('createOfferModal')" data-i18n="buyLater" class="text-xs font-semibold text-purple-400 hover:text-purple-300 bg-purple-950/60 border border-purple-500/30 px-3 py-1.5 rounded-lg transition">Buy Later / Browse</button>
+            </div>
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -251,10 +254,10 @@
                     <input type="text" id="offerTitle" placeholder="e.g. Korblox + Headless 50k Robux Spent" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
-                    <label data-i18n="modalScreenshots" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Screenshots (Select Multiple)</label>
+                    <label data-i18n="modalScreenshots" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Screenshots (Max 10 Photos)</label>
                     <label class="flex flex-col items-center justify-center border-2 border-dashed border-purple-900/60 rounded-xl p-5 bg-[#060812] hover:border-purple-500 cursor-pointer transition group">
                         <i class="fas fa-cloud-arrow-up text-purple-400 text-2xl mb-2 group-hover:scale-110 transition"></i>
-                        <span class="text-xs text-slate-300 font-semibold" data-i18n="uploadPrompt">Click to upload multiple photos</span>
+                        <span class="text-xs text-slate-300 font-semibold" data-i18n="uploadPrompt">Click to upload up to 10 photos</span>
                         <span class="text-[10px] text-slate-500 mt-0.5">PNG, JPG, WEBP supported</span>
                         <input type="file" id="offerImageFiles" accept="image/*" multiple class="hidden" onchange="previewImages(event)">
                     </label>
@@ -466,11 +469,12 @@
                 modalSelectGame: "Select Game",
                 modalTitle: "Listing Title",
                 modalPrice: "Price ($ USD)",
-                modalScreenshots: "Account Screenshots (Select Multiple)",
-                uploadPrompt: "Click to upload multiple photos",
+                modalScreenshots: "Account Screenshots (Max 10 Photos)",
+                uploadPrompt: "Click to upload up to 10 photos",
                 acceptedPaymentsLabel: "Accepted Payment Methods for this Offer",
                 modalDesc: "Account Details & Contact Info",
                 modalPublishBtn: "Publish Offer",
+                buyLater: "Buy Later / Browse",
                 loginUserLabel: "Username or Email",
                 loginPassLabel: "Password",
                 signupUserLabel: "Username",
@@ -481,7 +485,7 @@
                 profileSaveBtn: "Save Social Handles",
                 profileActiveListings: "Your Active Listings",
                 msgGotIt: "Got it",
-                viewAndBuy: "View & Buy",
+                viewAndBuy: "View",
                 selectPayment: "Choose Your Payment Method",
                 payNowBtn: "Proceed to Secure Payment"
             },
@@ -502,11 +506,12 @@
                 modalSelectGame: "Wybierz grę",
                 modalTitle: "Tytuł ogłoszenia",
                 modalPrice: "Cena ($ USD)",
-                modalScreenshots: "Zrzuty ekranu konta (Wiele)",
-                uploadPrompt: "Kliknij, aby przesłać wiele zdjęć",
+                modalScreenshots: "Zrzuty ekranu konta (Maks. 10 zdjęć)",
+                uploadPrompt: "Kliknij, aby przesłać do 10 zdjęć",
                 acceptedPaymentsLabel: "Akceptowane metody płatności dla tej oferty",
                 modalDesc: "Szczegóły konta i informacje kontaktowe",
                 modalPublishBtn: "Opublikuj ofertę",
+                buyLater: "Kup później / Przeglądaj",
                 loginUserLabel: "Nazwa użytkownika lub e-mail",
                 loginPassLabel: "Hasło",
                 signupUserLabel: "Nazwa użytkownika",
@@ -517,7 +522,7 @@
                 profileSaveBtn: "Zapisz profile",
                 profileActiveListings: "Twoje aktywne ogłoszenia",
                 msgGotIt: "Rozumiem",
-                viewAndBuy: "Zobacz i kup",
+                viewAndBuy: "Zobacz",
                 selectPayment: "Wybierz metodę płatności",
                 payNowBtn: "Przejdź do bezpiecznej płatności"
             }
@@ -729,7 +734,12 @@
         function previewImages(event) {
             const previewGrid = document.getElementById('imagePreviewGrid');
             previewGrid.innerHTML = '';
-            const files = Array.from(event.target.files);
+            let files = Array.from(event.target.files);
+
+            if (files.length > 10) {
+                showMsg("Limit", currentLang === 'pl' ? "Możesz dodać maksymalnie 10 zdjęć." : "You can upload a maximum of 10 photos.", "fa-triangle-exclamation");
+                files = files.slice(0, 10);
+            }
 
             files.forEach((file) => {
                 const reader = new FileReader();
@@ -897,7 +907,8 @@
             };
 
             if (filesInput.files && filesInput.files.length > 0) {
-                let promises = Array.from(filesInput.files).map(file => {
+                let filesToProcess = Array.from(filesInput.files).slice(0, 10);
+                let promises = filesToProcess.map(file => {
                     return new Promise((resolve) => {
                         const reader = new FileReader();
                         reader.onload = (e) => resolve(e.target.result);
@@ -970,4 +981,3 @@
     </script>
 </body>
 </html>
-
