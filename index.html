@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameMarket - Roblox, Fortnite, Brawl Stars & Clash Royale Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .active-tab { border-bottom: 2px solid #EAB308; color: #EAB308; }
+        .modal { transition: opacity 0.25s ease; }
+        body { background-color: #0F172A; }
+    </style>
+</head>
+<body class="text-slate-100 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCategory('All')">
+                    <div class="bg-yellow-500 text-slate-900 p-2 rounded-lg font-black text-xl">GM</div>
+                    <span class="font-extrabold text-xl tracking-wider bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">GAMEMARKET</span>
+                </div>
+
+                <!-- Navigation Links / Actions -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="openModal('createOfferModal')" class="bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-lg transition transform active:scale-95">
+                        <i class="fas font-black text-lg">+</i>
+                        <span class="hidden sm:inline">Post Offer</span>
+                    </button>
+
+                    <!-- User Logged Out View -->
+                    <div id="auth-buttons" class="flex items-center space-x-2">
+                        <button onclick="openModal('loginModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg font-medium border border-slate-700 transition">Log In</button>
+                    </div>
+
+                    <!-- User Logged In View -->
+                    <div id="user-profile-btn" class="hidden flex items-center space-x-3">
+                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition">
+                            <i class="fas fa-user-circle text-yellow-400 text-xl"></i>
+                            <span id="username-display" class="font-semibold text-sm">User</span>
+                        </button>
+                        <button onclick="logout()" class="text-slate-400 hover:text-red-400 text-sm font-medium"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+        <!-- Hero Banner -->
+        <div class="bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 mb-8 shadow-xl">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">Buy & Sell Game Accounts Securely</h1>
+            <p class="text-slate-400 max-w-2xl text-sm sm:text-base">Trade Roblox, Fortnite, Brawl Stars, and Clash Royale accounts safely with direct seller contact.</p>
+        </div>
+
+        <!-- Filter Categories -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 border-b border-slate-800 text-sm font-medium">
+            <button onclick="filterCategory('All')" id="btn-All" class="category-btn active-tab px-4 py-2 rounded-lg whitespace-nowrap transition">All Games</button>
+            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Roblox</button>
+            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Fortnite</button>
+            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg whitespace-nowrap transition">Brawl Stars</button>
+            <button onclick="filterCategory('Clash Royale')" id="
