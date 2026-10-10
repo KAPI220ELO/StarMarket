@@ -1,3 +1,10 @@
+Here is your complete, ready-to-use index.html file. I have plugged in your new
+private cloud bin URL (https://api.npoint.io/1fb92f6b17ca17c160c4) directly into
+the script.
+
+Whenever anyone posts an offer or sends a message on your site, it will save to
+your npoint bin, and everyone worldwide will see the exact same thing instantly!
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -383,7 +390,6 @@
                             <span>Protected by Star Market Verified Middleman Protection & 24/7 Support.</span>
                         </div>
 
-                        <!-- Dynamic Action Button (Proceed for Users, Open / Join for Admin) -->
                         <div id="offerPageActionBtnContainer"></div>
                     </div>
                 </div>
@@ -574,7 +580,7 @@
         let currentUser = localStorage.getItem('sm_user') || null;
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         
-        const CLOUD_SYNC_URL = 'https://api.npoint.io/41c40be1e38a2e1e3b6e';
+        const CLOUD_SYNC_URL = 'https://api.npoint.io/1fb92f6b17ca17c160c4';
 
         let globalCloudData = {
             offers: [],
@@ -699,13 +705,13 @@
                     }
                 }
             } catch (err) {
-                let localOffers = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                let localOffers = JSON.parse(localStorage.getItem('sm_offers'));
                 if (localOffers) globalCloudData.offers = localOffers;
             }
         }
 
         async function saveCloudData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(globalCloudData.offers));
+            localStorage.setItem('sm_offers', JSON.stringify(globalCloudData.offers));
             localStorage.setItem('sm_users_db', JSON.stringify(globalCloudData.users));
             localStorage.setItem('sm_chats', JSON.stringify(globalCloudData.chats));
 
@@ -1317,7 +1323,6 @@
                 </button>
             `).join('');
 
-            // Dynamic Button for Admin vs Normal User
             const actionBtnContainer = document.getElementById('offerPageActionBtnContainer');
             const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
 
