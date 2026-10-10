@@ -83,8 +83,9 @@
                     </button>
 
                     <!-- Auth State: Logged Out -->
-                    <div id="auth-buttons" class="flex items-center">
-                        <button onclick="openModal('loginModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-700 transition">Log In</button>
+                    <div id="auth-buttons" class="flex items-center space-x-2">
+                        <button onclick="openAuthTab('login')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-700 transition">Log In</button>
+                        <button onclick="openAuthTab('signup')" class="gradient-btn text-slate-950 px-4 py-2 rounded-xl text-sm font-bold transition shadow-md shadow-yellow-500/10">Sign Up</button>
                     </div>
 
                     <!-- Auth State: Logged In -->
@@ -113,6 +114,11 @@
                 <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight">Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span></h1>
                 <p class="text-slate-400 text-sm sm:text-base leading-relaxed">Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from sellers.</p>
             </div>
+        </div>
+
+        <!-- Star Banner Section -->
+        <div class="mb-8 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group">
+            <img src="starbanner.png" onerror="this.onerror=null; this.style.display='none';" alt="Star Market Banner" class="w-full h-auto object-cover transform transition duration-500 group-hover:scale-102">
         </div>
 
         <!-- Filter Chips -->
@@ -175,29 +181,57 @@
                     <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Account Details & Contact Info (Discord/Telegram)</label>
-                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and how buyers can reach you..." required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500"></textarea>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Account Details & Contact Info</label>
+                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500"></textarea>
                 </div>
                 <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Publish Offer</button>
             </form>
         </div>
     </div>
 
-    <!-- Login/Signup Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+    <!-- Auth Modal (Login & Signup) -->
+    <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
-            <h3 class="text-xl font-bold mb-4 gradient-text flex items-center gap-2"><i class="fas fa-user-lock"></i> Account Access</h3>
-            <form onsubmit="handleLogin(event)" class="space-y-4">
+            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
+            
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-800 mb-5">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition">Log In</button>
+                <button id="tabSignupBtn" onclick="switchAuthTab('signup')" class="flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Username</label>
-                    <input type="text" id="loginUsername" required placeholder="Choose a username" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Username or Email</label>
+                    <input type="text" id="loginId" required placeholder="Enter username or email" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
-                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
                 </div>
-                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition">Log In / Sign Up</button>
+                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Log In</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Username</label>
+                    <input type="text" id="signupUsername" required placeholder="Choose a username" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="name@example.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Birth Date</label>
+                    <input type="date" id="signupDob" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                </div>
+                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Create Account</button>
             </form>
         </div>
     </div>
@@ -206,19 +240,47 @@
     <div id="profileModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
             <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
-            <div class="flex items-center space-x-3 mb-6">
-                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-2xl">
+            
+            <div class="flex items-center space-x-3 mb-5">
+                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-2xl shrink-0">
                     <i class="fas fa-user"></i>
                 </div>
                 <div>
                     <h3 id="profileUsername" class="text-xl font-bold text-white">User</h3>
-                    <span class="text-xs text-yellow-400 font-semibold bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20">Verified Seller</span>
+                    <p id="profileEmail" class="text-xs text-slate-400">email@example.com</p>
                 </div>
             </div>
+
+            <!-- Social Links Editor -->
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4 mb-5 space-y-3">
+                <h4 class="font-bold text-xs text-yellow-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fas fa-share-nodes"></i> Connected Socials</h4>
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-400 mb-1"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord Handle</label>
+                    <input type="text" id="profileDiscord" placeholder="e.g. username#1234" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-yellow-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-400 mb-1"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram Username</label>
+                    <input type="text" id="profileTelegram" placeholder="e.g. @username" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-yellow-500">
+                </div>
+                <button onclick="saveSocials()" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-2 rounded-lg text-xs transition">Save Social Handles</button>
+            </div>
+
             <h4 class="font-semibold text-sm mb-3 border-b border-slate-800 pb-2 text-slate-300">Your Active Listings</h4>
-            <div id="userOffersList" class="space-y-2 max-h-52 overflow-y-auto pr-1">
+            <div id="userOffersList" class="space-y-2 max-h-40 overflow-y-auto pr-1">
                 <!-- User's offers list -->
             </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="msgModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl relative">
+            <div id="msgIcon" class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-xl mx-auto mb-3">
+                <i class="fas fa-info"></i>
+            </div>
+            <h3 id="msgTitle" class="text-lg font-bold text-white mb-2">Notice</h3>
+            <p id="msgBody" class="text-xs text-slate-300 mb-5 leading-relaxed">Message text...</p>
+            <button onclick="closeModal('msgModal')" class="w-full gradient-btn text-slate-950 font-bold py-2.5 rounded-xl text-xs transition">Got it</button>
         </div>
     </div>
 
@@ -233,6 +295,15 @@
             { id: '3', game: 'Brawl Stars', title: '50k Trophies + 70 Brawlers', price: '35.00', seller: 'StarPro', desc: 'Includes multiple hypercharges and legendary skins. Discord: StarPro#0001' },
             { id: '4', game: 'Clash Royale', title: 'Level 15 Account All Cards', price: '30.00', seller: 'RoyaleMaster', desc: 'Maxed out main deck with 10k gems. Telegram: @RoyaleMaster' }
         ];
+
+        function getUsers() {
+            const saved = localStorage.getItem('sm_users_db');
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('sm_users_db', JSON.stringify(users));
+        }
 
         function getOffers() {
             const saved = localStorage.getItem('sm_offers');
@@ -257,20 +328,99 @@
                 document.getElementById('user-profile-btn').classList.remove('hidden');
                 document.getElementById('username-display').innerText = currentUser;
                 document.getElementById('profileUsername').innerText = currentUser;
+                
+                const users = getUsers();
+                if (users[currentUser]) {
+                    document.getElementById('profileEmail').innerText = users[currentUser].email || 'No email set';
+                    document.getElementById('profileDiscord').value = users[currentUser].discord || '';
+                    document.getElementById('profileTelegram').value = users[currentUser].telegram || '';
+                }
             } else {
                 document.getElementById('auth-buttons').classList.remove('hidden');
                 document.getElementById('user-profile-btn').classList.add('hidden');
             }
         }
 
+        function openAuthTab(tab) {
+            openModal('authModal');
+            switchAuthTab(tab);
+        }
+
+        function switchAuthTab(tab) {
+            const loginBtn = document.getElementById('tabLoginBtn');
+            const signupBtn = document.getElementById('tabSignupBtn');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+
+            if (tab === 'login') {
+                loginBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition";
+                signupBtn.className = "flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+            } else {
+                signupBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition";
+                loginBtn.className = "flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const dob = document.getElementById('signupDob').value;
+            const password = document.getElementById('signupPassword').value;
+
+            if (!username || !email || !dob || !password) return;
+
+            let users = getUsers();
+            if (users[username]) {
+                showMsg("Registration Error", "Username already exists. Please choose another or log in.", "fa-triangle-exclamation");
+                return;
+            }
+
+            users[username] = { email, dob, password, discord: '', telegram: '' };
+            saveUsers(users);
+
+            currentUser = username;
+            localStorage.setItem('sm_user', username);
+            updateAuthUI();
+            closeModal('authModal');
+            document.getElementById('signupForm').reset();
+            showMsg("Welcome!", "Your account has been successfully created.", "fa-check-circle");
+        }
+
         function handleLogin(e) {
             e.preventDefault();
-            const username = document.getElementById('loginUsername').value.trim();
-            if (username) {
-                currentUser = username;
-                localStorage.setItem('sm_user', username);
+            const identifier = document.getElementById('loginId').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            let users = getUsers();
+            let matchedUser = null;
+
+            if (users[identifier]) {
+                if (users[identifier].password === password) {
+                    matchedUser = identifier;
+                }
+            } else {
+                // Check by email
+                for (let username in users) {
+                    if (users[username].email === identifier && users[username].password === password) {
+                        matchedUser = username;
+                        break;
+                    }
+                }
+            }
+
+            if (matchedUser) {
+                currentUser = matchedUser;
+                localStorage.setItem('sm_user', matchedUser);
                 updateAuthUI();
-                closeModal('loginModal');
+                closeModal('authModal');
+                document.getElementById('loginForm').reset();
+            } else {
+                showMsg("Login Failed", "Invalid username/email or password.", "fa-triangle-exclamation");
             }
         }
 
@@ -278,6 +428,17 @@
             currentUser = null;
             localStorage.removeItem('sm_user');
             updateAuthUI();
+        }
+
+        function saveSocials() {
+            if (!currentUser) return;
+            let users = getUsers();
+            if (users[currentUser]) {
+                users[currentUser].discord = document.getElementById('profileDiscord').value.trim();
+                users[currentUser].telegram = document.getElementById('profileTelegram').value.trim();
+                saveUsers(users);
+                showMsg("Success", "Social handles saved successfully!", "fa-check-circle");
+            }
         }
 
         function filterCategory(cat) {
@@ -338,17 +499,27 @@
                             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Price</span>
                             <span class="text-lg font-extrabold text-yellow-400">$${offer.price}</span>
                         </div>
-                        <button onclick="alert('Seller Contact Details:\\n\\n${offer.desc}')" class="bg-slate-800 hover:bg-yellow-500 hover:text-slate-950 text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition border border-slate-700">Buy Now</button>
+                        <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="bg-slate-800 hover:bg-yellow-500 hover:text-slate-950 text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition border border-slate-700">Buy Now</button>
                     </div>
                 </div>
             `}).join('');
+        }
+
+        function viewOfferDetails(seller, title, desc) {
+            let users = getUsers();
+            let contactInfo = `Seller: ${seller}\n\nDetails:\n${decodeURIComponent(desc)}`;
+            if (users[seller]) {
+                if (users[seller].discord) contactInfo += `\n\nDiscord: ${users[seller].discord}`;
+                if (users[seller].telegram) contactInfo += `\nTelegram: ${users[seller].telegram}`;
+            }
+            showMsg(`Offer: ${decodeURIComponent(title)}`, contactInfo, "fa-store");
         }
 
         function handleCreateOffer(e) {
             e.preventDefault();
             if (!currentUser) {
                 closeModal('createOfferModal');
-                openModal('loginModal');
+                openAuthTab('login');
                 return;
             }
 
@@ -365,6 +536,7 @@
             document.getElementById('offerForm').reset();
             closeModal('createOfferModal');
             renderOffers();
+            showMsg("Success", "Your offer has been posted successfully!", "fa-check-circle");
         }
 
         function renderUserOffers() {
@@ -401,6 +573,13 @@
 
         function closeModal(id) {
             document.getElementById(id).classList.add('hidden');
+        }
+
+        function showMsg(title, body, iconClass = "fa-info") {
+            document.getElementById('msgTitle').innerText = title;
+            document.getElementById('msgBody').innerText = body;
+            document.getElementById('msgIcon').innerHTML = `<i class="fas ${iconClass}"></i>`;
+            openModal('msgModal');
         }
 
         window.onload = init;
