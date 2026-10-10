@@ -17,14 +17,43 @@
         .gradient-text { background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .gradient-btn { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
         .gradient-btn:hover { background: linear-gradient(135deg, #facc15 0%, #eab308 100%); }
-        .category-chip.active { background: #eab308; color: #0f172a; font-weight: 700; shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+        .category-chip.active { background: #eab308; color: #0f172a; font-weight: 700; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+
+        /* Continuous Scrolling Banner Animation (Moving Right) */
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+        }
+        .animate-scroll-right {
+            display: flex;
+            width: max-content;
+            animation: scrollRight 20s linear infinite;
+        }
+        .animate-scroll-right:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 text-slate-950 font-bold text-xs py-1.5 text-center tracking-wide">
-        ⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace ⚡
+    <!-- Top Scrolling Announcement Bar (Moving Right continuously) -->
+    <div class="bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 text-slate-950 font-bold text-xs py-2 overflow-hidden shadow-md relative border-b border-yellow-600/30">
+        <div class="animate-scroll-right flex items-center whitespace-nowrap gap-8">
+            <!-- First Set -->
+            <div class="flex items-center gap-8">
+                <span>⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace</span>
+                <span>🛡️ 100% Verified & Trusted Middlemans Available</span>
+                <span>🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale</span>
+                <span>🚀 Instant Account Handover & 24/7 Live Support</span>
+            </div>
+            <!-- Duplicate Set for Seamless Loop -->
+            <div class="flex items-center gap-8">
+                <span>⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace</span>
+                <span>🛡️ 100% Verified & Trusted Middlemans Available</span>
+                <span>🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale</span>
+                <span>🚀 Instant Account Handover & 24/7 Live Support</span>
+            </div>
+        </div>
     </div>
 
     <!-- Navigation Bar -->
@@ -79,7 +108,7 @@
             <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="relative z-10 max-w-2xl">
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full mb-4">
-                    <i class="fas fa-shield-halved"></i> Direct Marketplace
+                    <i class="fas fa-shield-halved"></i> Direct & Trusted Middleman Trades
                 </span>
                 <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight">Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span></h1>
                 <p class="text-slate-400 text-sm sm:text-base leading-relaxed">Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from sellers.</p>
