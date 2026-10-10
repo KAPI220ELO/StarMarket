@@ -11,15 +11,66 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; }
-        .glass-card { background: rgba(18, 24, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glass-card:hover { border-color: rgba(234, 179, 8, 0.4); transform: translateY(-3px); }
-        .gradient-text { background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .gradient-btn { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
-        .gradient-btn:hover { background: linear-gradient(135deg, #facc15 0%, #eab308 100%); }
-        .category-chip.active { background: #eab308; color: #0f172a; font-weight: 700; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #030409; 
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
 
-        /* Continuous Scrolling Banner Animation (Moving Right) */
+        /* Banner Background Overlay Layout */
+        .hero-banner-bg {
+            position: relative;
+            background: linear-gradient(to bottom, rgba(3, 4, 9, 0.75), rgba(3, 4, 9, 0.95)), url('starbanner.png') center/cover no-repeat;
+        }
+
+        .glass-panel { 
+            background: rgba(13, 15, 28, 0.75); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(139, 92, 246, 0.15); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-panel:hover { 
+            border-color: rgba(168, 85, 247, 0.4); 
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.15);
+        }
+
+        .gradient-text { 
+            background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #ec4899 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        .gradient-btn { 
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); 
+            color: white;
+            box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4);
+        }
+        .gradient-btn:hover { 
+            background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); 
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
+        }
+
+        .category-chip {
+            background: rgba(13, 15, 28, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+        }
+        .category-chip:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            color: #fff;
+        }
+        .category-chip.active { 
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); 
+            color: #ffffff; 
+            font-weight: 700; 
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); 
+        }
+
+        /* Continuous Scrolling Announcement Bar Animation */
         @keyframes scrollRight {
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0%); }
@@ -27,29 +78,27 @@
         .animate-scroll-right {
             display: flex;
             width: max-content;
-            animation: scrollRight 20s linear infinite;
+            animation: scrollRight 22s linear infinite;
         }
         .animate-scroll-right:hover {
             animation-play-state: paused;
         }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
-    <!-- Top Scrolling Announcement Bar (Moving Right continuously) -->
-    <div class="bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 text-slate-950 font-bold text-xs py-2 overflow-hidden shadow-md relative border-b border-yellow-600/30">
+    <!-- Top Scrolling Announcement Bar (Purple/Neon Vibe) -->
+    <div class="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700 text-white font-bold text-xs py-2 overflow-hidden shadow-lg relative border-b border-purple-500/30 z-50">
         <div class="animate-scroll-right flex items-center whitespace-nowrap gap-8">
-            <!-- First Set -->
             <div class="flex items-center gap-8">
                 <span>⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace</span>
-                <span>🛡️ 100% Verified & Trusted Middlemans Available</span>
+                <span>🛡️ 100% Verified & Trusted Middlemen Available</span>
                 <span>🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale</span>
                 <span>🚀 Instant Account Handover & 24/7 Live Support</span>
             </div>
-            <!-- Duplicate Set for Seamless Loop -->
             <div class="flex items-center gap-8">
                 <span>⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace</span>
-                <span>🛡️ 100% Verified & Trusted Middlemans Available</span>
+                <span>🛡️ 100% Verified & Trusted Middlemen Available</span>
                 <span>🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale</span>
                 <span>🚀 Instant Account Handover & 24/7 Live Support</span>
             </div>
@@ -57,41 +106,41 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-40">
+    <nav class="bg-[#060812]/90 backdrop-blur-md border-b border-purple-900/40 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center gap-4">
                 
                 <!-- Logo with starmarket.png -->
                 <div class="flex items-center space-x-3 cursor-pointer shrink-0" onclick="filterCategory('All')">
-                    <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-9 h-9 object-contain drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]">
+                    <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-9 h-9 object-contain drop-shadow-[0_0_12px_rgba(168,85,247,0.7)]">
                     <span class="font-extrabold text-2xl tracking-wider gradient-text">STAR MARKET</span>
                 </div>
 
                 <!-- Search Bar -->
                 <div class="hidden md:flex items-center flex-1 max-w-md mx-4">
                     <div class="relative w-full">
-                        <i class="fas fa-search absolute left-3.5 top-3 text-slate-500 text-sm"></i>
-                        <input type="text" id="searchInput" oninput="renderOffers()" placeholder="Search Roblox, Fortnite, skins, brawlers..." class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition">
+                        <i class="fas fa-search absolute left-3.5 top-3 text-purple-400/60 text-sm"></i>
+                        <input type="text" id="searchInput" oninput="renderOffers()" placeholder="Search Roblox, Fortnite, skins, brawlers..." class="w-full bg-[#0d0f1c]/90 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition">
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
-                    <button onclick="openModal('createOfferModal')" class="gradient-btn text-slate-950 font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-lg shadow-yellow-500/10 transition transform active:scale-95 text-sm">
+                    <button onclick="openModal('createOfferModal')" class="gradient-btn font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition transform active:scale-95 text-sm">
                         <i class="fas fa-plus-circle text-base"></i>
                         <span>Post Offer</span>
                     </button>
 
                     <!-- Auth State: Logged Out -->
                     <div id="auth-buttons" class="flex items-center space-x-2">
-                        <button onclick="openAuthTab('login')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-700 transition">Log In</button>
-                        <button onclick="openAuthTab('signup')" class="gradient-btn text-slate-950 px-4 py-2 rounded-xl text-sm font-bold transition shadow-md shadow-yellow-500/10">Sign Up</button>
+                        <button onclick="openAuthTab('login')" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-purple-900/50 transition">Log In</button>
+                        <button onclick="openAuthTab('signup')" class="gradient-btn px-4 py-2 rounded-xl text-sm font-bold transition">Sign Up</button>
                     </div>
 
                     <!-- Auth State: Logged In -->
                     <div id="user-profile-btn" class="hidden flex items-center space-x-2">
-                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3.5 py-1.5 rounded-xl transition">
-                            <i class="fas fa-user-circle text-yellow-400 text-lg"></i>
+                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3.5 py-1.5 rounded-xl transition">
+                            <i class="fas fa-user-circle text-purple-400 text-lg"></i>
                             <span id="username-display" class="font-semibold text-sm">User</span>
                         </button>
                         <button onclick="logout()" class="text-slate-400 hover:text-red-400 p-2 transition" title="Log Out"><i class="fas fa-sign-out-alt"></i></button>
@@ -101,41 +150,42 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-        
-        <!-- Hero Section -->
-        <div class="relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 mb-8 shadow-2xl">
-            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-2xl">
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full mb-4">
-                    <i class="fas fa-shield-halved"></i> Direct & Trusted Middleman Trades
+    <!-- Hero Section with Background Banner and Theme Color Integration -->
+    <section class="hero-banner-bg border-b border-purple-900/30 py-12 sm:py-20 mb-8 relative">
+        <div class="absolute inset-0 bg-radial from-purple-900/20 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-300 bg-purple-950/80 border border-purple-500/30 px-3.5 py-1.5 rounded-full mb-6 shadow-lg shadow-purple-900/20">
+                    <i class="fas fa-shield-halved text-purple-400"></i> Direct & Trusted Middleman Trades
                 </span>
-                <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight">Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span></h1>
-                <p class="text-slate-400 text-sm sm:text-base leading-relaxed">Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from sellers.</p>
+                <h1 class="text-3xl sm:text-6xl font-extrabold text-white mb-4 tracking-tight leading-tight">
+                    Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span>
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+                    Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers.
+                </p>
             </div>
         </div>
+    </section>
 
-        <!-- Star Banner Section -->
-        <div class="mb-8 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group">
-            <img src="starbanner.png" onerror="this.onerror=null; this.style.display='none';" alt="Star Market Banner" class="w-full h-auto object-cover transform transition duration-500 group-hover:scale-102">
-        </div>
-
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full">
+        
         <!-- Filter Chips -->
-        <div class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 text-sm font-medium border-b border-slate-800/80 scrollbar-none">
-            <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2 rounded-xl whitespace-nowrap bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition flex items-center gap-2">
+        <div class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 text-sm font-medium border-b border-purple-900/30 scrollbar-none">
+            <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-gamepad"></i> All Games
             </button>
-            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition flex items-center gap-2">
+            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-cube text-red-400"></i> Roblox
             </button>
-            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition flex items-center gap-2">
+            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-bolt text-purple-400"></i> Fortnite
             </button>
-            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition flex items-center gap-2">
-                <i class="fas fa-star text-yellow-400"></i> Brawl Stars
+            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                <i class="fas fa-star text-amber-400"></i> Brawl Stars
             </button>
-            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition flex items-center gap-2">
+            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-crown text-blue-400"></i> Clash Royale
             </button>
         </div>
@@ -147,11 +197,11 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900/60 border-t border-slate-800/80 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <footer class="bg-[#060812] border-t border-purple-900/30 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-2">
-                <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-5 h-5 opacity-70">
-                <span class="font-bold text-slate-400">Star Market &copy; 2026</span>
+                <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-5 h-5 opacity-80">
+                <span class="font-bold text-slate-300">Star Market &copy; 2026</span>
             </div>
             <p>Roblox, Fortnite, Brawl Stars & Clash Royale are trademarks of their respective owners.</p>
         </div>
@@ -159,13 +209,13 @@
 
     <!-- Create Offer Modal -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
             <h3 class="text-xl font-bold mb-4 gradient-text flex items-center gap-2"><i class="fas fa-plus-circle"></i> Post New Offer</h3>
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Select Game</label>
-                    <select id="offerGame" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <select id="offerGame" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                         <option value="Roblox">Roblox</option>
                         <option value="Fortnite">Fortnite</option>
                         <option value="Brawl Stars">Brawl Stars</option>
@@ -174,29 +224,29 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Listing Title</label>
-                    <input type="text" id="offerTitle" placeholder="e.g. Korblox + Headless 50k Robux Spent" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="text" id="offerTitle" placeholder="e.g. Korblox + Headless 50k Robux Spent" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Price ($ USD)</label>
-                    <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Account Details & Contact Info</label>
-                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500"></textarea>
+                    <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500"></textarea>
                 </div>
-                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Publish Offer</button>
+                <button type="submit" class="w-full gradient-btn font-bold py-3 rounded-xl transition">Publish Offer</button>
             </form>
         </div>
     </div>
 
     <!-- Auth Modal (Login & Signup) -->
     <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
+        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
             
             <!-- Tabs -->
-            <div class="flex border-b border-slate-800 mb-5">
-                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition">Log In</button>
+            <div class="flex border-b border-purple-900/40 mb-5">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition">Log In</button>
                 <button id="tabSignupBtn" onclick="switchAuthTab('signup')" class="flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Sign Up</button>
             </div>
 
@@ -204,45 +254,45 @@
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Username or Email</label>
-                    <input type="text" id="loginId" required placeholder="Enter username or email" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="text" id="loginId" required placeholder="Enter username or email" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
-                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Log In</button>
+                <button type="submit" class="w-full gradient-btn font-bold py-3 rounded-xl transition">Log In</button>
             </form>
 
             <!-- Signup Form -->
             <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4 hidden">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Username</label>
-                    <input type="text" id="signupUsername" required placeholder="Choose a username" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="text" id="signupUsername" required placeholder="Choose a username" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Email Address</label>
-                    <input type="email" id="signupEmail" required placeholder="name@example.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="email" id="signupEmail" required placeholder="name@example.com" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Birth Date</label>
-                    <input type="date" id="signupDob" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="date" id="signupDob" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
-                    <input type="password" id="signupPassword" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-yellow-500">
+                    <input type="password" id="signupPassword" required placeholder="••••••••" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                 </div>
-                <button type="submit" class="w-full gradient-btn text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-500/10">Create Account</button>
+                <button type="submit" class="w-full gradient-btn font-bold py-3 rounded-xl transition">Create Account</button>
             </form>
         </div>
     </div>
 
     <!-- Profile Modal -->
     <div id="profileModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
             <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
             
             <div class="flex items-center space-x-3 mb-5">
-                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-2xl shrink-0">
+                <div class="w-12 h-12 rounded-full bg-purple-950 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl shrink-0 shadow-md">
                     <i class="fas fa-user"></i>
                 </div>
                 <div>
@@ -252,20 +302,20 @@
             </div>
 
             <!-- Social Links Editor -->
-            <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4 mb-5 space-y-3">
-                <h4 class="font-bold text-xs text-yellow-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fas fa-share-nodes"></i> Connected Socials</h4>
+            <div class="bg-[#060812] border border-purple-900/40 rounded-xl p-4 mb-5 space-y-3">
+                <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wide flex items-center gap-1.5"><i class="fas fa-share-nodes"></i> Connected Socials</h4>
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-400 mb-1"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord Handle</label>
-                    <input type="text" id="profileDiscord" placeholder="e.g. username#1234" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-yellow-500">
+                    <input type="text" id="profileDiscord" placeholder="e.g. username#1234" class="w-full bg-[#0b0e1b] border border-purple-900/40 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-400 mb-1"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram Username</label>
-                    <input type="text" id="profileTelegram" placeholder="e.g. @username" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-yellow-500">
+                    <input type="text" id="profileTelegram" placeholder="e.g. @username" class="w-full bg-[#0b0e1b] border border-purple-900/40 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-500">
                 </div>
-                <button onclick="saveSocials()" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-2 rounded-lg text-xs transition">Save Social Handles</button>
+                <button onclick="saveSocials()" class="w-full bg-purple-900/60 hover:bg-purple-800 text-purple-200 font-bold py-2 rounded-lg text-xs transition border border-purple-700/40">Save Social Handles</button>
             </div>
 
-            <h4 class="font-semibold text-sm mb-3 border-b border-slate-800 pb-2 text-slate-300">Your Active Listings</h4>
+            <h4 class="font-semibold text-sm mb-3 border-b border-purple-900/40 pb-2 text-slate-300">Your Active Listings</h4>
             <div id="userOffersList" class="space-y-2 max-h-40 overflow-y-auto pr-1">
                 <!-- User's offers list -->
             </div>
@@ -274,13 +324,13 @@
 
     <!-- Notification Modal -->
     <div id="msgModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl relative">
-            <div id="msgIcon" class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-xl mx-auto mb-3">
+        <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl relative">
+            <div id="msgIcon" class="w-12 h-12 rounded-full bg-purple-950 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl mx-auto mb-3">
                 <i class="fas fa-info"></i>
             </div>
             <h3 id="msgTitle" class="text-lg font-bold text-white mb-2">Notice</h3>
             <p id="msgBody" class="text-xs text-slate-300 mb-5 leading-relaxed">Message text...</p>
-            <button onclick="closeModal('msgModal')" class="w-full gradient-btn text-slate-950 font-bold py-2.5 rounded-xl text-xs transition">Got it</button>
+            <button onclick="closeModal('msgModal')" class="w-full gradient-btn font-bold py-2.5 rounded-xl text-xs transition">Got it</button>
         </div>
     </div>
 
@@ -353,12 +403,12 @@
             const signupForm = document.getElementById('signupForm');
 
             if (tab === 'login') {
-                loginBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition";
+                loginBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
                 signupBtn.className = "flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
                 loginForm.classList.remove('hidden');
                 signupForm.classList.add('hidden');
             } else {
-                signupBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-yellow-500 text-yellow-400 transition";
+                signupBtn.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
                 loginBtn.className = "flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
                 signupForm.classList.remove('hidden');
                 loginForm.classList.add('hidden');
@@ -404,7 +454,6 @@
                     matchedUser = identifier;
                 }
             } else {
-                // Check by email
                 for (let username in users) {
                     if (users[username].email === identifier && users[username].password === password) {
                         matchedUser = username;
@@ -455,11 +504,11 @@
 
         function getGameBadgeColor(game) {
             switch(game) {
-                case 'Roblox': return 'text-red-400 bg-red-500/10 border-red-500/20';
-                case 'Fortnite': return 'text-purple-400 bg-purple-500/10 border-purple-500/20';
-                case 'Brawl Stars': return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20';
-                case 'Clash Royale': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
-                default: return 'text-slate-400 bg-slate-500/10 border-slate-500/20';
+                case 'Roblox': return 'text-red-400 bg-red-500/10 border-red-500/30';
+                case 'Fortnite': return 'text-purple-300 bg-purple-500/10 border-purple-500/30';
+                case 'Brawl Stars': return 'text-amber-300 bg-amber-500/10 border-amber-500/30';
+                case 'Clash Royale': return 'text-blue-300 bg-blue-500/10 border-blue-500/30';
+                default: return 'text-slate-400 bg-slate-500/10 border-slate-500/30';
             }
         }
 
@@ -485,21 +534,21 @@
             grid.innerHTML = filtered.map(offer => {
                 const badgeStyle = getGameBadgeColor(offer.game);
                 return `
-                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
+                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border ${badgeStyle}">${offer.game}</span>
-                            <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fas fa-user-circle text-slate-500"></i> ${offer.seller}</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fas fa-user-circle text-purple-400/80"></i> ${offer.seller}</span>
                         </div>
                         <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1">${offer.title}</h3>
                         <p class="text-slate-400 text-xs mb-4 line-clamp-2 leading-relaxed">${offer.desc}</p>
                     </div>
-                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
+                    <div class="flex items-center justify-between pt-3 border-t border-purple-900/30">
                         <div>
                             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Price</span>
-                            <span class="text-lg font-extrabold text-yellow-400">$${offer.price}</span>
+                            <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
                         </div>
-                        <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="bg-slate-800 hover:bg-yellow-500 hover:text-slate-950 text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition border border-slate-700">Buy Now</button>
+                        <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="bg-[#12162b] hover:bg-purple-600 hover:text-white text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition border border-purple-900/50">Buy Now</button>
                     </div>
                 </div>
             `}).join('');
@@ -549,10 +598,10 @@
             }
 
             list.innerHTML = offers.map(o => `
-                <div class="flex items-center justify-between bg-slate-800/80 p-3 rounded-xl border border-slate-700/80 text-xs">
+                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs">
                     <div>
                         <p class="font-bold text-white">${o.title}</p>
-                        <p class="text-yellow-400 font-semibold">$${o.price} • ${o.game}</p>
+                        <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
                     </div>
                     <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-1.5"><i class="fas fa-trash"></i></button>
                 </div>
