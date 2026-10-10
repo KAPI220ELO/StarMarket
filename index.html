@@ -22,19 +22,19 @@
         /* Banner Background Overlay Layout */
         .hero-banner-bg {
             position: relative;
-            background: linear-gradient(to bottom, rgba(3, 4, 9, 0.75), rgba(3, 4, 9, 0.95)), url('starbanner.png') center/cover no-repeat;
+            background: linear-gradient(180deg, rgba(3, 4, 9, 0.6) 0%, rgba(3, 4, 9, 0.9) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
         }
 
         .glass-panel { 
-            background: rgba(13, 15, 28, 0.75); 
+            background: rgba(13, 15, 28, 0.8); 
             backdrop-filter: blur(16px); 
-            border: 1px solid rgba(139, 92, 246, 0.15); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(139, 92, 246, 0.2); 
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
         }
         .glass-panel:hover { 
-            border-color: rgba(168, 85, 247, 0.4); 
-            transform: translateY(-3px); 
-            box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.15);
+            border-color: rgba(168, 85, 247, 0.6); 
+            transform: translateY(-4px); 
+            box-shadow: 0 15px 45px 0 rgba(139, 92, 246, 0.25);
         }
 
         .gradient-text { 
@@ -54,7 +54,7 @@
         }
 
         .category-chip {
-            background: rgba(13, 15, 28, 0.6);
+            background: rgba(13, 15, 28, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #cbd5e1;
         }
@@ -66,7 +66,7 @@
             background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); 
             color: #ffffff; 
             font-weight: 700; 
-            border-color: rgba(192, 132, 252, 0.5);
+            border-color: rgba(192, 132, 252, 0.6);
             box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); 
         }
 
@@ -87,8 +87,8 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Scrolling Announcement Bar (Purple/Neon Vibe) -->
-    <div class="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700 text-white font-bold text-xs py-2 overflow-hidden shadow-lg relative border-b border-purple-500/30 z-50">
+    <!-- Top Scrolling Announcement Bar -->
+    <div class="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700 text-white font-bold text-xs py-2.5 overflow-hidden shadow-lg relative border-b border-purple-500/30 z-50">
         <div class="animate-scroll-right flex items-center whitespace-nowrap gap-8">
             <div class="flex items-center gap-8">
                 <span>⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace</span>
@@ -106,13 +106,13 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="bg-[#060812]/90 backdrop-blur-md border-b border-purple-900/40 sticky top-0 z-40">
+    <nav class="bg-[#060812]/95 backdrop-blur-md border-b border-purple-900/40 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center gap-4">
                 
                 <!-- Logo with starmarket.png -->
-                <div class="flex items-center space-x-3 cursor-pointer shrink-0" onclick="filterCategory('All')">
-                    <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-9 h-9 object-contain drop-shadow-[0_0_12px_rgba(168,85,247,0.7)]">
+                <div class="flex items-center space-x-3 cursor-pointer shrink-0 group" onclick="filterCategory('All')">
+                    <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
                     <span class="font-extrabold text-2xl tracking-wider gradient-text">STAR MARKET</span>
                 </div>
 
@@ -120,26 +120,26 @@
                 <div class="hidden md:flex items-center flex-1 max-w-md mx-4">
                     <div class="relative w-full">
                         <i class="fas fa-search absolute left-3.5 top-3 text-purple-400/60 text-sm"></i>
-                        <input type="text" id="searchInput" oninput="renderOffers()" placeholder="Search Roblox, Fortnite, skins, brawlers..." class="w-full bg-[#0d0f1c]/90 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition">
+                        <input type="text" id="searchInput" oninput="renderOffers()" placeholder="Search Roblox, Fortnite, skins, brawlers..." class="w-full bg-[#0d0f1c]/90 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition">
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
-                    <button onclick="openModal('createOfferModal')" class="gradient-btn font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition transform active:scale-95 text-sm">
+                    <button onclick="openModal('createOfferModal')" class="gradient-btn font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition transform active:scale-95 text-sm shadow-md">
                         <i class="fas fa-plus-circle text-base"></i>
                         <span>Post Offer</span>
                     </button>
 
                     <!-- Auth State: Logged Out -->
                     <div id="auth-buttons" class="flex items-center space-x-2">
-                        <button onclick="openAuthTab('login')" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold border border-purple-900/50 transition">Log In</button>
-                        <button onclick="openAuthTab('signup')" class="gradient-btn px-4 py-2 rounded-xl text-sm font-bold transition">Sign Up</button>
+                        <button onclick="openAuthTab('login')" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-4 py-2.5 rounded-xl text-sm font-semibold border border-purple-900/50 transition">Log In</button>
+                        <button onclick="openAuthTab('signup')" class="gradient-btn px-4 py-2.5 rounded-xl text-sm font-bold transition">Sign Up</button>
                     </div>
 
                     <!-- Auth State: Logged In -->
                     <div id="user-profile-btn" class="hidden flex items-center space-x-2">
-                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3.5 py-1.5 rounded-xl transition">
+                        <button onclick="openModal('profileModal')" class="flex items-center space-x-2 bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-3.5 py-2 rounded-xl transition">
                             <i class="fas fa-user-circle text-purple-400 text-lg"></i>
                             <span id="username-display" class="font-semibold text-sm">User</span>
                         </button>
@@ -150,20 +150,26 @@
         </div>
     </nav>
 
-    <!-- Hero Section with Background Banner and Theme Color Integration -->
-    <section class="hero-banner-bg border-b border-purple-900/30 py-12 sm:py-20 mb-8 relative">
-        <div class="absolute inset-0 bg-radial from-purple-900/20 via-transparent to-transparent pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-3xl mx-auto text-center">
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-300 bg-purple-950/80 border border-purple-500/30 px-3.5 py-1.5 rounded-full mb-6 shadow-lg shadow-purple-900/20">
-                    <i class="fas fa-shield-halved text-purple-400"></i> Direct & Trusted Middleman Trades
-                </span>
-                <h1 class="text-3xl sm:text-6xl font-extrabold text-white mb-4 tracking-tight leading-tight">
-                    Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span>
-                </h1>
-                <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-                    Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers.
-                </p>
+    <!-- Upgraded Hero Section with Immersive Lighting & Banner Integration -->
+    <section class="hero-banner-bg border-b border-purple-900/40 py-16 sm:py-28 mb-10 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#030409] via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-purple-300 bg-purple-950/80 border border-purple-500/40 px-4 py-2 rounded-full mb-6 shadow-xl shadow-purple-900/30 backdrop-blur-md">
+                <i class="fas fa-shield-halved text-purple-400 animate-pulse"></i> Direct & Verified Middleman Trades
+            </div>
+            <h1 class="text-4xl sm:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight drop-shadow-lg">
+                Buy & Sell Game Accounts on <span class="gradient-text">Star Market</span>
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-medium">
+                Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers with zero fees.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="openModal('createOfferModal')" class="gradient-btn font-bold px-8 py-3.5 rounded-2xl flex items-center gap-2 transition transform hover:scale-105 text-base shadow-xl">
+                    <i class="fas fa-plus-circle text-lg"></i> Post New Offer
+                </button>
+                <a href="#offersGrid" class="bg-[#0d0f1c]/90 hover:bg-purple-950/50 text-slate-200 px-8 py-3.5 rounded-2xl text-base font-semibold border border-purple-900/50 transition backdrop-blur-md flex items-center gap-2">
+                    <i class="fas fa-compass text-purple-400"></i> Browse Marketplace
+                </a>
             </div>
         </div>
     </section>
@@ -173,19 +179,19 @@
         
         <!-- Filter Chips -->
         <div class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 text-sm font-medium border-b border-purple-900/30 scrollbar-none">
-            <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+            <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-gamepad"></i> All Games
             </button>
-            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-cube text-red-400"></i> Roblox
             </button>
-            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-bolt text-purple-400"></i> Fortnite
             </button>
-            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-star text-amber-400"></i> Brawl Stars
             </button>
-            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
                 <i class="fas fa-crown text-blue-400"></i> Clash Royale
             </button>
         </div>
@@ -207,7 +213,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal -->
+    <!-- Create Offer Modal (With Screenshot Upload) -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
@@ -229,6 +235,10 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Price ($ USD)</label>
                     <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Account Screenshot / Proof</label>
+                    <input type="file" id="offerImageFile" accept="image/*" class="w-full bg-[#060812] border border-purple-900/40 rounded-xl p-2.5 text-slate-300 text-xs file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-900 file:text-purple-200 hover:file:bg-purple-800 cursor-pointer">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Account Details & Contact Info</label>
@@ -316,7 +326,7 @@
             </div>
 
             <h4 class="font-semibold text-sm mb-3 border-b border-purple-900/40 pb-2 text-slate-300">Your Active Listings</h4>
-            <div id="userOffersList" class="space-y-2 max-h-40 overflow-y-auto pr-1">
+            <div id="userOffersList" class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
                 <!-- User's offers list -->
             </div>
         </div>
@@ -329,21 +339,21 @@
                 <i class="fas fa-info"></i>
             </div>
             <h3 id="msgTitle" class="text-lg font-bold text-white mb-2">Notice</h3>
-            <p id="msgBody" class="text-xs text-slate-300 mb-5 leading-relaxed">Message text...</p>
+            <p id="msgBody" class="text-xs text-slate-300 mb-5 leading-relaxed whitespace-pre-line">Message text...</p>
             <button onclick="closeModal('msgModal')" class="w-full gradient-btn font-bold py-2.5 rounded-xl text-xs transition">Got it</button>
         </div>
     </div>
 
-    <!-- JavaScript logic -->
+    <!-- JavaScript Logic -->
     <script>
         let activeCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
 
         const defaultOffers = [
-            { id: '1', game: 'Roblox', title: 'Korblox + Headless Account', price: '45.00', seller: 'RobloxKing', desc: 'Full access with original email. 50k+ Robux spent. Contact Discord: RobloxKing#1234' },
-            { id: '2', game: 'Fortnite', title: 'Renegade Raider OG Account', price: '120.00', seller: 'FN_Trader', desc: 'Chapter 1 Season 1 skins included. PC/Console linkable. Telegram: @FNTrader' },
-            { id: '3', game: 'Brawl Stars', title: '50k Trophies + 70 Brawlers', price: '35.00', seller: 'StarPro', desc: 'Includes multiple hypercharges and legendary skins. Discord: StarPro#0001' },
-            { id: '4', game: 'Clash Royale', title: 'Level 15 Account All Cards', price: '30.00', seller: 'RoyaleMaster', desc: 'Maxed out main deck with 10k gems. Telegram: @RoyaleMaster' }
+            { id: '1', game: 'Roblox', title: 'Korblox + Headless Account', price: '45.00', seller: 'RobloxKing', desc: 'Full access with original email. 50k+ Robux spent. Contact Discord: RobloxKing#1234', image: 'https://images.unsplash.com/photo-1612287233202-b51b36619dfc?w=600&auto=format&fit=crop&q=80' },
+            { id: '2', game: 'Fortnite', title: 'Renegade Raider OG Account', price: '120.00', seller: 'FN_Trader', desc: 'Chapter 1 Season 1 skins included. PC/Console linkable. Telegram: @FNTrader', image: 'https://images.unsplash.com/photo-1589241062272-c0a000071dfa?w=600&auto=format&fit=crop&q=80' },
+            { id: '3', game: 'Brawl Stars', title: '50k Trophies + 70 Brawlers', price: '35.00', seller: 'StarPro', desc: 'Includes multiple hypercharges and legendary skins. Discord: StarPro#0001', image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80' },
+            { id: '4', game: 'Clash Royale', title: 'Level 15 Account All Cards', price: '30.00', seller: 'RoyaleMaster', desc: 'Maxed out main deck with 10k gems. Telegram: @RoyaleMaster', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80' }
         ];
 
         function getUsers() {
@@ -504,11 +514,11 @@
 
         function getGameBadgeColor(game) {
             switch(game) {
-                case 'Roblox': return 'text-red-400 bg-red-500/10 border-red-500/30';
-                case 'Fortnite': return 'text-purple-300 bg-purple-500/10 border-purple-500/30';
-                case 'Brawl Stars': return 'text-amber-300 bg-amber-500/10 border-amber-500/30';
-                case 'Clash Royale': return 'text-blue-300 bg-blue-500/10 border-blue-500/30';
-                default: return 'text-slate-400 bg-slate-500/10 border-slate-500/30';
+                case 'Roblox': return 'text-red-300 bg-red-950/80 border-red-500/40';
+                case 'Fortnite': return 'text-purple-300 bg-purple-950/80 border-purple-500/40';
+                case 'Brawl Stars': return 'text-amber-300 bg-amber-950/80 border-amber-500/40';
+                case 'Clash Royale': return 'text-blue-300 bg-blue-950/80 border-blue-500/40';
+                default: return 'text-slate-300 bg-slate-950/80 border-slate-500/40';
             }
         }
 
@@ -524,8 +534,8 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-500">
-                    <i class="fas fa-box-open text-4xl mb-3 block opacity-50"></i>
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500">
+                    <i class="fas fa-box-open text-5xl mb-3 block opacity-40"></i>
                     No active offers found.
                 </div>`;
                 return;
@@ -533,22 +543,30 @@
 
             grid.innerHTML = filtered.map(offer => {
                 const badgeStyle = getGameBadgeColor(offer.game);
+                const imgSrc = offer.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80';
                 return `
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border ${badgeStyle}">${offer.game}</span>
-                            <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fas fa-user-circle text-purple-400/80"></i> ${offer.seller}</span>
+                <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 group">
+                    <div class="relative overflow-hidden aspect-video bg-[#060812]">
+                        <img src="${imgSrc}" alt="${offer.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border backdrop-blur-md shadow-lg ${badgeStyle}">${offer.game}</span>
                         </div>
-                        <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1">${offer.title}</h3>
-                        <p class="text-slate-400 text-xs mb-4 line-clamp-2 leading-relaxed">${offer.desc}</p>
                     </div>
-                    <div class="flex items-center justify-between pt-3 border-t border-purple-900/30">
+                    <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
-                            <span class="text-[10px] text-slate-500 uppercase font-semibold block">Price</span>
-                            <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-slate-400 flex items-center gap-1.5"><i class="fas fa-user-circle text-purple-400/90 text-sm"></i> ${offer.seller}</span>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1 group-hover:text-purple-300 transition">${offer.title}</h3>
+                            <p class="text-slate-400 text-xs mb-4 line-clamp-2 leading-relaxed">${offer.desc}</p>
                         </div>
-                        <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="bg-[#12162b] hover:bg-purple-600 hover:text-white text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition border border-purple-900/50">Buy Now</button>
+                        <div class="flex items-center justify-between pt-3 border-t border-purple-900/30">
+                            <div>
+                                <span class="text-[10px] text-slate-500 uppercase font-semibold block">Price</span>
+                                <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
+                            </div>
+                            <button onclick="viewOfferDetails('${offer.seller}', '${encodeURIComponent(offer.title)}', '${encodeURIComponent(offer.desc)}')" class="gradient-btn font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md hover:scale-105 active:scale-95">View & Buy</button>
+                        </div>
                     </div>
                 </div>
             `}).join('');
@@ -576,16 +594,37 @@
             const title = document.getElementById('offerTitle').value.trim();
             const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
             const desc = document.getElementById('offerDescription').value.trim();
+            const imageFile = document.getElementById('offerImageFile').files[0];
 
-            const newOffer = { id: Date.now().toString(), game, title, price, desc, seller: currentUser };
-            const offers = getOffers();
-            offers.unshift(newOffer);
-            saveOffers(offers);
+            const createOfferObj = (imageUrl) => {
+                const newOffer = { 
+                    id: Date.now().toString(), 
+                    game, 
+                    title, 
+                    price, 
+                    desc, 
+                    seller: currentUser,
+                    image: imageUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'
+                };
+                const offers = getOffers();
+                offers.unshift(newOffer);
+                saveOffers(offers);
 
-            document.getElementById('offerForm').reset();
-            closeModal('createOfferModal');
-            renderOffers();
-            showMsg("Success", "Your offer has been posted successfully!", "fa-check-circle");
+                document.getElementById('offerForm').reset();
+                closeModal('createOfferModal');
+                renderOffers();
+                showMsg("Success", "Your offer has been posted successfully!", "fa-check-circle");
+            };
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    createOfferObj(uploadEvent.target.result);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                createOfferObj(null);
+            }
         }
 
         function renderUserOffers() {
@@ -593,17 +632,18 @@
             const offers = getOffers().filter(o => o.seller === currentUser);
 
             if (offers.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-500 py-2">You haven't posted any offers yet.</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">You haven't posted any offers yet.</p>`;
                 return;
             }
 
             list.innerHTML = offers.map(o => `
-                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs">
-                    <div>
-                        <p class="font-bold text-white">${o.title}</p>
+                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
+                    <img src="${o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-white truncate">${o.title}</p>
                         <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
                     </div>
-                    <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-1.5"><i class="fas fa-trash"></i></button>
+                    <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-2 rounded-lg hover:bg-red-950/30 transition shrink-0"><i class="fas fa-trash"></i></button>
                 </div>
             `).join('');
         }
