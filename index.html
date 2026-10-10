@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Banner Background Overlay Layout */
         .hero-banner-bg {
             position: relative;
             background: linear-gradient(180deg, rgba(3, 4, 9, 0.6) 0%, rgba(3, 4, 9, 0.9) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
@@ -70,7 +69,6 @@
             box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); 
         }
 
-        /* Continuous Scrolling Announcement Bar Animation */
         @keyframes scrollRight {
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0%); }
@@ -104,7 +102,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center gap-4">
                 
-                <!-- Logo with starmarket.png -->
+                <!-- Logo -->
                 <div class="flex items-center space-x-3 cursor-pointer shrink-0 group" onclick="filterCategory('All')">
                     <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
                     <span class="font-extrabold text-2xl tracking-wider gradient-text">STAR MARKET</span>
@@ -120,14 +118,13 @@
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
-                    <!-- Big Language Selector Button (Flag + Code) -->
+                    <!-- Language Selector -->
                     <div class="relative">
                         <button onclick="toggleLangDropdown()" class="bg-[#0d0f1c] hover:bg-purple-950/50 text-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-purple-900/50 flex items-center gap-2 transition shadow-md">
                             <span id="currentLangFlag" class="text-base">🇺🇸</span>
                             <span id="currentLangCode" class="tracking-wide">ENG</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-70 ml-0.5"></i>
                         </button>
-                        <!-- Dropdown Menu -->
                         <div id="langDropdown" class="absolute right-0 mt-2 w-36 bg-[#0b0e1b] border border-purple-900/50 rounded-xl shadow-2xl hidden z-50 overflow-hidden backdrop-blur-md">
                             <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2.5 font-semibold transition">
                                 <span class="text-sm">🇺🇸</span> English
@@ -227,7 +224,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal (Max 10 Photos + Single Payment Option Selection) -->
+    <!-- Create Offer Modal -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -296,9 +293,8 @@
         </div>
     </div>
 
-    <!-- Dedicated Full-Page Offer View (Opens when clicking someone's offer) -->
+    <!-- Dedicated Full-Page Offer View -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
-        <!-- Navigation header inside offer page -->
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center border-b border-purple-900/40 bg-[#060812]/95 backdrop-blur-md sticky top-0 z-40">
             <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2 font-semibold text-sm transition">
                 <i class="fas fa-arrow-left"></i> <span data-i18n="backToMarket">Back to Marketplace</span>
@@ -311,16 +307,15 @@
 
         <div class="max-w-6xl mx-auto px-4 py-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Left Column: Image Gallery (All photos) -->
+                <!-- Left Column: Image Gallery -->
                 <div class="lg:col-span-7 space-y-4">
                     <div class="aspect-video bg-[#060812] rounded-3xl overflow-hidden border border-purple-900/50 shadow-2xl">
                         <img id="offerPageMainImage" src="" class="w-full h-full object-cover">
                     </div>
-                    <!-- Thumbnails grid -->
                     <div id="offerPageThumbnails" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none"></div>
                 </div>
 
-                <!-- Right Column: Details, Seller, Payment & Chat Button -->
+                <!-- Right Column: Details, Seller & Chat Button -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-[#0b0e1b] border border-purple-500/35 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
                         <div>
@@ -329,22 +324,18 @@
                             <div class="text-3xl font-extrabold text-purple-400" id="offerPagePrice"></div>
                         </div>
 
-                        <!-- Seller Info Box -->
                         <div id="offerPageSellerBox" class="flex items-center justify-between bg-[#060812] p-4 rounded-2xl border border-purple-900/40 cursor-pointer hover:border-purple-500 transition" onclick=""></div>
 
-                        <!-- Accepted Payment Method -->
                         <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/40">
                             <span class="text-xs text-slate-400 font-semibold block mb-1.5" data-i18n="acceptedPayment">Accepted Payment Method</span>
                             <div id="offerPagePaymentMethod" class="flex items-center gap-2 text-white font-bold text-sm"></div>
                         </div>
 
-                        <!-- Description -->
                         <div>
                             <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider mb-2" data-i18n="accountDesc">Account Description</h4>
                             <p id="offerPageDesc" class="text-xs text-slate-300 leading-relaxed bg-[#060812] p-4 rounded-2xl border border-purple-900/40 max-h-48 overflow-y-auto whitespace-pre-line"></p>
                         </div>
 
-                        <!-- Chat with seller button -->
                         <button onclick="startChatWithSeller()" data-i18n="chatWithSellerBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5">
                             <i class="fas fa-comments"></i> Chat with seller
                         </button>
@@ -357,7 +348,6 @@
     <!-- Live Middleman Escrow Chat Modal -->
     <div id="chatModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
-            <!-- Header -->
             <div class="bg-[#060812] p-4 border-b border-purple-900/40 flex justify-between items-center shrink-0">
                 <div>
                     <div class="flex items-center gap-2">
@@ -368,7 +358,6 @@
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
             </div>
-            <!-- Participants / Roles Bar -->
             <div class="bg-[#060812]/70 px-4 py-2 border-b border-purple-900/30 flex items-center gap-3 shrink-0 text-xs">
                 <span class="text-slate-400 font-semibold">Roles:</span>
                 <div id="chatParticipantsRoles" class="flex flex-wrap gap-2">
@@ -377,11 +366,7 @@
                     <span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">🛡️ Verified Middleman</span>
                 </div>
             </div>
-            <!-- Message Feed -->
-            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#030409]/60">
-                <!-- Messages -->
-            </div>
-            <!-- Input Bar -->
+            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#030409]/60"></div>
             <div class="bg-[#060812] p-3 border-t border-purple-900/40 shrink-0">
                 <form onsubmit="sendChatMessage(event)" class="flex gap-2">
                     <input type="text" id="chatMessageInput" placeholder="Type message to middleman, seller & buyer..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500">
@@ -412,18 +397,16 @@
         </div>
     </div>
 
-    <!-- Auth Modal (Login & Signup) -->
+    <!-- Auth Modal -->
     <div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
             
-            <!-- Tabs -->
             <div class="flex border-b border-purple-900/40 mb-5">
                 <button id="tabLoginBtn" onclick="switchAuthTab('login')" data-i18n="logIn" class="flex-1 pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition">Log In</button>
                 <button id="tabSignupBtn" onclick="switchAuthTab('signup')" data-i18n="signUp" class="flex-1 pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Sign Up</button>
             </div>
 
-            <!-- Login Form -->
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label data-i18n="loginUserLabel" class="block text-xs font-semibold text-slate-400 mb-1">Username or Email</label>
@@ -436,7 +419,6 @@
                 <button type="submit" data-i18n="logIn" class="w-full gradient-btn font-bold py-3 rounded-xl transition">Log In</button>
             </form>
 
-            <!-- Signup Form -->
             <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-4 hidden">
                 <div>
                     <label data-i18n="signupUserLabel" class="block text-xs font-semibold text-slate-400 mb-1">Username</label>
@@ -459,7 +441,7 @@
         </div>
     </div>
 
-    <!-- Profile Modal (With Avatar Upload) -->
+    <!-- Profile Modal -->
     <div id="profileModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-6 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fas fa-times text-lg"></i></button>
@@ -481,7 +463,6 @@
                 </div>
             </div>
 
-            <!-- Social Links Editor -->
             <div class="bg-[#060812] border border-purple-900/40 rounded-xl p-4 mb-5 space-y-3">
                 <h4 data-i18n="profileSocialsHeader" class="font-bold text-xs text-purple-300 uppercase tracking-wide flex items-center gap-1.5"><i class="fas fa-share-nodes"></i> Connected Socials</h4>
                 <div>
@@ -496,9 +477,7 @@
             </div>
 
             <h4 data-i18n="profileActiveListings" class="font-semibold text-sm mb-3 border-b border-purple-900/40 pb-2 text-slate-300">Your Active Listings</h4>
-            <div id="userOffersList" class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                <!-- User's offers list -->
-            </div>
+            <div id="userOffersList" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
         </div>
     </div>
 
@@ -689,7 +668,6 @@
                     document.getElementById('profileDiscord').value = u.discord || '';
                     document.getElementById('profileTelegram').value = u.telegram || '';
 
-                    // Update Avatar Previews
                     const avatarHtml = u.avatar ? `<img src="${u.avatar}" class="w-full h-full object-cover">` : `<i class="fas fa-user"></i>`;
                     document.getElementById('profileAvatarPreview').innerHTML = avatarHtml;
                     document.getElementById('navUserAvatar').innerHTML = avatarHtml;
@@ -994,7 +972,7 @@
                 : `<div class="w-9 h-9 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
 
             document.getElementById('offerPageSellerBox').innerHTML = `
-                <div class="flex items-center gap-3" onclick="openSellerProfile('${offer.seller}')">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="openSellerProfile('${offer.seller}')">
                     ${sellerAvatarHtml}
                     <div>
                         <span class="text-xs text-slate-400 block">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}</span>
@@ -1137,7 +1115,7 @@
             const selectedPayment = document.querySelector('input[name="offerPaymentRadio"]:checked').value;
 
             if (selectedOfferFiles.length === 0) {
-                selectedOfferFiles = [null]; // fallback placeholder
+                selectedOfferFiles = [null];
             }
 
             let promises = selectedOfferFiles.map(file => {
@@ -1220,7 +1198,6 @@
             openModal('msgModal');
         }
 
-        // Close dropdown when clicking outside
         window.onclick = function(event) {
             if (!event.target.closest('.relative')) {
                 document.getElementById('langDropdown').classList.add('hidden');
