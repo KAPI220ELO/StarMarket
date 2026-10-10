@@ -227,7 +227,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal -->
+    <!-- Create Offer Modal (Max 10 Photos + Payment Selection) -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -268,10 +268,14 @@
                 </div>
                 <div>
                     <label data-i18n="acceptedPaymentsLabel" class="block text-xs font-semibold text-slate-300 mb-1.5">Accepted Payment Methods for this Offer</label>
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         <label class="flex items-center gap-2 bg-[#060812] border border-purple-900/50 p-2.5 rounded-xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200">
                             <input type="checkbox" name="offerPayment" value="PayPal" checked class="accent-purple-600"> 
                             <i class="fab fa-paypal text-sky-400"></i> PayPal
+                        </label>
+                        <label class="flex items-center gap-2 bg-[#060812] border border-purple-900/50 p-2.5 rounded-xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200">
+                            <input type="checkbox" name="offerPayment" value="Credit Card" checked class="accent-purple-600"> 
+                            <i class="fas fa-credit-card text-purple-400"></i> Credit Card
                         </label>
                         <label class="flex items-center gap-2 bg-[#060812] border border-purple-900/50 p-2.5 rounded-xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200">
                             <input type="checkbox" name="offerPayment" value="Crypto" checked class="accent-purple-600"> 
@@ -292,59 +296,113 @@
         </div>
     </div>
 
-    <!-- Checkout / Offer Details Modal -->
+    <!-- Confirm and Pay Checkout Modal (Pro Layout matching user reference) -->
     <div id="checkoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
-            <div class="flex items-center gap-2 mb-4">
-                <span class="bg-purple-950/80 text-purple-300 border border-purple-500/40 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Secure Escrow Checkout</span>
-            </div>
+        <div class="bg-[#070913] border border-purple-500/30 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
+            
+            <h2 class="text-2xl font-extrabold text-white mb-6 tracking-tight" data-i18n="confirmAndPay">Confirm and Pay</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Interactive Image Gallery Viewer -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left Side: Payment Options (Only what seller chose) -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div id="checkoutPaymentOptionsList" class="space-y-3">
+                        <!-- Dynamically rendered payment options -->
+                    </div>
+                </div>
+
+                <!-- Right Side: Item Preview & Order Summary -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Item Card -->
+                    <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-4 shadow-xl">
+                        <div class="flex gap-3 mb-4">
+                            <div id="checkoutThumbnailBox" class="w-20 h-20 rounded-xl overflow-hidden bg-[#060812] shrink-0 border border-purple-900/50">
+                                <img id="checkoutMainImage" src="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 id="checkoutTitle" class="font-bold text-white text-sm mb-1 line-clamp-2"></h3>
+                                <div id="checkoutSellerBadge" class="flex items-center gap-1.5 text-xs text-slate-300"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 border-t border-purple-900/30 font-extrabold text-lg text-purple-400">
+                            <span class="text-xs text-slate-400 font-semibold" data-i18n="itemPrice">Price</span>
+                            <span id="checkoutPrice"></span>
+                        </div>
+                    </div>
+
+                    <!-- Description & Trust Badges -->
+                    <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-4 space-y-3">
+                        <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider flex items-center gap-1.5"><i class="fas fa-list-check"></i> Description & Trust</h4>
+                        <p id="checkoutDesc" class="text-xs text-slate-300 leading-relaxed max-h-24 overflow-y-auto whitespace-pre-line"></p>
+                        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-purple-900/30 text-[11px] font-bold text-emerald-400">
+                            <div><i class="fas fa-check text-emerald-400 mr-1"></i> INSTANT DELIVERY</div>
+                            <div><i class="fas fa-check text-emerald-400 mr-1"></i> 24/7 SUPPORT</div>
+                            <div><i class="fas fa-check text-emerald-400 mr-1"></i> 100% TRUSTED</div>
+                            <div><i class="fas fa-check text-emerald-400 mr-1"></i> GENUINE DEALS</div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Box -->
+                    <div class="bg-[#0b0e1b] border border-purple-900/40 rounded-2xl p-4 space-y-2 text-xs">
+                        <h4 class="font-bold text-sm text-white mb-2" data-i18n="orderSummary">Order Summary</h4>
+                        <div class="flex justify-between text-slate-400">
+                            <span data-i18n="itemPriceLabel">Item price</span>
+                            <span id="summaryItemPrice" class="text-slate-200 font-semibold"></span>
+                        </div>
+                        <div class="flex justify-between text-slate-400">
+                            <span data-i18n="discountLabel">Discount</span>
+                            <span class="text-slate-200 font-semibold">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-slate-400 pt-2 border-t border-purple-900/30 font-bold text-sm">
+                            <span class="text-white" data-i18n="subtotalLabel">Subtotal</span>
+                            <span id="summarySubtotal" class="text-purple-400 text-base"></span>
+                        </div>
+                    </div>
+
+                    <button onclick="completeCheckout()" data-i18n="payNowBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-sm shadow-xl flex items-center justify-center gap-2">
+                        <i class="fas fa-lock"></i> <span data-i18n="confirmAndPayBtn">Confirm and Pay</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Middleman Escrow Chat Modal -->
+    <div id="chatModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
+            <!-- Header -->
+            <div class="bg-[#060812] p-4 border-b border-purple-900/40 flex justify-between items-center shrink-0">
                 <div>
-                    <div class="aspect-video bg-[#060812] rounded-xl overflow-hidden border border-purple-900/50 mb-3 shadow-inner">
-                        <img id="checkoutMainImage" src="" class="w-full h-full object-cover">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Middleman Escrow Chat</h3>
                     </div>
-                    <!-- Thumbnails -->
-                    <div id="checkoutThumbnails" class="flex gap-2 overflow-x-auto pb-1 scrollbar-none"></div>
+                    <p class="text-[11px] text-purple-300 font-semibold mt-0.5" id="chatHeaderSubtitle">Secure Transaction</p>
                 </div>
-                <!-- Details & Seller Info -->
-                <div class="flex flex-col justify-between">
-                    <div>
-                        <h3 id="checkoutTitle" class="text-lg font-bold text-white mb-2"></h3>
-                        <div class="text-2xl font-extrabold text-purple-400 mb-3" id="checkoutPrice"></div>
-                        <p id="checkoutDesc" class="text-xs text-slate-300 mb-4 leading-relaxed bg-[#060812] p-3 rounded-xl border border-purple-900/40 max-h-32 overflow-y-auto whitespace-pre-line"></p>
-                    </div>
-                    <div>
-                        <div id="checkoutSellerInfo" class="text-xs text-slate-400 space-y-1 bg-[#060812] p-3 rounded-xl border border-purple-900/40 mb-3"></div>
-                        <div id="checkoutAcceptedPayments" class="text-xs text-slate-400 bg-[#060812] p-3 rounded-xl border border-purple-900/40"></div>
-                    </div>
+                <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <!-- Participants / Roles Bar -->
+            <div class="bg-[#060812]/70 px-4 py-2 border-b border-purple-900/30 flex items-center gap-3 shrink-0 text-xs">
+                <span class="text-slate-400 font-semibold">Roles:</span>
+                <div id="chatParticipantsRoles" class="flex flex-wrap gap-2">
+                    <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">👤 Buyer</span>
+                    <span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">📦 Seller</span>
+                    <span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-md font-bold text-[11px]">🛡️ Verified Middleman</span>
                 </div>
             </div>
-
-            <!-- Buyer Payment Method Selection with Icons -->
-            <div class="mb-6 border-t border-purple-900/40 pt-4">
-                <label class="block text-xs font-semibold text-slate-300 mb-2.5" data-i18n="selectPayment">Choose Your Payment Method</label>
-                <div class="grid grid-cols-3 gap-3">
-                    <button type="button" onclick="selectPayment('paypal')" id="payBtn-paypal" class="pay-method-btn bg-[#060812] border-2 border-purple-500 rounded-xl p-3 text-center transition flex flex-col items-center gap-1.5 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
-                        <i class="fab fa-paypal text-sky-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">PayPal</span>
-                    </button>
-                    <button type="button" onclick="selectPayment('crypto')" id="payBtn-crypto" class="pay-method-btn bg-[#060812] border-2 border-purple-900/40 rounded-xl p-3 text-center transition flex flex-col items-center gap-1.5 hover:border-purple-500/50">
-                        <i class="fab fa-bitcoin text-amber-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Crypto</span>
-                    </button>
-                    <button type="button" onclick="selectPayment('cashapp')" id="payBtn-cashapp" class="pay-method-btn bg-[#060812] border-2 border-purple-900/40 rounded-xl p-3 text-center transition flex flex-col items-center gap-1.5 hover:border-purple-500/50">
-                        <i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cash App</span>
-                    </button>
-                </div>
+            <!-- Message Feed -->
+            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#030409]/60">
+                <!-- Messages -->
             </div>
-
-            <button onclick="completeCheckout()" data-i18n="payNowBtn" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-lg flex items-center justify-center gap-2">
-                <i class="fas fa-lock text-xs"></i> Proceed to Secure Payment
-            </button>
+            <!-- Input Bar -->
+            <div class="bg-[#060812] p-3 border-t border-purple-900/40 shrink-0">
+                <form onsubmit="sendChatMessage(event)" class="flex gap-2">
+                    <input type="text" id="chatMessageInput" placeholder="Type message to middleman, seller & buyer..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500">
+                    <button type="submit" class="gradient-btn font-bold px-5 py-2.5 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -476,8 +534,9 @@
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         const STORAGE_KEY = 'sm_market_offers_v3';
 
-        let selectedPaymentMethod = 'paypal';
+        let selectedPaymentMethod = 'PayPal';
         let currentCheckoutOffer = null;
+        let activeChatSession = null;
 
         const translations = {
             en: {
@@ -514,8 +573,13 @@
                 profileActiveListings: "Your Active Listings",
                 msgGotIt: "Got it",
                 viewAndBuy: "View",
-                selectPayment: "Choose Your Payment Method",
-                payNowBtn: "Proceed to Secure Payment",
+                confirmAndPay: "Confirm and Pay",
+                itemPrice: "Price",
+                orderSummary: "Order Summary",
+                itemPriceLabel: "Item price",
+                discountLabel: "Discount",
+                subtotalLabel: "Subtotal",
+                confirmAndPayBtn: "Confirm and Pay",
                 changeAvatar: "Change profile picture",
                 verifiedSeller: "Verified Star Market Seller",
                 sellerActiveListings: "Seller Active Listings"
@@ -554,12 +618,24 @@
                 profileActiveListings: "Twoje aktywne ogłoszenia",
                 msgGotIt: "Rozumiem",
                 viewAndBuy: "Zobacz",
-                selectPayment: "Wybierz metodę płatności",
-                payNowBtn: "Przejdź do bezpiecznej płatności",
+                confirmAndPay: "Potwierdź i zapłać",
+                itemPrice: "Cena",
+                orderSummary: "Podsumowanie zamówienia",
+                itemPriceLabel: "Cena przedmiotu",
+                discountLabel: "Zniżka",
+                subtotalLabel: "Suma częściowa",
+                confirmAndPayBtn: "Potwierdź i zapłać",
                 changeAvatar: "Zmień zdjęcie profilowe",
                 verifiedSeller: "Zweryfikowany sprzedawca Star Market",
                 sellerActiveListings: "Aktywne oferty sprzedawcy"
             }
+        };
+
+        const paymentOptionsDetails = {
+            'PayPal': { name: 'PayPal', icon: '<i class="fab fa-paypal text-sky-400 text-lg"></i>', badge: '<span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded">Fast</span>' },
+            'Credit Card': { name: 'Credit Card / Debit Card', icon: '<i class="fas fa-credit-card text-purple-400 text-lg"></i>', badge: '<div class="flex gap-1 text-[10px] text-slate-400 font-bold"><span class="bg-slate-800 px-1.5 py-0.5 rounded">VISA</span><span class="bg-slate-800 px-1.5 py-0.5 rounded">MC</span></div>' },
+            'Crypto': { name: 'Crypto (USDT / BTC / ETH)', icon: '<i class="fab fa-bitcoin text-amber-400 text-lg"></i>', badge: '<div class="flex gap-1 text-xs"><i class="fab fa-bitcoin text-amber-400"></i><i class="fab fa-ethereum text-indigo-400"></i></div>' },
+            'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>', badge: '' }
         };
 
         function getUsers() {
@@ -784,13 +860,6 @@
             }
         }
 
-        function getPaymentIcon(method) {
-            const m = method.toLowerCase();
-            if (m.includes('pay')) return '<i class="fab fa-paypal text-sky-400"></i>';
-            if (m.includes('cry') || m.includes('btc') || m.includes('eth')) return '<i class="fab fa-bitcoin text-amber-400"></i>';
-            return '<i class="fas fa-dollar-sign text-emerald-400"></i>';
-        }
-
         function previewImages(event) {
             const previewGrid = document.getElementById('imagePreviewGrid');
             previewGrid.innerHTML = '';
@@ -909,12 +978,19 @@
             openModal('sellerProfileModal');
         }
 
-        function selectPayment(method) {
-            selectedPaymentMethod = method;
-            document.querySelectorAll('.pay-method-btn').forEach(btn => {
-                btn.className = "pay-method-btn bg-[#060812] border-2 border-purple-900/40 rounded-xl p-3 text-center transition flex flex-col items-center gap-1.5 hover:border-purple-500/50";
+        function selectPaymentMethod(methodKey) {
+            selectedPaymentMethod = methodKey;
+            document.querySelectorAll('.checkout-pay-option').forEach(el => {
+                el.className = "checkout-pay-option flex items-center justify-between bg-[#0b0e1b] border-2 border-purple-900/40 p-4 rounded-2xl cursor-pointer hover:border-purple-500/60 transition";
+                const radio = el.querySelector('input[type="radio"]');
+                if (radio) radio.checked = false;
             });
-            document.getElementById(`payBtn-${method}`).className = "pay-method-btn bg-[#060812] border-2 border-purple-500 rounded-xl p-3 text-center transition flex flex-col items-center gap-1.5 shadow-[0_0_15px_rgba(168,85,247,0.3)]";
+            const activeEl = document.getElementById(`payOptContainer-${methodKey}`);
+            if (activeEl) {
+                activeEl.className = "checkout-pay-option flex items-center justify-between bg-[#0b0e1b] border-2 border-purple-500 p-4 rounded-2xl cursor-pointer transition shadow-[0_0_20px_rgba(168,85,247,0.25)]";
+                const radio = activeEl.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            }
         }
 
         function openCheckoutModal(offerId) {
@@ -925,6 +1001,8 @@
 
             document.getElementById('checkoutTitle').innerText = offer.title;
             document.getElementById('checkoutPrice').innerText = `$${offer.price}`;
+            document.getElementById('summaryItemPrice').innerText = `$${offer.price}`;
+            document.getElementById('summarySubtotal').innerText = `$${offer.price}`;
             document.getElementById('checkoutDesc').innerText = offer.desc;
 
             let users = getUsers();
@@ -933,44 +1011,137 @@
                 ? `<img src="${sellerUser.avatar}" class="w-5 h-5 rounded-full object-cover inline-block mr-1.5 border border-purple-500/40">`
                 : `<i class="fas fa-user-circle text-purple-400 mr-1.5"></i>`;
 
-            let sellerHtml = `<p class="cursor-pointer hover:text-purple-300 transition" onclick="closeModal('checkoutModal'); openSellerProfile('${offer.seller}')"><strong class="text-slate-300">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}:</strong> ${sellerAvatarHtml} <span class="underline">${offer.seller}</span></p>`;
-            if (sellerUser) {
-                if (sellerUser.discord) sellerHtml += `<p><strong class="text-slate-300">Discord:</strong> ${sellerUser.discord}</p>`;
-                if (sellerUser.telegram) sellerHtml += `<p><strong class="text-slate-300">Telegram:</strong> ${sellerUser.telegram}</p>`;
-            }
-            document.getElementById('checkoutSellerInfo').innerHTML = sellerHtml;
-
-            const accepted = offer.acceptedPayments || ['PayPal', 'Crypto', 'Cash App'];
-            document.getElementById('checkoutAcceptedPayments').innerHTML = `
-                <p class="font-semibold text-slate-300 mb-1.5"><i class="fas fa-wallet text-purple-400 mr-1"></i> ${currentLang === 'pl' ? 'Akceptowane przez sprzedawcę:' : 'Accepted by seller:'}</p>
-                <div class="flex flex-wrap gap-2 mt-1">
-                    ${accepted.map(p => `<span class="bg-purple-950/80 text-purple-200 border border-purple-500/30 px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5">${getPaymentIcon(p)} ${p}</span>`).join('')}
-                </div>
+            document.getElementById('checkoutSellerBadge').innerHTML = `
+                <span class="cursor-pointer hover:text-purple-300 transition flex items-center gap-1.5" onclick="closeModal('checkoutModal'); openSellerProfile('${offer.seller}')">
+                    ${sellerAvatarHtml} <strong class="underline">${offer.seller}</strong>
+                </span>
+                <span class="text-amber-400 font-bold ml-2">★ 4.9</span>
             `;
 
             const images = offer.images || [offer.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
             document.getElementById('checkoutMainImage').src = images[0];
 
-            const thumbnailsContainer = document.getElementById('checkoutThumbnails');
-            thumbnailsContainer.innerHTML = images.map((img) => `
-                <button type="button" onclick="document.getElementById('checkoutMainImage').src='${img}'" class="w-14 h-14 rounded-xl overflow-hidden border border-purple-900/50 shrink-0 hover:border-purple-500 transition shadow-md bg-[#060812]">
-                    <img src="${img}" class="w-full h-full object-cover">
-                </button>
-            `).join('');
+            // Render ONLY the payment methods that the seller accepted
+            const accepted = offer.acceptedPayments || ['PayPal', 'Credit Card', 'Crypto', 'Cash App'];
+            const payListContainer = document.getElementById('checkoutPaymentOptionsList');
+            payListContainer.innerHTML = accepted.map((methodKey, idx) => {
+                const details = paymentOptionsDetails[methodKey] || { name: methodKey, icon: '<i class="fas fa-wallet text-purple-400 text-lg"></i>', badge: '' };
+                const isChecked = idx === 0 ? 'checked' : '';
+                if (idx === 0) selectedPaymentMethod = methodKey;
 
-            selectPayment('paypal');
+                return `
+                <div id="payOptContainer-${methodKey}" onclick="selectPaymentMethod('${methodKey}')" class="checkout-pay-option flex items-center justify-between bg-[#0b0e1b] border-2 ${idx === 0 ? 'border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.25)]' : 'border-purple-900/40 hover:border-purple-500/60'} p-4 rounded-2xl cursor-pointer transition">
+                    <div class="flex items-center space-x-3.5">
+                        <input type="radio" name="checkoutPayment" value="${methodKey}" ${isChecked} class="accent-purple-600 w-4 h-4 cursor-pointer">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="w-8 h-8 rounded-lg bg-[#060812] flex items-center justify-center border border-purple-900/50">${details.icon}</span>
+                            <span class="font-bold text-white text-sm">${details.name}</span>
+                        </div>
+                    </div>
+                    <div>${details.badge}</div>
+                </div>
+            `;}).join('');
+
             openModal('checkoutModal');
         }
 
         function completeCheckout() {
             closeModal('checkoutModal');
-            showMsg(
-                currentLang === 'pl' ? 'Zamówienie Escrow zainicjowane' : 'Escrow Order Initialized',
-                currentLang === 'pl' 
-                    ? `Wybrano płatność: ${selectedPaymentMethod.toUpperCase()}.\n\nSkontaktuj się z naszym zweryfikowanym pośrednikiem (Middleman) na Discordzie lub Telegramie podając ID oferty: #${currentCheckoutOffer.id}, aby dokonać bezpiecznej płatności i przejąć konto.`
-                    : `Selected Payment: ${selectedPaymentMethod.toUpperCase()}.\n\nPlease contact our verified escrow middleman on Discord or Telegram referencing Offer ID #${currentCheckoutOffer.id} to safely complete payment and receive account credentials.`,
-                "fa-shield-check"
-            );
+            
+            // Initialize or retrieve chat session for this order
+            const chatId = `chat_${currentCheckoutOffer.id}`;
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            
+            if (!chats[chatId]) {
+                const buyerName = currentUser || 'Guest_' + Math.floor(Math.random() * 9000 + 1000);
+                chats[chatId] = {
+                    orderId: currentCheckoutOffer.id,
+                    offerTitle: currentCheckoutOffer.title,
+                    price: currentCheckoutOffer.price,
+                    buyer: buyerName,
+                    seller: currentCheckoutOffer.seller,
+                    middleman: 'StarMarket_Official',
+                    messages: [
+                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Escrow connection established for "${currentCheckoutOffer.title}" ($${currentCheckoutOffer.price}). Buyer (${buyerName}), Seller (${currentCheckoutOffer.seller}), and Official Middleman are now in a secure session.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+                    ]
+                };
+                localStorage.setItem('sm_chats', JSON.stringify(chats));
+            }
+            
+            activeChatSession = chatId;
+            openChatModal(chatId);
+        }
+
+        function openChatModal(chatId) {
+            activeChatSession = chatId;
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            let chat = chats[chatId];
+            if (!chat) return;
+
+            document.getElementById('chatHeaderTitle').innerText = `Escrow Order #${chat.orderId.slice(-6)}`;
+            document.getElementById('chatHeaderSubtitle').innerText = `${chat.offerTitle} • $${chat.price}`;
+            
+            renderChatMessages();
+            openModal('chatModal');
+        }
+
+        function renderChatMessages() {
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            let chat = chats[activeChatSession];
+            if (!chat) return;
+
+            const feed = document.getElementById('chatMessageFeed');
+            feed.innerHTML = chat.messages.map(m => {
+                let roleBadge = '';
+                let bubbleBg = 'bg-[#0d0f1c] border-purple-900/40 text-slate-200';
+                
+                if (m.role === 'Verified Middleman') {
+                    roleBadge = '<span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">🛡️ Middleman</span>';
+                    bubbleBg = 'bg-emerald-950/20 border-emerald-500/30 text-emerald-100';
+                } else if (m.role === 'Seller') {
+                    roleBadge = '<span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">📦 Seller</span>';
+                    bubbleBg = 'bg-blue-950/20 border-blue-500/30 text-blue-100';
+                } else {
+                    roleBadge = '<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-1.5 py-0.5 rounded text-[10px] font-bold ml-2">👤 Buyer</span>';
+                }
+
+                return `
+                <div class="flex flex-col space-y-1 bg-[#0b0e1b] border ${bubbleBg} rounded-2xl p-3 text-xs shadow-md">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white flex items-center">${m.sender} ${roleBadge}</span>
+                        <span class="text-[10px] text-slate-500">${m.time}</span>
+                    </div>
+                    <p class="leading-relaxed text-slate-300 mt-1">${m.text}</p>
+                </div>
+            `;}).join('');
+            feed.scrollTop = feed.scrollHeight;
+        }
+
+        function sendChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatMessageInput');
+            const text = input.value.trim();
+            if (!text || !activeChatSession) return;
+
+            let chats = JSON.parse(localStorage.getItem('sm_chats') || '{}');
+            let chat = chats[activeChatSession];
+            if (!chat) return;
+
+            const senderName = currentUser || chat.buyer;
+            let senderRole = 'Buyer';
+            if (senderName === chat.seller) senderRole = 'Seller';
+            if (senderName === chat.middleman) senderRole = 'Verified Middleman';
+
+            chat.messages.push({
+                sender: senderName,
+                role: senderRole,
+                text: text,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            });
+
+            localStorage.setItem('sm_chats', JSON.stringify(chats));
+            input.value = '';
+            renderChatMessages();
         }
 
         function handleCreateOffer(e) {
@@ -999,7 +1170,7 @@
                     desc, 
                     seller: currentUser,
                     images: imageUrls,
-                    acceptedPayments: acceptedPayments.length > 0 ? acceptedPayments : ['PayPal']
+                    acceptedPayments: acceptedPayments.length > 0 ? acceptedPayments : ['PayPal', 'Credit Card']
                 };
                 const offers = getOffers();
                 offers.unshift(newOffer);
