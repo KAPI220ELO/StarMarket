@@ -26,7 +26,7 @@
         }
 
         .glass-panel { 
-            background: rgba(13, 15, 28, 0.8); 
+            background: rgba(13, 15, 28, 0.85); 
             backdrop-filter: blur(16px); 
             border: 1px solid rgba(139, 92, 246, 0.2); 
             box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
@@ -232,7 +232,7 @@
         </div>
     </footer>
 
-    <!-- Create Offer Modal (Max 10 Photos + Specific Crypto Icons) -->
+    <!-- Create Offer Modal (Max 10 Photos + Correct Crypto Options) -->
     <div id="createOfferModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('createOfferModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
@@ -279,7 +279,7 @@
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="USDT" class="accent-purple-600"> 
-                            <i class="fas fa-coins text-emerald-400 text-sm"></i> <span class="font-bold">USDT (Tether)</span>
+                            <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] border border-emerald-500/40">₮</span> <span class="font-bold">USDT (Tether)</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Bitcoin" class="accent-purple-600"> 
@@ -291,7 +291,7 @@
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Solana" class="accent-purple-600"> 
-                            <i class="fas fa-bolt text-purple-400 text-sm"></i> <span class="font-bold">Solana (SOL)</span>
+                            <span class="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px] border border-purple-500/40">◎</span> <span class="font-bold">Solana (SOL)</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Cash App" class="accent-purple-600"> 
@@ -334,7 +334,7 @@
         </div>
     </div>
 
-    <!-- Dedicated Full-Page Offer View (Refined Professional UI) -->
+    <!-- Dedicated Full-Page Offer View (Redesigned & Beautiful) -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-500/20 bg-[#060812]/90 backdrop-blur-xl sticky top-0 z-40 shadow-xl shadow-purple-950/20">
             <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2.5 font-bold text-xs sm:text-sm bg-purple-950/50 border border-purple-500/30 px-4 py-2 rounded-xl transition hover:border-purple-400 shadow-md">
@@ -346,39 +346,50 @@
             </div>
         </div>
 
-        <div class="max-w-6xl mx-auto px-4 py-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Left Column: Image Gallery (Main picture first, then thumbnails) -->
-                <div class="lg:col-span-7 space-y-4">
-                    <div class="aspect-video bg-[#060812] rounded-3xl overflow-hidden border border-purple-900/50 shadow-2xl">
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Left Column: Gallery & Screenshots -->
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="aspect-video bg-[#060812] rounded-3xl overflow-hidden border-2 border-purple-500/30 shadow-[0_0_40px_rgba(147,51,234,0.15)] relative">
                         <img id="offerPageMainImage" src="" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span id="offerPageGameBadge" class="text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg"></span>
+                        </div>
                     </div>
                     <div id="offerPageThumbnails" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none"></div>
                 </div>
 
                 <!-- Right Column: Details, Seller & Proceed Button -->
                 <div class="lg:col-span-5 space-y-6">
-                    <div class="bg-[#0b0e1b] border border-purple-500/35 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+                    <div class="bg-[#0b0e1b] border-2 border-purple-500/35 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 backdrop-blur-xl">
                         <div>
-                            <span id="offerPageGameBadge" class="text-xs px-3 py-1 rounded-lg font-bold border mb-3 inline-block"></span>
-                            <h1 id="offerPageTitle" class="text-2xl font-extrabold text-white mb-2 leading-tight"></h1>
-                            <div class="text-3xl font-extrabold text-purple-400" id="offerPagePrice"></div>
+                            <h1 id="offerPageTitle" class="text-2xl sm:text-3xl font-extrabold text-white mb-3 leading-tight"></h1>
+                            <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400" id="offerPagePrice"></div>
                         </div>
 
-                        <div id="offerPageSellerBox" class="flex items-center justify-between bg-[#060812] p-4 rounded-2xl border border-purple-900/40 cursor-pointer hover:border-purple-500 transition" onclick=""></div>
+                        <!-- Seller Box -->
+                        <div id="offerPageSellerBox" class="flex items-center justify-between bg-[#060812] p-4 rounded-2xl border border-purple-900/50 cursor-pointer hover:border-purple-500 transition shadow-inner" onclick=""></div>
 
-                        <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/40">
-                            <span class="text-xs text-slate-400 font-semibold block mb-1.5" data-i18n="acceptedPayment">Accepted Payment Method</span>
-                            <div id="offerPagePaymentMethod" class="flex items-center gap-2 text-white font-bold text-sm"></div>
+                        <!-- Accepted Payment -->
+                        <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/50 shadow-inner">
+                            <span class="text-xs text-slate-400 font-semibold block mb-2" data-i18n="acceptedPayment">Accepted Payment Method</span>
+                            <div id="offerPagePaymentMethod" class="flex items-center gap-3 text-white font-bold text-sm"></div>
                         </div>
 
+                        <!-- Description -->
                         <div>
-                            <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider mb-2" data-i18n="accountDesc">Account Description</h4>
-                            <p id="offerPageDesc" class="text-xs text-slate-300 leading-relaxed bg-[#060812] p-4 rounded-2xl border border-purple-900/40 max-h-48 overflow-y-auto whitespace-pre-line"></p>
+                            <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"><i class="fas fa-circle-info"></i> <span data-i18n="accountDesc">Account Description</span></h4>
+                            <p id="offerPageDesc" class="text-xs text-slate-300 leading-relaxed bg-[#060812] p-4 rounded-2xl border border-purple-900/50 max-h-48 overflow-y-auto whitespace-pre-line shadow-inner"></p>
                         </div>
 
-                        <button onclick="startChatWithSeller()" data-i18n="proceedBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5">
-                            <i class="fas fa-arrow-right"></i> Proceed
+                        <!-- Secure Escrow Note -->
+                        <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
+                            <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
+                            <span>Protected by Star Market Secure Escrow & 24/7 Middleman Assistance.</span>
+                        </div>
+
+                        <button onclick="startChatWithSeller()" data-i18n="proceedBtn" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5 transform hover:scale-[1.02] active:scale-98">
+                            <i class="fas fa-arrow-right"></i> Proceed with Order
                         </button>
                     </div>
                 </div>
@@ -386,7 +397,7 @@
         </div>
     </div>
 
-    <!-- Live Middleman Escrow Chat Modal -->
+    <!-- Live Order Chat Modal -->
     <div id="chatModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
             <div class="bg-[#060812] p-4 border-b border-purple-900/40 flex justify-between items-center shrink-0">
@@ -567,6 +578,13 @@
             }
         };
 
+        // Storage listener for full cross-tab synchronization across the same browser profile
+        window.addEventListener('storage', (event) => {
+            if (event.key === STORAGE_KEY) {
+                renderOffers();
+            }
+        });
+
         const defaultOffers = [
             {
                 id: '101',
@@ -616,7 +634,7 @@
                 images: [
                     'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'
                 ],
-                acceptedPayment: 'Bank Transfer'
+                acceptedPayment: 'Bitcoin'
             }
         ];
 
@@ -664,7 +682,7 @@
                 backToMarket: "Back to Marketplace",
                 acceptedPayment: "Accepted Payment Method",
                 accountDesc: "Account Description",
-                proceedBtn: "Proceed",
+                proceedBtn: "Proceed with Order",
                 changeAvatar: "Change profile picture",
                 verifiedSeller: "Verified Star Market Seller",
                 sellerActiveListings: "Seller Active Listings",
@@ -707,7 +725,7 @@
                 backToMarket: "Powrót do rynku",
                 acceptedPayment: "Akceptowana metoda płatności",
                 accountDesc: "Opis konta",
-                proceedBtn: "Przejdź dalej",
+                proceedBtn: "Przejdź do zamówienia",
                 changeAvatar: "Zmień zdjęcie profilowe",
                 verifiedSeller: "Zweryfikowany sprzedawca Star Market",
                 sellerActiveListings: "Aktywne oferty sprzedawcy",
@@ -717,12 +735,11 @@
 
         const paymentOptionsDetails = {
             'PayPal': { name: 'PayPal', icon: '<i class="fab fa-paypal text-sky-400 text-lg"></i>' },
-            'USDT': { name: 'USDT (Tether)', icon: '<i class="fas fa-coins text-emerald-400 text-lg"></i>' },
+            'USDT': { name: 'USDT (Tether)', icon: '<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/40">₮</span>' },
             'Bitcoin': { name: 'Bitcoin (BTC)', icon: '<i class="fab fa-bitcoin text-amber-400 text-lg"></i>' },
             'Ethereum': { name: 'Ethereum (ETH)', icon: '<i class="fab fa-ethereum text-indigo-400 text-lg"></i>' },
-            'Solana': { name: 'Solana (SOL)', icon: '<i class="fas fa-bolt text-purple-400 text-lg"></i>' },
-            'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>' },
-            'Bank Transfer': { name: 'Bank Transfer', icon: '<i class="fas fa-university text-indigo-400 text-lg"></i>' }
+            'Solana': { name: 'Solana (SOL)', icon: '<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs border border-purple-500/40">◎</span>' },
+            'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>' }
         };
 
         function getUsers() {
@@ -760,10 +777,10 @@
             updateAuthUI();
             renderOffers();
 
-            // Background polling to keep offers globally synced across browsers/devices
+            // Background polling for global multi-tab sync reliability
             setInterval(() => {
                 renderOffers();
-            }, 3000);
+            }, 2000);
         }
 
         function toggleLangDropdown() {
@@ -1051,7 +1068,8 @@
 
         function renderOffers() {
             const grid = document.getElementById('offersGrid');
-            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const searchInput = document.getElementById('searchInput');
+            const searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
             const offers = getOffers();
             const users = getUsers();
             const t = translations[currentLang];
@@ -1072,7 +1090,7 @@
 
             grid.innerHTML = filtered.map(offer => {
                 const badgeStyle = getGameBadgeColor(offer.game);
-                const images = offer.images || (offer.image ? [offer.image] : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80']);
+                const images = offer.images && offer.images.length > 0 ? offer.images : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
                 const mainImg = images[0];
                 const photoBadge = images.length > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-lg"><i class="fas fa-images"></i> ${images.length}</div>` : '';
 
@@ -1132,7 +1150,7 @@
                 offersList.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">${currentLang === 'pl' ? 'Brak aktywnych ofert.' : 'No active listings.'}</p>`;
             } else {
                 offersList.innerHTML = offers.map(o => {
-                    const imgs = o.images || [o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
+                    const imgs = o.images || ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
                     return `
                     <div onclick="closeModal('sellerProfileModal'); openOfferPage('${o.id}')" class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3 cursor-pointer hover:border-purple-500 transition">
                         <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
@@ -1182,7 +1200,7 @@
                 return;
             }
             list.innerHTML = offers.map(o => {
-                const imgs = o.images || [o.image || ''];
+                const imgs = o.images || [''];
                 return `
                 <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
                     <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
@@ -1249,16 +1267,16 @@
 
             const badge = document.getElementById('offerPageGameBadge');
             badge.innerText = offer.game;
-            badge.className = `text-xs px-3 py-1 rounded-lg font-bold border backdrop-blur-md shadow-lg ${getGameBadgeColor(offer.game)}`;
+            badge.className = `text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg ${getGameBadgeColor(offer.game)}`;
 
             let users = getUsers();
             const sellerUser = users[offer.seller];
             const sellerAvatarHtml = sellerUser && sellerUser.avatar 
-                ? `<img src="${sellerUser.avatar}" class="w-9 h-9 rounded-full object-cover border border-purple-500/40">`
-                : `<div class="w-9 h-9 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
+                ? `<img src="${sellerUser.avatar}" class="w-10 h-10 rounded-full object-cover border border-purple-500/40">`
+                : `<div class="w-10 h-10 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
 
             document.getElementById('offerPageSellerBox').innerHTML = `
-                <div class="flex items-center gap-3 cursor-pointer" onclick="openSellerProfile('${offer.seller}')">
+                <div class="flex items-center gap-3.5 cursor-pointer" onclick="openSellerProfile('${offer.seller}')">
                     ${sellerAvatarHtml}
                     <div>
                         <span class="text-xs text-slate-400 block">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}</span>
@@ -1269,18 +1287,18 @@
             `;
 
             const paymentMethod = offer.acceptedPayment || 'PayPal';
-            const payDetails = paymentOptionsDetails[paymentMethod] || { name: paymentMethod, icon: '<i class="fas fa-wallet text-purple-400"></i>' };
+            const payDetails = paymentOptionsDetails[paymentMethod] || { name: paymentMethod, icon: '<i class="fas fa-wallet text-purple-400 text-lg"></i>' };
             document.getElementById('offerPagePaymentMethod').innerHTML = `
-                <span class="w-7 h-7 rounded-lg bg-[#060812] flex items-center justify-center border border-purple-900/50">${payDetails.icon}</span>
-                <span>${payDetails.name}</span>
+                <span class="w-9 h-9 rounded-xl bg-[#060812] flex items-center justify-center border border-purple-900/50 shadow-md">${payDetails.icon}</span>
+                <span class="text-base">${payDetails.name}</span>
             `;
 
-            const images = offer.images || [offer.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
+            const images = offer.images && offer.images.length > 0 ? offer.images : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
             document.getElementById('offerPageMainImage').src = images[0];
 
             const thumbnailsContainer = document.getElementById('offerPageThumbnails');
             thumbnailsContainer.innerHTML = images.map((img) => `
-                <button type="button" onclick="document.getElementById('offerPageMainImage').src='${img}'" class="w-20 h-20 rounded-xl overflow-hidden border border-purple-900/50 shrink-0 hover:border-purple-500 transition shadow-md bg-[#060812]">
+                <button type="button" onclick="document.getElementById('offerPageMainImage').src='${img}'" class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-purple-900/50 shrink-0 hover:border-purple-500 transition shadow-lg bg-[#060812]">
                     <img src="${img}" class="w-full h-full object-cover">
                 </button>
             `).join('');
@@ -1406,21 +1424,17 @@
             if (!title || !priceStr || !desc) return;
             const price = parseFloat(priceStr).toFixed(2);
 
-            const processImages = () => {
-                if (selectedOfferFiles.length === 0) {
-                    return Promise.resolve(['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80']);
-                }
-                let promises = selectedOfferFiles.map(file => {
+            let promises = selectedOfferFiles.length > 0 
+                ? selectedOfferFiles.map(file => {
                     return new Promise((resolve) => {
                         const reader = new FileReader();
-                        reader.onload = (ev) => resolve(ev.target.result);
+                        reader.onload = (e) => resolve(e.target.result);
                         reader.readAsDataURL(file);
                     });
-                });
-                return Promise.all(promises);
-            };
+                  })
+                : [Promise.resolve('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80')];
 
-            processImages().then(base64Array => {
+            Promise.all(promises).then(base64Array => {
                 const newOffer = { 
                     id: Date.now().toString(), 
                     game, 
@@ -1454,7 +1468,7 @@
             }
 
             list.innerHTML = offers.map(o => {
-                const imgs = o.images || [o.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
+                const imgs = o.images || ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
                 return `
                 <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
                     <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
@@ -1494,7 +1508,8 @@
 
         window.onclick = function(event) {
             if (!event.target.closest('.relative')) {
-                document.getElementById('langDropdown').classList.add('hidden');
+                const dropdown = document.getElementById('langDropdown');
+                if (dropdown) dropdown.classList.add('hidden');
             }
         }
 
