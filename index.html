@@ -89,10 +89,10 @@
     <div class="bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700 text-white font-bold text-xs py-2.5 overflow-hidden shadow-lg relative border-b border-purple-500/30 z-50">
         <div class="animate-scroll-right flex items-center whitespace-nowrap gap-8">
             <div class="flex items-center gap-8">
-                <span data-i18n="announcement">⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Middlemen Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support</span>
+                <span data-i18n="announcement">⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Support Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support</span>
             </div>
             <div class="flex items-center gap-8">
-                <span data-i18n="announcement">⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Middlemen Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support</span>
+                <span data-i18n="announcement">⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Support Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support</span>
             </div>
         </div>
     </div>
@@ -164,9 +164,9 @@
         </div>
     </nav>
 
-    <!-- Floating Live Support Help Desk Widget -->
+    <!-- Floating Live Support Help Desk Widget (Fixed Button) -->
     <div class="fixed bottom-6 right-6 z-40">
-        <button onclick="openPrivateMiddleMapChat()" class="gradient-btn w-14 h-14 rounded-full shadow-[0_0_30px_rgba(147,51,234,0.6)] flex items-center justify-center text-white text-xl hover:scale-110 transition cursor-pointer" title="Live Support Help Desk">
+        <button onclick="openPrivateMiddlemanChat()" class="gradient-btn w-14 h-14 rounded-full shadow-[0_0_30px_rgba(147,51,234,0.6)] flex items-center justify-center text-white text-xl hover:scale-110 transition cursor-pointer" title="Live Support Help Desk">
             <i class="fas fa-headset"></i>
         </button>
     </div>
@@ -176,7 +176,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-[#030409] via-transparent to-transparent pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <div class="inline-flex items-center gap-2 text-xs font-bold text-purple-300 bg-purple-950/80 border border-purple-500/40 px-4 py-2 rounded-full mb-6 shadow-xl shadow-purple-900/30 backdrop-blur-md">
-                <i class="fas fa-shield-halved text-purple-400 animate-pulse"></i> <span data-i18n="heroBadge">Direct & Verified Middleman Trades</span>
+                <i class="fas fa-shield-halved text-purple-400 animate-pulse"></i> <span data-i18n="heroBadge">Direct & Verified Support Trades</span>
             </div>
             <h1 class="text-4xl sm:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight drop-shadow-lg">
                 <span data-i18n="heroTitle">Buy & Sell Game Accounts on</span> <span class="gradient-text">Star Market</span>
@@ -396,13 +396,13 @@
         </div>
     </div>
 
-    <!-- Secure Middleman Checkout Modal with QR Code -->
+    <!-- Secure Support Checkout Modal with QR Code -->
     <div id="paymentCheckoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative text-center">
             <button onclick="closeModal('paymentCheckoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
             
             <div class="inline-flex items-center gap-2 mb-3">
-                <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Secure Middleman Deposit</span>
+                <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Secure Support Deposit</span>
             </div>
 
             <h3 class="text-xl font-bold text-white mb-1" id="checkoutOfferTitle">Order Checkout</h3>
@@ -439,28 +439,27 @@
         </div>
     </div>
 
-    <!-- 1 Minute 6 Seconds Blockchain Processing Modal (Always Fails -> Contact Support) -->
-    <div id="paymentProcessingModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center space-y-6">
+    <!-- Upgraded 66-Second Blockchain Processing Modal (Always Fails -> Contact Support) -->
+    <div id="paymentProcessingModal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-8 max-w-md w-full shadow-[0_0_60px_rgba(147,51,234,0.25)] relative text-center space-y-6">
             
-            <!-- Spinner / Warning Icon Box -->
-            <div id="processingIconBox" class="w-20 h-20 rounded-full bg-emerald-950/80 border-2 border-emerald-500/60 flex items-center justify-center text-emerald-400 text-3xl mx-auto shadow-[0_0_30px_rgba(16,185,129,0.4)] animate-pulse">
+            <div id="processingIconBox" class="w-20 h-20 rounded-full bg-purple-950/80 border-2 border-purple-500/60 flex items-center justify-center text-purple-400 text-3xl mx-auto shadow-[0_0_30px_rgba(168,85,247,0.4)] animate-pulse">
                 <i id="processingIcon" class="fas fa-circle-notch fa-spin"></i>
             </div>
 
             <div>
                 <h3 class="text-xl font-extrabold text-white mb-2" id="processingTitle">Processing Deposit...</h3>
-                <p class="text-xs text-slate-300 leading-relaxed max-w-xs mx-auto" id="processingDesc">Scanning blockchain network for confirmations (1 minute 6 seconds timeout)...</p>
+                <p class="text-xs text-slate-300 leading-relaxed max-w-xs mx-auto" id="processingDesc">Establishing secure connection to decentralized blockchain network. Please remain on this page.</p>
             </div>
             
             <div id="processingDetailsBox" class="space-y-2 text-left bg-[#060812] p-4 rounded-2xl border border-purple-900/40 text-xs">
                 <div class="flex items-center justify-between text-slate-300">
-                    <span class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> Transaction broadcasted</span>
-                    <span class="text-[10px] text-emerald-400 font-mono">DONE</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> Transaction payload signed</span>
+                    <span class="text-[10px] text-emerald-400 font-mono">OK</span>
                 </div>
                 <div class="flex items-center justify-between text-slate-300">
-                    <span class="flex items-center gap-2"><i class="fas fa-spinner fa-spin text-purple-400" id="step2Icon"></i> Verifying block confirmations</span>
-                    <span class="text-[10px] text-purple-400 font-mono" id="processingTimerText">00:00 / 01:06</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-spinner fa-spin text-purple-400" id="step2Icon"></i> <span id="processingStatusMessage">Awaiting validator confirmations</span></span>
+                    <span class="text-[10px] text-purple-400 font-mono" id="processingTimerText">Syncing...</span>
                 </div>
             </div>
 
@@ -469,7 +468,7 @@
             </div>
 
             <div id="processingActionContainer" class="hidden">
-                <button onclick="openPrivateMiddlemapChatFromFailed()" class="w-full bg-red-950 hover:bg-red-900 text-red-200 border border-red-500/60 font-bold py-3.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
+                <button onclick="openPrivateMiddlemanChatFromFailed()" class="w-full bg-red-950 hover:bg-red-900 text-red-200 border border-red-500/60 font-bold py-3.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
                     <i class="fas fa-headset text-red-400"></i> Contact Support Agent Now
                 </button>
             </div>
@@ -484,9 +483,11 @@
                 <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Star Market Admin Dashboard</span>
             </div>
 
+            <!-- Admin Tabs -->
             <div class="flex border-b border-purple-900/40 mb-6 gap-6">
                 <button id="adminTabOffersBtn" onclick="switchAdminTab('offers')" class="pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition">Manage Offers</button>
                 <button id="adminTabTicketsBtn" onclick="switchAdminTab('tickets')" class="pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Order Tickets</button>
+                <button id="adminTabAccountsBtn" onclick="switchAdminTab('accounts')" class="pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition">Special Accounts</button>
             </div>
 
             <div id="adminOffersSection" class="space-y-3">
@@ -505,6 +506,22 @@
                     </form>
                 </div>
                 <div id="adminTicketsList" class="space-y-2.5 max-h-[40vh] overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Special Accounts Creator Tab -->
+            <div id="adminAccountsSection" class="space-y-4 hidden">
+                <div class="bg-[#060812] border border-purple-500/30 rounded-2xl p-5 shadow-lg space-y-3">
+                    <h4 class="font-bold text-xs text-purple-300 uppercase tracking-wider flex items-center gap-1.5"><i class="fas fa-user-plus"></i> Create Instant-Bypass Account</h4>
+                    <p class="text-[11px] text-slate-400">Accounts created here can log in and purchase any item instantly without paying, immediately opening a verified escrow delivery ticket.</p>
+                    <form onsubmit="adminCreateBypassAccount(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <input type="text" id="adminNewAccUser" placeholder="Username" required class="bg-[#0b0e1b] border border-purple-900/50 rounded-xl p-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-500">
+                        <input type="password" id="adminNewAccPass" placeholder="Password" required class="bg-[#0b0e1b] border border-purple-900/50 rounded-xl p-2.5 text-xs text-slate-100 focus:outline-none focus:border-purple-500">
+                        <button type="submit" class="gradient-btn font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fas fa-plus"></i> Create Account
+                        </button>
+                    </form>
+                </div>
+                <div id="adminSpecialAccountsList" class="space-y-2.5 max-h-[40vh] overflow-y-auto pr-1"></div>
             </div>
         </div>
     </div>
@@ -530,7 +547,6 @@
                 <div class="lg:col-span-7 space-y-5">
                     <div class="aspect-video bg-[#060812] rounded-3xl overflow-hidden border-2 border-purple-500/30 shadow-[0_0_40px_rgba(147,51,234,0.15)] relative">
                         <img id="offerPageMainImage" src="" class="w-full h-full object-cover">
-                        <div class="absolute top-4 left-4" id="offerPageGameBadgeContainer"></div>
                     </div>
                     <div id="offerPageThumbnails" class="flex gap-3 overflow-x-auto pb-2 scrollbar-none"></div>
                 </div>
@@ -556,7 +572,7 @@
 
                         <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
                             <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
-                            <span>Protected by Star Market Verified Middleman. Admins can type <b>!details</b> in order chat to reveal seller payout destination.</span>
+                            <span>Protected by Star Market Verified Support. Admins can type <b>!details</b> in order chat to reveal seller payout destination.</span>
                         </div>
 
                         <div id="offerPageActionBtnContainer"></div>
@@ -574,7 +590,7 @@
                     <div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
                     <div>
                         <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Secure Order #839210</h3>
-                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Secure Middleman Active</p>
+                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Support Escrow Active</p>
                     </div>
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-base"></i></button>
@@ -584,7 +600,7 @@
                 <div class="flex items-center gap-2 text-slate-400">
                     <span class="font-semibold text-slate-300">Session ID:</span> <span id="chatSessionIdDisplay" class="font-mono text-purple-300">SEC-9021</span>
                 </div>
-                <button onclick="openPrivateMiddlemapChat()" class="bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/50 px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 transition shadow-sm cursor-pointer">
+                <button onclick="openPrivateMiddlemanChat()" class="bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/50 px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 transition shadow-sm cursor-pointer">
                     <i class="fas fa-headset text-purple-400"></i> Contact Support Agent
                 </button>
             </div>
@@ -769,7 +785,8 @@
         let globalCloudData = {
             offers: [],
             users: {},
-            chats: {}
+            chats: {},
+            specialAccounts: {}
         };
 
         let selectedOfferFiles = [];
@@ -785,8 +802,8 @@
             'Bitcoin': 'bc1qqeq8e7kg800u75k8arcsrls5jh0qj6jtggp96w',
             'Ethereum': '0x36a82404B70B2B9351544E954687a4Ea235b6858',
             'USDT': 'TJNgoaZDK89RLRoovbcXoUhAu7KtMW22QS',
-            'PayPal': 'admin@starmarket.com (Platform Middleman)',
-            'Cash App': '$StarMarketEscrow'
+            'PayPal': 'admin@starmarket.com (Platform Support)',
+            'Cash App': '$StarMarketSupport'
         };
 
         const cryptoRates = {
@@ -801,12 +818,12 @@
 
         const translations = {
             en: {
-                announcement: "⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Middlemen Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support",
+                announcement: "⚡ Welcome to Star Market — Fast & Direct Game Account Marketplace | 🛡️ 100% Verified & Trusted Support Available | 🔥 Zero Fee Deals for Roblox, Fortnite, Brawl Stars & Clash Royale | 🚀 Instant Account Handover & 24/7 Live Support",
                 searchPlaceholder: "Search Roblox, Fortnite, skins, brawlers...",
                 postOffer: "Post Offer",
                 logIn: "Log In",
                 signUp: "Sign Up",
-                heroBadge: "Direct & Verified Middleman Trades",
+                heroBadge: "Direct & Verified Support Trades",
                 heroTitle: "Buy & Sell Game Accounts on",
                 heroDesc: "Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers with zero fees.",
                 postNewOfferBtn: "Post New Offer",
@@ -845,7 +862,7 @@
                 sellerActiveListings: "Seller Active Listings",
                 rateSeller: "Rate Seller:",
                 cookieTitle: "Cookie Notice",
-                cookieText: "We use cookies to ensure secure middleman transactions, analyze traffic, and enhance your user experience.",
+                cookieText: "We use cookies to ensure secure support transactions, analyze traffic, and enhance your user experience.",
                 cookieAccept: "Accept All",
                 sortBy: "Sort By:",
                 sortNewest: "Newest First",
@@ -854,12 +871,12 @@
                 typeLabel: "Type:"
             },
             pl: {
-                announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani pośrednicy | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
+                announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani eksperci supportu | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
                 searchPlaceholder: "Szukaj Roblox, Fortnite, skinów, zadymiarzy...",
                 postOffer: "Wystaw ofertę",
                 logIn: "Zaloguj się",
                 signUp: "Zarejestruj się",
-                heroBadge: "Bezpośrednie i zaufane transakcje przez pośrednika",
+                heroBadge: "Bezpośrednie i zaufane transakcje",
                 heroTitle: "Kupuj i sprzedawaj konta w grach na",
                 heroDesc: "Znajdź rzadkie przedmioty w Roblox, konta OG Fortnite, wymaksowanych zadymiarzy w Brawl Stars i konta Clash Royale bezpośrednio od zweryfikowanych sprzedawców bez prowizji.",
                 postNewOfferBtn: "Wystaw nową ofertę",
@@ -1176,8 +1193,12 @@
 
             let users = getUsers();
             let matchedUser = null;
+            let specialAccs = globalCloudData.specialAccounts || {};
 
-            if (users[identifier]) {
+            // Check special bypass accounts
+            if (specialAccs[identifier] && specialAccs[identifier].password === password) {
+                matchedUser = identifier;
+            } else if (users[identifier]) {
                 if (users[identifier].password === password) {
                     matchedUser = identifier;
                 }
@@ -1400,7 +1421,6 @@
             }
 
             grid.innerHTML = filtered.map(offer => {
-                const badgeHtml = getGameBadgeHtml(offer.game);
                 const images = offer.images && offer.images.length > 0 ? offer.images : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
                 const sellerUser = users[offer.seller];
                 const sellerAvatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">` : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
@@ -1409,7 +1429,6 @@
                 <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 group cursor-pointer" onclick="openOfferPage('${offer.id}')">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
                         <img src="${images[0]}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute top-3 left-3">${badgeHtml}</div>
                     </div>
                     <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
@@ -1456,6 +1475,7 @@
         function openAdminPanel() {
             renderAdminOffers();
             renderAdminTickets();
+            renderAdminSpecialAccounts();
             openModal('adminPanelModal');
         }
 
@@ -1463,20 +1483,66 @@
             currentAdminTab = tab;
             const offersBtn = document.getElementById('adminTabOffersBtn');
             const ticketsBtn = document.getElementById('adminTabTicketsBtn');
+            const accountsBtn = document.getElementById('adminTabAccountsBtn');
+
             const offersSec = document.getElementById('adminOffersSection');
             const ticketsSec = document.getElementById('adminTicketsSection');
+            const accountsSec = document.getElementById('adminAccountsSection');
+
+            offersBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+            ticketsBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+            accountsBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
+
+            offersSec.classList.add('hidden');
+            ticketsSec.classList.add('hidden');
+            accountsSec.classList.add('hidden');
 
             if (tab === 'offers') {
                 offersBtn.className = "pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
-                ticketsBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
                 offersSec.classList.remove('hidden');
-                ticketsSec.classList.add('hidden');
-            } else {
+            } else if (tab === 'tickets') {
                 ticketsBtn.className = "pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
-                offersBtn.className = "pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition";
                 ticketsSec.classList.remove('hidden');
-                offersSec.classList.add('hidden');
+            } else if (tab === 'accounts') {
+                accountsBtn.className = "pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-300 transition";
+                accountsSec.classList.remove('hidden');
             }
+        }
+
+        function adminCreateBypassAccount(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminNewAccUser').value.trim();
+            const password = document.getElementById('adminNewAccPass').value;
+            if (!username || !password) return;
+
+            if (!globalCloudData.specialAccounts) globalCloudData.specialAccounts = {};
+            globalCloudData.specialAccounts[username] = { password, role: 'bypass_buyer' };
+            saveCloudData();
+
+            document.getElementById('adminNewAccUser').value = '';
+            document.getElementById('adminNewAccPass').value = '';
+            renderAdminSpecialAccounts();
+            showMsg("Success", `Special bypass account "${username}" created successfully!`, "fa-check-circle");
+        }
+
+        function adminDeleteBypassAccount(username) {
+            if (globalCloudData.specialAccounts && globalCloudData.specialAccounts[username]) {
+                delete globalCloudData.specialAccounts[username];
+                saveCloudData();
+                renderAdminSpecialAccounts();
+            }
+        }
+
+        function renderAdminSpecialAccounts() {
+            const list = document.getElementById('adminSpecialAccountsList');
+            const accounts = globalCloudData.specialAccounts || {};
+            const usernames = Object.keys(accounts);
+
+            list.innerHTML = usernames.length === 0 ? `<p class="text-xs text-slate-500 text-center py-4">No special bypass accounts created yet.</p>` : usernames.map(username => `
+                <div class="flex items-center justify-between bg-[#060812] p-3.5 rounded-xl border text-xs gap-3">
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white">Username: ${username}</p><p class="text-purple-300">Role: Instant-Bypass Buyer</p></div>
+                    <button onclick="adminDeleteBypassAccount('${username}')" class="bg-red-950 text-red-300 px-3 py-1.5 rounded font-bold">Delete</button>
+                </div>`).join('');
         }
 
         function renderAdminOffers() {
@@ -1512,7 +1578,7 @@
                 price: '0.00',
                 buyer: targetUser,
                 seller: 'StarMarket_Official',
-                messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Secure support ticket opened for ${targetUser}. Subject: "${subject}". Type !details to view payout info.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                messages: [{ sender: 'StarMarket Support', role: 'Support Agent', text: `Secure support ticket opened for ${targetUser}. Subject: "${subject}". Type !details to view payout info.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
             };
 
             saveCloudData();
@@ -1557,8 +1623,6 @@
             document.getElementById('offerPagePrice').innerText = `$${offer.price}`;
             document.getElementById('offerPageDesc').innerText = offer.desc;
 
-            document.getElementById('offerPageGameBadgeContainer').innerHTML = getGameBadgeHtml(offer.game);
-
             const users = getUsers();
             const sellerUser = users[offer.seller];
             const avatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-10 h-10 rounded-full object-cover">` : `<div class="w-10 h-10 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
@@ -1578,11 +1642,44 @@
                 <button type="button" onclick="document.getElementById('offerPageMainImage').src='${img}'" class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-purple-900/50 bg-[#060812]"><img src="${img}" class="w-full h-full object-cover"></button>`).join('');
 
             const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
-            document.getElementById('offerPageActionBtnContainer').innerHTML = isAdmin ? `
-                <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition">Open & Join Conversation</button>` : `
-                <button onclick="openPaymentCheckout()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
+            const isSpecialBypass = globalCloudData.specialAccounts && globalCloudData.specialAccounts[currentUser];
+
+            if (isAdmin) {
+                document.getElementById('offerPageActionBtnContainer').innerHTML = `
+                    <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition">Open & Join Conversation</button>`;
+            } else if (isSpecialBypass) {
+                document.getElementById('offerPageActionBtnContainer').innerHTML = `
+                    <button onclick="startBypassOrder('${offer.id}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-2xl transition shadow-xl">Instant Ticket (Payment Bypassed)</button>`;
+            } else {
+                document.getElementById('offerPageActionBtnContainer').innerHTML = `
+                    <button onclick="openPaymentCheckout()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
+            }
 
             document.getElementById('offerPageModal').classList.remove('hidden');
+        }
+
+        function startBypassOrder(offerId) {
+            if (!currentUser) { openAuthTab('login'); return; }
+            currentActiveOffer = getOffers().find(o => o.id === offerId);
+            if (!currentActiveOffer) return;
+
+            closeModal('offerPageModal');
+            const chatId = `chat_${currentActiveOffer.id}_${currentUser}`;
+            if (!globalCloudData.chats) globalCloudData.chats = {};
+
+            globalCloudData.chats[chatId] = {
+                orderId: currentActiveOffer.id,
+                offerTitle: currentActiveOffer.title,
+                price: currentActiveOffer.price,
+                buyer: currentUser,
+                seller: currentActiveOffer.seller,
+                messages: [
+                    { sender: 'StarMarket Support', role: 'Support Agent', text: `Payment confirmed by Support. Support is holding funds in secure escrow. The buyer and seller can now exchange account login credentials safely.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+                ]
+            };
+            saveCloudData();
+            activeChatSession = chatId;
+            openChatModal(chatId);
         }
 
         function openPaymentCheckout() {
@@ -1624,23 +1721,22 @@
             const title = document.getElementById('processingTitle');
             const desc = document.getElementById('processingDesc');
             const bar = document.getElementById('processingProgressBar');
-            const timerText = document.getElementById('processingTimerText');
+            const statusMessage = document.getElementById('processingStatusMessage');
             const iconBox = document.getElementById('processingIconBox');
             const icon = document.getElementById('processingIcon');
             const actionContainer = document.getElementById('processingActionContainer');
             const step2Icon = document.getElementById('step2Icon');
 
-            // Reset UI states
-            iconBox.className = "w-20 h-20 rounded-full bg-emerald-950/80 border-2 border-emerald-500/60 flex items-center justify-center text-emerald-400 text-3xl mx-auto shadow-[0_0_30px_rgba(16,185,129,0.4)] animate-pulse";
+            iconBox.className = "w-20 h-20 rounded-full bg-purple-950/80 border-2 border-purple-500/60 flex items-center justify-center text-purple-400 text-3xl mx-auto shadow-[0_0_30px_rgba(168,85,247,0.4)] animate-pulse";
             icon.className = "fas fa-circle-notch fa-spin";
             title.innerText = "Processing Deposit...";
-            desc.innerText = "Connecting to blockchain network & verifying network deposit confirmations (1 minute 6 seconds timeout).";
+            desc.innerText = "Establishing secure connection to decentralized blockchain network. Please remain on this page.";
             actionContainer.classList.add('hidden');
             step2Icon.className = "fas fa-spinner fa-spin text-purple-400";
+            statusMessage.innerText = "Awaiting validator confirmations";
 
             let secondsLeft = 66;
             bar.style.width = '0%';
-            timerText.innerText = "00:00 / 01:06";
 
             if (processingTimerInterval) clearInterval(processingTimerInterval);
 
@@ -1650,19 +1746,21 @@
                 let pct = (elapsed / 66) * 100;
                 bar.style.width = `${pct}%`;
 
-                let m = String(Math.floor(elapsed / 60)).padStart(2, '0');
-                let s = String(elapsed % 60).padStart(2, '0');
-                timerText.innerText = `${m}:${s} / 01:06`;
+                if (elapsed === 20) {
+                    statusMessage.innerText = "Broadcasting block hash to nodes";
+                } else if (elapsed === 45) {
+                    statusMessage.innerText = "Finalizing cryptographic escrow";
+                }
 
                 if (secondsLeft <= 0) {
                     clearInterval(processingTimerInterval);
                     
-                    // ALWAYS FAIL AS REQUESTED
                     iconBox.className = "w-20 h-20 rounded-full bg-red-950/80 border-2 border-red-500/60 flex items-center justify-center text-red-500 text-3xl mx-auto shadow-[0_0_30px_rgba(239,68,68,0.4)]";
                     icon.className = "fas fa-triangle-exclamation";
                     title.innerText = "Deposit Verification Failed";
                     desc.innerText = "Unable to detect funds on the blockchain network or transaction timed out. Please contact support immediately.";
                     step2Icon.className = "fas fa-times text-red-400";
+                    statusMessage.innerText = "Verification Timeout";
                     actionContainer.classList.remove('hidden');
                 }
             }, 1000);
@@ -1686,7 +1784,7 @@
                     price: currentActiveOffer.price,
                     buyer: currentActiveOffer.seller,
                     seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Support agent joined conversation. Type !details to view payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Support', role: 'Support Agent', text: `Support agent joined conversation. Type !details to view payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1709,7 +1807,7 @@
                     price: activeOffer.price,
                     buyer: currentUser,
                     seller: activeOffer.seller,
-                    messages: [{ sender: 'StarMarket Secure', role: 'Verified Middleman', text: `Secure order #${activeOffer.id.slice(-6)} initiated for "${activeOffer.title}" ($${activeOffer.price}). Buyer has submitted payment deposit. Admins can type !details in chat to reveal seller payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Support', role: 'Support Agent', text: `Secure order #${activeOffer.id.slice(-6)} initiated for "${activeOffer.title}" ($${activeOffer.price}). Buyer has submitted payment deposit. Admins can type !details in chat to reveal seller payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1729,7 +1827,7 @@
                     price: '0.00',
                     buyer: currentUser,
                     seller: 'StarMarket Support',
-                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Hello ${currentUser}. Connected with Star Market Support. How can we assist you today?`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Support', role: 'Support Agent', text: `Hello ${currentUser}. Connected with Star Market Support. How can we assist you today?`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1757,7 +1855,7 @@
             feed.innerHTML = chat.messages.map(m => {
                 const isMe = m.sender === currentUser;
                 let bubbleBg = isMe ? 'bg-purple-950/60 border-purple-500/40 text-white ml-auto' : 'bg-[#0d0f1c] border-purple-900/40 text-slate-200 mr-auto';
-                if (m.role === 'Verified Middleman' || m.sender === 'StarMarket Support' || m.sender === 'StarMarket Secure') {
+                if (m.role === 'Support Agent' || m.sender === 'StarMarket Support' || m.sender === 'StarMarket Secure') {
                     bubbleBg = 'bg-slate-900/80 border-slate-700/50 text-slate-300 mx-auto w-full text-center';
                 }
 
@@ -1796,10 +1894,9 @@
 
                 if (isAdmin) {
                     let offer = getOffers().find(o => o.id === chat.orderId);
-                    let payoutMethod = offer ? offer.acceptedPayment : 'Escrow Deposit';
+                    let payoutMethod = offer ? offer.acceptedPayment : 'Support Deposit';
                     let payoutAddress = offer ? offer.paymentAddress : 'N/A';
 
-                    // Clean stacked professional format (No emojis)
                     let detailsCard = `SECURE TRANSACTION PAYOUT DETAILS\n` +
                                       `----------------------------------------\n` +
                                       `Payment Method: ${payoutMethod}\n` +
@@ -1807,15 +1904,15 @@
                                       `Status: Verified & Protected`;
                     
                     chat.messages.push({
-                        sender: 'StarMarket Secure',
-                        role: 'Verified Middleman',
+                        sender: 'StarMarket Support',
+                        role: 'Support Agent',
                         text: detailsCard,
                         time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
                     });
                 } else {
                     chat.messages.push({
-                        sender: 'StarMarket Secure',
-                        role: 'Verified Middleman',
+                        sender: 'StarMarket Support',
+                        role: 'Support Agent',
                         text: `Unauthorized command. Only verified administrators can retrieve payout details.`,
                         time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
                     });
@@ -1973,6 +2070,9 @@
         window.copyCheckoutWallet = copyCheckoutWallet;
         window.confirmPaymentAndChat = confirmPaymentAndChat;
         window.openPrivateMiddlemapChatFromFailed = openPrivateMiddlemapChatFromFailed;
+        window.adminCreateBypassAccount = adminCreateBypassAccount;
+        window.adminDeleteBypassAccount = adminDeleteBypassAccount;
+        window.startBypassOrder = startBypassOrder;
 
         window.onload = init;
     </script>
