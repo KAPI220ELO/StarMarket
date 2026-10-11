@@ -191,7 +191,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Game Quick-Select Visual Cards Section -->
+        <!-- Game Quick-Select Visual Cards Section (Clean & Bigger Icons) -->
         <div class="mb-10">
             <h2 class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
                 <i class="fas fa-fire text-pink-500"></i> <span data-i18n="exploreCategories">Explore Popular Marketplaces</span>
@@ -200,9 +200,7 @@
                 
                 <!-- Roblox Card -->
                 <div onclick="filterCategory('Roblox')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <div class="w-14 h-14 rounded-2xl bg-red-950/90 border border-red-500/40 flex items-center justify-center group-hover:scale-110 transition shadow-lg shrink-0 p-2.5">
-                        <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/roblox.png';" alt="Roblox" class="w-full h-full object-contain">
-                    </div>
+                    <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/roblox.png';" alt="Roblox" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">
                     <div>
                         <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Roblox</h3>
                         <p class="text-[11px] text-slate-400 mt-0.5">Korblox, Headless & Robux</p>
@@ -211,9 +209,7 @@
 
                 <!-- Fortnite Card -->
                 <div onclick="filterCategory('Fortnite')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-950/90 border border-purple-500/40 flex items-center justify-center group-hover:scale-110 transition shadow-lg shrink-0 p-2.5">
-                        <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/fortnite.png';" alt="Fortnite" class="w-full h-full object-contain">
-                    </div>
+                    <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/fortnite.png';" alt="Fortnite" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">
                     <div>
                         <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Fortnite</h3>
                         <p class="text-[11px] text-slate-400 mt-0.5">OG Skins & Stacked Accounts</p>
@@ -222,9 +218,7 @@
 
                 <!-- Brawl Stars Card -->
                 <div onclick="filterCategory('Brawl Stars')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-950/90 border border-amber-500/40 flex items-center justify-center group-hover:scale-110 transition shadow-lg shrink-0 p-2.5">
-                        <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/brawl-stars.png';" alt="Brawl Stars" class="w-full h-full object-contain">
-                    </div>
+                    <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/brawl-stars.png';" alt="Brawl Stars" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
                     <div>
                         <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Brawl Stars</h3>
                         <p class="text-[11px] text-slate-400 mt-0.5">Maxed Brawlers & Trophies</p>
@@ -233,9 +227,7 @@
 
                 <!-- Clash Royale Card -->
                 <div onclick="filterCategory('Clash Royale')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-950/90 border border-blue-500/40 flex items-center justify-center group-hover:scale-110 transition shadow-lg shrink-0 p-2.5">
-                        <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/clash-royale.png';" alt="Clash Royale" class="w-full h-full object-contain">
-                    </div>
+                    <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/clash-royale.png';" alt="Clash Royale" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                     <div>
                         <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Clash Royale</h3>
                         <p class="text-[11px] text-slate-400 mt-0.5">Max Towers & Legendaries</p>
@@ -251,16 +243,16 @@
                 <i class="fas fa-gamepad"></i> <span data-i18n="allGames">All Games</span>
             </button>
             <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/roblox.png';" class="w-4 h-4 object-contain"> Roblox
+                <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/roblox.png';" class="w-5 h-5 object-contain"> Roblox
             </button>
             <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/fortnite.png';" class="w-4 h-4 object-contain"> Fortnite
+                <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/fortnite.png';" class="w-5 h-5 object-contain"> Fortnite
             </button>
             <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-4 h-4 object-contain"> Brawl Stars
+                <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-5 h-5 object-contain"> Brawl Stars
             </button>
             <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-4 h-4 object-contain"> Clash Royale
+                <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-5 h-5 object-contain"> Clash Royale
             </button>
         </div>
 
@@ -1070,8 +1062,8 @@
                     img = 'starmarket.png'; 
                     style = 'text-slate-300 bg-slate-950/90 border-slate-500/40';
             }
-            return `<span class="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg ${style}">
-                <img src="${img}" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/star.png';" class="w-4 h-4 object-contain"> ${game}
+            return `<span class="inline-flex items-center gap-2 text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg ${style}">
+                <img src="${img}" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/star.png';" class="w-5 h-5 object-contain"> ${game}
             </span>`;
         }
 
