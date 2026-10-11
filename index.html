@@ -1,3 +1,7 @@
+Here is your updated code! I have completely removed the colored drop-shadow
+glow from all four game icons and deleted the subtitle descriptions underneath
+the game titles, leaving clean, centered game cards.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -191,7 +195,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Game Quick-Select Visual Cards Section (Clean & Bigger Icons) -->
+        <!-- Game Quick-Select Visual Cards Section (Clean Icons, No Glow, No Subtitles) -->
         <div class="mb-10">
             <h2 class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
                 <i class="fas fa-fire text-pink-500"></i> <span data-i18n="exploreCategories">Explore Popular Marketplaces</span>
@@ -200,38 +204,26 @@
                 
                 <!-- Roblox Card -->
                 <div onclick="filterCategory('Roblox')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/roblox.png';" alt="Roblox" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">
-                    <div>
-                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Roblox</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Korblox, Headless & Robux</p>
-                    </div>
+                    <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/roblox.png';" alt="Roblox" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0">
+                    <h3 class="font-extrabold text-white text-lg group-hover:text-purple-300 transition">Roblox</h3>
                 </div>
 
                 <!-- Fortnite Card -->
                 <div onclick="filterCategory('Fortnite')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/fortnite.png';" alt="Fortnite" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-                    <div>
-                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Fortnite</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">OG Skins & Stacked Accounts</p>
-                    </div>
+                    <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/fortnite.png';" alt="Fortnite" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0">
+                    <h3 class="font-extrabold text-white text-lg group-hover:text-purple-300 transition">Fortnite</h3>
                 </div>
 
                 <!-- Brawl Stars Card -->
                 <div onclick="filterCategory('Brawl Stars')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/brawl-stars.png';" alt="Brawl Stars" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
-                    <div>
-                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Brawl Stars</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Maxed Brawlers & Trophies</p>
-                    </div>
+                    <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/brawl-stars.png';" alt="Brawl Stars" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0">
+                    <h3 class="font-extrabold text-white text-lg group-hover:text-purple-300 transition">Brawl Stars</h3>
                 </div>
 
                 <!-- Clash Royale Card -->
                 <div onclick="filterCategory('Clash Royale')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
-                    <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/clash-royale.png';" alt="Clash Royale" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0 drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]">
-                    <div>
-                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Clash Royale</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Max Towers & Legendaries</p>
-                    </div>
+                    <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/clash-royale.png';" alt="Clash Royale" class="w-16 h-16 object-contain group-hover:scale-110 transition duration-300 shrink-0">
+                    <h3 class="font-extrabold text-white text-lg group-hover:text-purple-300 transition">Clash Royale</h3>
                 </div>
 
             </div>
