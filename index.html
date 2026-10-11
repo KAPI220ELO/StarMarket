@@ -792,7 +792,9 @@
         
         let globalCloudData = {
             offers: [],
-            users: {},
+            users: {
+                'Support': { email: 'support@starmarket.com', password: 'adminpassword', role: 'admin', discord: 'Support#0001', telegram: '@support', avatar: '', reputation: { pos: 5, neg: 0, voters: [] } }
+            },
             chats: {},
             specialAccounts: {}
         };
@@ -990,6 +992,9 @@
                 if (data) {
                     globalCloudData = data;
                     if (!globalCloudData.users) globalCloudData.users = {};
+                    if (!globalCloudData.users['Support']) {
+                        globalCloudData.users['Support'] = { email: 'support@starmarket.com', password: 'adminpassword', role: 'admin', discord: 'Support#0001', telegram: '@support', avatar: '', reputation: { pos: 5, neg: 0, voters: [] } };
+                    }
                     if (!globalCloudData.offers) globalCloudData.offers = [];
                     if (!globalCloudData.chats) globalCloudData.chats = {};
                     if (!globalCloudData.specialAccounts) globalCloudData.specialAccounts = {};
@@ -1738,7 +1743,6 @@
 
             const title = document.getElementById('processingTitle');
             const desc = document.getElementById('processingDesc');
-            const bar = document.getElementById('processingProgressBar');
             const statusMessage = document.getElementById('processingStatusMessage');
             const iconBox = document.getElementById('processingIconBox');
             const icon = document.getElementById('processingIcon');
@@ -1754,15 +1758,12 @@
             statusMessage.innerText = "Awaiting validator confirmations";
 
             let secondsLeft = 30;
-            bar.style.width = '0%';
 
             if (processingTimerInterval) clearInterval(processingTimerInterval);
 
             processingTimerInterval = setInterval(() => {
                 secondsLeft--;
                 let elapsed = 30 - secondsLeft;
-                let pct = (elapsed / 30) * 100;
-                bar.style.width = `${pct}%`;
 
                 if (elapsed === 10) {
                     statusMessage.innerText = "Broadcasting block hash to nodes";
