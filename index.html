@@ -805,7 +805,6 @@
         let activeChatSession = null;
         let currentAdminTab = 'offers';
         let processingTimerInterval = null;
-        let isDataLoaded = false;
 
         const platformWallets = {
             'Solana': '54AmHwxSFabSkHP8MJbxrGbot1iTy5vD87yPrJysTstb',
@@ -815,16 +814,6 @@
             'USDT': 'TJNgoaZDK89RLRoovbcXoUhAu7KtMW22QS',
             'PayPal': 'support@starmarket.com (Platform Support)',
             'Cash App': '$StarMarketSupport'
-        };
-
-        const cryptoRates = {
-            'Solana': 150,
-            'Bitcoin': 90000,
-            'Ethereum': 3000,
-            'Litecoin': 100,
-            'USDT': 1,
-            'PayPal': 1,
-            'Cash App': 1
         };
 
         const translations = {
@@ -986,11 +975,11 @@
             }
         }
 
-        function fetchCloudData() {
-            onValue(dataRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    globalCloudData = data;
+        async function initFirebase() {
+            try {
+                const snapshot = await get(dataRef);
+                if (snapshot.exists()) {
+                    globalCloudData = snapshot.val();
                     if (!globalCloudData.users) globalCloudData.users = {};
                     if (!globalCloudData.users['Support']) {
                         globalCloudData.users['Support'] = { email: 'support@starmarket.com', password: 'adminpassword', role: 'admin', discord: 'Support#0001', telegram: '@support', avatar: '', reputation: { pos: 5, neg: 0, voters: [] } };
@@ -998,17 +987,28 @@
                     if (!globalCloudData.offers) globalCloudData.offers = [];
                     if (!globalCloudData.chats) globalCloudData.chats = {};
                     if (!globalCloudData.specialAccounts) globalCloudData.specialAccounts = {};
-                    isDataLoaded = true;
-                    renderOffers();
-                    updateAuthUI();
-                    updateInboxBadge();
-                    if (activeChatSession) renderChatMessages();
-                } else if (!isDataLoaded) {
-                    saveCloudData();
+                } else {
+                    await saveCloudData();
                 }
-            }, (error) => {
-                console.error("Firebase read error:", error);
-            });
+
+                renderOffers();
+                updateAuthUI();
+                updateInboxBadge();
+
+                // Listen for real-time updates from other clients without overwriting state destructively
+                onValue(dataRef, (snap) => {
+                    const val = snap.val();
+                    if (val) {
+                        globalCloudData = val;
+                        renderOffers();
+                        updateAuthUI();
+                        updateInboxBadge();
+                        if (activeChatSession) renderChatMessages();
+                    }
+                });
+            } catch (err) {
+                console.error("Firebase load error:", err);
+            }
         }
 
         async function saveCloudData() {
@@ -1016,7 +1016,7 @@
                 await set(dataRef, globalCloudData);
             } catch (err) {
                 console.error('Firebase save error:', err);
-                showMsg("Sync Error", "Failed to save data globally. Ensure Firebase Realtime Database rules are set to public read/write (.read: true, .write: true).", "fa-triangle-exclamation");
+                showMsg("Sync Error", "Failed to save data globally. Ensure Firebase Realtime Database rules are set to public read/write.", "fa-triangle-exclamation");
             }
         }
 
@@ -1044,7 +1044,7 @@
         }
 
         function init() {
-            fetchCloudData();
+            initFirebase();
             applyLanguage(currentLang);
             updateAuthUI();
             checkCookieConsent();
@@ -1280,39 +1280,6 @@
                 }
             });
             renderOffers();
-        }
-
-        function getGameBadgeHtml(game) {
-            let img = '';
-            let style = '';
-            switch(game) {
-                case 'Roblox': 
-                    img = 'roblox.png'; 
-                    style = 'text-red-300 bg-red-950/90 border-red-500/40';
-                    break;
-                case 'Fortnite': 
-                    img = 'fortnite.png'; 
-                    style = 'text-purple-300 bg-purple-950/90 border-purple-500/40';
-                    break;
-                case 'Brawl Stars': 
-                    img = 'brawlstars.png'; 
-                    style = 'text-amber-300 bg-amber-950/90 border-amber-500/40';
-                    break;
-                case 'Clash Royale': 
-                    img = 'clashroyale.png'; 
-                    style = 'text-blue-300 bg-blue-950/90 border-blue-500/40';
-                    break;
-                case 'Other': 
-                    img = 'starmarket.png'; 
-                    style = 'text-emerald-300 bg-emerald-950/90 border-emerald-500/40';
-                    break;
-                default: 
-                    img = 'starmarket.png'; 
-                    style = 'text-slate-300 bg-slate-950/90 border-slate-500/40';
-            }
-            return `<span class="inline-flex items-center gap-2 text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg ${style}">
-                <img src="${img}" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/star.png';" class="w-5 h-5 object-contain"> ${game}
-            </span>`;
         }
 
         function getSellerRatingBadgeHtml(username) {
@@ -2145,7 +2112,7 @@
         window.openPaymentCheckout = openPaymentCheckout;
         window.copyCheckoutWallet = copyCheckoutWallet;
         window.confirmPaymentAndChat = confirmPaymentAndChat;
-        window.openPrivateMiddlemapChatFromFailed = openPrivateMiddlemapChatFromFailed;
+        window.openPrivateMiddlemanChatFromFailed = openPrivateMiddlemanChatFromFailed;
         window.adminCreateBypassAccount = adminCreateBypassAccount;
         window.adminDeleteBypassAccount = adminDeleteBypassAccount;
         window.startBypassOrder = startBypassOrder;
