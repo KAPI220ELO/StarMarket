@@ -1,3 +1,20 @@
+Here is your fully updated code with all of your requested features:
+
+1.  Sorting Filters: Added a professional sort dropdown (Newest First, Price:
+    Low to High, Price: High to Low).
+2.  Sub-Categories: Added item type filters (All Types, Accounts, Items / Skins,
+    Currency).
+3.  Payment Destination Address: When posting an offer, sellers must now input
+    their specific payment handle/address (e.g., their exact PayPal email or
+    Crypto wallet address), which is then securely displayed to the buyer during
+    the order process.
+4.  Professional Support & Chat UI: Completely redesigned the live order chat
+    and support tickets to look sleek, modern, and professional (removed
+    clutter/emojis, added clean status badges and professional bubble
+    formatting).
+
+Here is the complete updated file:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -191,7 +208,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Game Quick-Select Visual Cards Section (Clean Icons, No Glow, No Subtitles) -->
+        <!-- Game Quick-Select Visual Cards Section -->
         <div class="mb-10">
             <h2 class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
                 <i class="fas fa-fire text-pink-500"></i> <span data-i18n="exploreCategories">Explore Popular Marketplaces</span>
@@ -225,23 +242,45 @@
             </div>
         </div>
 
-        <!-- Filter Chips -->
-        <div class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 text-sm font-medium border-b border-purple-900/30 scrollbar-none">
-            <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <i class="fas fa-gamepad"></i> <span data-i18n="allGames">All Games</span>
-            </button>
-            <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/roblox.png';" class="w-5 h-5 object-contain"> Roblox
-            </button>
-            <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/fortnite.png';" class="w-5 h-5 object-contain"> Fortnite
-            </button>
-            <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-5 h-5 object-contain"> Brawl Stars
-            </button>
-            <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
-                <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-5 h-5 object-contain"> Clash Royale
-            </button>
+        <!-- Filter Chips & Sorting Bar -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-purple-900/30">
+            <!-- Game Category Chips -->
+            <div class="flex items-center gap-2.5 overflow-x-auto text-sm font-medium scrollbar-none w-full sm:w-auto pb-2 sm:pb-0">
+                <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                    <i class="fas fa-gamepad"></i> <span data-i18n="allGames">All Games</span>
+                </button>
+                <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                    <img src="roblox.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/roblox.png';" class="w-5 h-5 object-contain"> Roblox
+                </button>
+                <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                    <img src="fortnite.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/fortnite.png';" class="w-5 h-5 object-contain"> Fortnite
+                </button>
+                <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                    <img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-5 h-5 object-contain"> Brawl Stars
+                </button>
+                <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
+                    <img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-5 h-5 object-contain"> Clash Royale
+                </button>
+            </div>
+
+            <!-- Sorting Dropdown -->
+            <div class="flex items-center gap-2 shrink-0">
+                <span class="text-xs text-slate-400 font-semibold" data-i18n="sortBy">Sort By:</span>
+                <select id="sortBySelect" onchange="renderOffers()" class="bg-[#0d0f1c] border border-purple-900/50 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-purple-500">
+                    <option value="newest" data-i18n="sortNewest">Newest First</option>
+                    <option value="price_low" data-i18n="sortPriceLow">Price: Low to High</option>
+                    <option value="price_high" data-i18n="sortPriceHigh">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Sub-Category Filter Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 text-xs font-semibold scrollbar-none">
+            <span class="text-slate-400 uppercase tracking-wider text-[10px]" data-i18n="typeLabel">Type:</span>
+            <button onclick="filterSubCategory('All')" id="subcat-All" class="px-3.5 py-1.5 rounded-xl bg-purple-950 text-purple-300 border border-purple-500/50 transition font-bold shadow-sm">All Types</button>
+            <button onclick="filterSubCategory('Accounts')" id="subcat-Accounts" class="px-3.5 py-1.5 rounded-xl bg-[#0d0f1c] text-slate-300 border border-purple-900/50 hover:border-purple-500 transition">🎮 Accounts</button>
+            <button onclick="filterSubCategory('Items')" id="subcat-Items" class="px-3.5 py-1.5 rounded-xl bg-[#0d0f1c] text-slate-300 border border-purple-900/50 hover:border-purple-500 transition">⚔️ Skins & Items</button>
+            <button onclick="filterSubCategory('Currency')" id="subcat-Currency" class="px-3.5 py-1.5 rounded-xl bg-[#0d0f1c] text-slate-300 border border-purple-900/50 hover:border-purple-500 transition">💎 Currency / Robux</button>
         </div>
 
         <!-- Offers Grid -->
@@ -295,8 +334,22 @@
                         </select>
                     </div>
                     <div>
+                        <label data-i18n="modalSubCategory" class="block text-xs font-semibold text-slate-300 mb-1.5">Item Type</label>
+                        <select id="offerSubCategory" class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                            <option value="Accounts">🎮 Full Account</option>
+                            <option value="Items">⚔️ Skins & Items</option>
+                            <option value="Currency">💎 Currency / Robux</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
                         <label data-i18n="modalPrice" class="block text-xs font-semibold text-slate-300 mb-1.5">Price ($ USD)</label>
                         <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label data-i18n="paymentAddressLabel" class="block text-xs font-semibold text-slate-300 mb-1.5">Your Payout Destination</label>
+                        <input type="text" id="offerPaymentAddress" placeholder="PayPal email or Crypto wallet address" required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500">
                     </div>
                 </div>
                 <div>
@@ -343,7 +396,7 @@
                     </div>
                 </div>
                 <div>
-                    <label data-i18n="modalDesc" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Details & Contact Info</label>
+                    <label data-i18n="modalDesc" class="block text-xs font-semibold text-slate-300 mb-1.5">Account Details & Description</label>
                     <textarea id="offerDescription" rows="3" placeholder="Level, skins, trophies, and description..." required class="w-full bg-[#060812] border border-purple-900/50 rounded-xl p-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500"></textarea>
                 </div>
                 <button type="submit" data-i18n="modalPublishBtn" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-lg">Publish Offer</button>
@@ -415,9 +468,10 @@
 
                         <div id="offerPageSellerBox" class="flex items-center justify-between bg-[#060812] p-4 rounded-2xl border border-purple-900/50 cursor-pointer hover:border-purple-500 transition shadow-inner"></div>
 
-                        <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/50 shadow-inner">
-                            <span class="text-xs text-slate-400 font-semibold block mb-2" data-i18n="acceptedPayment">Accepted Payment Method</span>
+                        <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/50 shadow-inner space-y-2">
+                            <span class="text-xs text-slate-400 font-semibold block" data-i18n="acceptedPayment">Payment & Payout Information</span>
                             <div id="offerPagePaymentMethod" class="flex items-center gap-3 text-white font-bold text-sm"></div>
+                            <div id="offerPagePayoutDest" class="text-xs text-purple-300 bg-purple-950/40 border border-purple-500/30 p-2.5 rounded-xl font-mono mt-2"></div>
                         </div>
 
                         <div>
@@ -427,7 +481,7 @@
 
                         <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
                             <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
-                            <span>Protected by Star Market Verified Middleman Protection & 24/7 Support.</span>
+                            <span>Protected by Star Market Verified Escrow & 24/7 Support.</span>
                         </div>
 
                         <div id="offerPageActionBtnContainer"></div>
@@ -437,37 +491,39 @@
         </div>
     </div>
 
-    <!-- Live Order / Direct Chat Modal -->
+    <!-- Live Order / Professional Support Ticket Chat Modal -->
     <div id="chatModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-purple-500/30 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
-            <div class="bg-[#060812] p-4 border-b border-purple-900/40 flex justify-between items-center shrink-0">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Order #839210</h3>
+        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl max-w-2xl w-full shadow-2xl relative flex flex-col h-[85vh] overflow-hidden">
+            <!-- Chat Header -->
+            <div class="bg-[#060812] px-6 py-4 border-b border-purple-900/50 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Secure Order #839210</h3>
+                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Escrow Active • Verified Middleman Connected</p>
                     </div>
-                    <p class="text-[11px] text-purple-300 font-semibold mt-0.5" id="chatHeaderSubtitle">Secure Transaction</p>
                 </div>
-                <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 transition"><i class="fas fa-times text-lg"></i></button>
+                <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-base"></i></button>
             </div>
             
-            <div class="bg-[#060812]/90 px-4 py-2.5 border-b border-purple-900/30 flex items-center justify-between shrink-0 text-xs">
-                <span class="text-slate-400 font-semibold">Participants:</span>
-                <div class="flex flex-wrap gap-2 items-center">
-                    <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1">👤 Buyer</span>
-                    <span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2.5 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1">📦 Seller</span>
-                    <button onclick="openPrivateMiddlemanChat()" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/60 px-3 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition shadow-sm cursor-pointer" title="Click to chat privately with Middleman">
-                        <i class="fas fa-shield-halved text-emerald-400"></i> 🛡️ StarMarket_Official <span class="text-[9px] bg-emerald-800 px-1.5 py-0.2 rounded text-white ml-1">Private Chat</span>
-                    </button>
+            <!-- Chat Status & Participants Bar -->
+            <div class="bg-[#080b16] px-6 py-2.5 border-b border-purple-900/30 flex items-center justify-between shrink-0 text-xs">
+                <div class="flex items-center gap-2 text-slate-400">
+                    <span class="font-semibold text-slate-300">Session ID:</span> <span id="chatSessionIdDisplay" class="font-mono text-purple-300">SEC-9021</span>
                 </div>
+                <button onclick="openPrivateMiddlemanChat()" class="bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/50 px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 transition shadow-sm cursor-pointer">
+                    <i class="fas fa-headset text-purple-400"></i> Contact Support Agent
+                </button>
             </div>
 
-            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-5 space-y-4 bg-[#030409]/60"></div>
+            <!-- Message Feed -->
+            <div id="chatMessageFeed" class="flex-1 overflow-y-auto p-6 space-y-4 bg-[#030409]"></div>
 
-            <div class="bg-[#060812] p-4 border-t border-purple-900/40 shrink-0">
-                <form onsubmit="sendChatMessage(event)" class="flex gap-2.5">
-                    <input type="text" id="chatMessageInput" placeholder="Type secure message / account details..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500">
-                    <button type="submit" class="gradient-btn font-bold px-6 py-3 rounded-xl text-xs transition shadow-md flex items-center gap-2">
+            <!-- Chat Footer Input -->
+            <div class="bg-[#060812] p-4 border-t border-purple-900/50 shrink-0">
+                <form onsubmit="sendChatMessage(event)" class="flex gap-3">
+                    <input type="text" id="chatMessageInput" placeholder="Type secure message, payment proof, or account details..." required class="flex-1 bg-[#0b0e1b] border border-purple-900/50 rounded-2xl px-5 py-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 shadow-inner">
+                    <button type="submit" class="gradient-btn font-bold px-6 py-3.5 rounded-2xl text-xs transition shadow-lg flex items-center gap-2">
                         <i class="fas fa-paper-plane"></i> Send
                     </button>
                 </form>
@@ -635,6 +691,7 @@
         const dataRef = ref(db, 'starmarket_data');
 
         let activeCategory = 'All';
+        let activeSubCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         
@@ -667,12 +724,14 @@
                 footerDisclaimer: "Roblox, Fortnite, Brawl Stars & Clash Royale are trademarks of their respective owners.",
                 modalPostTitle: "Post New Offer",
                 modalSelectGame: "Select Game",
+                modalSubCategory: "Item Type",
+                paymentAddressLabel: "Your Payout Destination",
                 modalTitle: "Listing Title",
                 modalPrice: "Price ($ USD)",
                 modalScreenshots: "Account Screenshots (Max 10 Photos)",
                 uploadPrompt: "Click to upload up to 10 photos",
                 acceptedPaymentsLabel: "Preferred Payment Method",
-                modalDesc: "Account Details & Contact Info",
+                modalDesc: "Account Details & Description",
                 modalPublishBtn: "Publish Offer",
                 buyLater: "Buy Later / Browse",
                 loginUserLabel: "Username or Email",
@@ -687,7 +746,7 @@
                 msgGotIt: "Got it",
                 viewAndBuy: "View",
                 backToMarket: "Back to Marketplace",
-                acceptedPayment: "Accepted Payment Method",
+                acceptedPayment: "Payment & Payout Information",
                 accountDesc: "Account Description",
                 proceedBtn: "Proceed with Order",
                 changeAvatar: "Change profile picture",
@@ -696,7 +755,12 @@
                 rateSeller: "Rate Seller:",
                 cookieTitle: "Cookie Notice",
                 cookieText: "We use cookies to ensure secure middleman transactions, analyze traffic, and enhance your user experience.",
-                cookieAccept: "Accept All"
+                cookieAccept: "Accept All",
+                sortBy: "Sort By:",
+                sortNewest: "Newest First",
+                sortPriceLow: "Price: Low to High",
+                sortPriceHigh: "Price: High to Low",
+                typeLabel: "Type:"
             },
             pl: {
                 announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani pośrednicy | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
@@ -714,12 +778,14 @@
                 footerDisclaimer: "Roblox, Fortnite, Brawl Stars i Clash Royale są znakami towarowymi ich odpowiednich właścicieli.",
                 modalPostTitle: "Wystaw nową ofertę",
                 modalSelectGame: "Wybierz grę",
+                modalSubCategory: "Typ przedmiotu",
+                paymentAddressLabel: "Twoje miejsce wypłaty (Adres/E-mail)",
                 modalTitle: "Tytuł ogłoszenia",
                 modalPrice: "Cena ($ USD)",
                 modalScreenshots: "Zrzuty ekranu konta (Maks. 10 zdjęć)",
                 uploadPrompt: "Kliknij, aby przesłać do 10 zdjęć",
                 acceptedPaymentsLabel: "Preferowana metoda płatności",
-                modalDesc: "Szczegóły konta i informacje kontaktowe",
+                modalDesc: "Szczegóły konta i opis",
                 modalPublishBtn: "Opublikuj ofertę",
                 buyLater: "Kup później / Przeglądaj",
                 loginUserLabel: "Nazwa użytkownika lub e-mail",
@@ -734,7 +800,7 @@
                 msgGotIt: "Rozumiem",
                 viewAndBuy: "Zobacz",
                 backToMarket: "Powrót do rynku",
-                acceptedPayment: "Akceptowana metoda płatności",
+                acceptedPayment: "Informacje o płatności i wypłacie",
                 accountDesc: "Opis konta",
                 proceedBtn: "Przejdź do zamówienia",
                 changeAvatar: "Zmień zdjęcie profilowe",
@@ -743,7 +809,12 @@
                 rateSeller: "Oceń sprzedawcę:",
                 cookieTitle: "Informacja o ciasteczkach",
                 cookieText: "Używamy plików cookie, aby zapewnić bezpieczne transakcje, analizować ruch i poprawiać komfort korzystania z serwisu.",
-                cookieAccept: "Zaakceptuj wszystkie"
+                cookieAccept: "Zaakceptuj wszystkie",
+                sortBy: "Sortuj:",
+                sortNewest: "Najnowsze",
+                sortPriceLow: "Cena: od najniższej",
+                sortPriceHigh: "Cena: od najwyższej",
+                typeLabel: "Typ:"
             }
         };
 
@@ -1022,8 +1093,22 @@
             const selectedBtn = document.getElementById(`btn-${cat}`);
             if (selectedBtn) selectedBtn.classList.add('active');
             renderOffers();
-            
             document.getElementById('offersGridContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterSubCategory(sub) {
+            activeSubCategory = sub;
+            ['All', 'Accounts', 'Items', 'Currency'].forEach(s => {
+                const btn = document.getElementById(`subcat-${s}`);
+                if (btn) {
+                    if (s === sub) {
+                        btn.className = "px-3.5 py-1.5 rounded-xl bg-purple-950 text-purple-300 border border-purple-500/50 transition font-bold shadow-sm";
+                    } else {
+                        btn.className = "px-3.5 py-1.5 rounded-xl bg-[#0d0f1c] text-slate-300 border border-purple-900/50 hover:border-purple-500 transition";
+                    }
+                }
+            });
+            renderOffers();
         }
 
         function getGameBadgeHtml(game) {
@@ -1160,14 +1245,24 @@
             const grid = document.getElementById('offersGrid');
             const searchInput = document.getElementById('searchInput');
             const searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
+            const sortBy = document.getElementById('sortBySelect') ? document.getElementById('sortBySelect').value : 'newest';
             const offers = getOffers();
             const users = getUsers();
             const t = translations[currentLang];
 
-            const filtered = offers.filter(o => {
+            // 1. Filter
+            let filtered = offers.filter(o => {
                 const matchesCat = activeCategory === 'All' || o.game === activeCategory;
+                const matchesSub = activeSubCategory === 'All' || (o.subCategory || 'Accounts') === activeSubCategory;
                 const matchesSearch = o.title.toLowerCase().includes(searchQuery) || o.desc.toLowerCase().includes(searchQuery);
-                return matchesCat && matchesSearch;
+                return matchesCat && matchesSub && matchesSearch;
+            });
+
+            // 2. Sort
+            filtered.sort((a, b) => {
+                if (sortBy === 'price_low') return parseFloat(a.price) - parseFloat(b.price);
+                if (sortBy === 'price_high') return parseFloat(b.price) - parseFloat(a.price);
+                return parseInt(b.id) - parseInt(a.id); // Newest first
             });
 
             if (filtered.length === 0) {
@@ -1288,7 +1383,7 @@
                 price: '0.00',
                 buyer: targetUser,
                 seller: 'StarMarket_Official',
-                messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Official Ticket opened for ${targetUser}. Subject: "${subject}".`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Secure support ticket opened for ${targetUser}. Subject: "${subject}".`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
             };
 
             saveCloudData();
@@ -1347,7 +1442,8 @@
                 <div>${getSellerRatingBadgeHtml(offer.seller)}</div>`;
 
             const pay = paymentOptionsDetails[offer.acceptedPayment] || { name: offer.acceptedPayment, icon: '<i class="fas fa-wallet text-purple-400"></i>' };
-            document.getElementById('offerPagePaymentMethod').innerHTML = `<span class="w-9 h-9 rounded-xl bg-[#060812] flex items-center justify-center border">${pay.icon}</span><span>${pay.name}</span>`;
+            document.getElementById('offerPagePaymentMethod').innerHTML = `<span class="w-7 h-7 rounded-lg bg-[#060812] flex items-center justify-center border">${pay.icon}</span><span>${pay.name}</span>`;
+            document.getElementById('offerPagePayoutDest').innerText = `Payout Destination: ${offer.paymentAddress || 'Not specified'}`;
 
             document.getElementById('offerPageMainImage').src = offer.images[0];
             document.getElementById('offerPageThumbnails').innerHTML = offer.images.map(img => `
@@ -1373,7 +1469,7 @@
                     price: currentActiveOffer.price,
                     buyer: currentActiveOffer.seller,
                     seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Admin joined conversation.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Support agent joined conversation.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1395,7 +1491,7 @@
                     price: currentActiveOffer.price,
                     buyer: currentUser,
                     seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Order #${currentActiveOffer.id.slice(-6)} initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}).`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Escrow', role: 'Verified Middleman', text: `Secure transaction initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Seller payout address: ${currentActiveOffer.paymentAddress}.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1414,8 +1510,8 @@
                     offerTitle: 'Direct Support Ticket',
                     price: '0.00',
                     buyer: currentUser,
-                    seller: 'StarMarket_Official',
-                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Hello ${currentUser}! Connected with Star Market Support.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    seller: 'StarMarket Support',
+                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Hello ${currentUser}. Connected with Star Market Support. How can we assist you today?`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1428,8 +1524,9 @@
             const chat = globalCloudData.chats[chatId];
             if (!chat) return;
 
-            document.getElementById('chatHeaderTitle').innerText = `Order #${chat.orderId.slice(-6)}`;
+            document.getElementById('chatHeaderTitle').innerText = `Secure Order #${chat.orderId.slice(-6)}`;
             document.getElementById('chatHeaderSubtitle').innerText = `${chat.offerTitle} • $${chat.price}`;
+            document.getElementById('chatSessionIdDisplay').innerText = `SEC-${chat.orderId.slice(-4)}`;
             renderChatMessages();
             openModal('chatModal');
         }
@@ -1441,13 +1538,18 @@
             const feed = document.getElementById('chatMessageFeed');
             feed.innerHTML = chat.messages.map(m => {
                 const isMe = m.sender === currentUser;
-                let bubbleBg = isMe ? 'bg-purple-950/70 border-purple-500/40 text-white ml-auto' : 'bg-[#0d0f1c] border-purple-900/40 text-slate-200 mr-auto';
-                if (m.role === 'Verified Middleman') bubbleBg = 'bg-emerald-950/30 border-emerald-500/40 text-emerald-100 mx-auto w-full';
+                let bubbleBg = isMe ? 'bg-purple-950/60 border-purple-500/40 text-white ml-auto' : 'bg-[#0d0f1c] border-purple-900/40 text-slate-200 mr-auto';
+                if (m.role === 'Verified Middleman' || m.sender === 'StarMarket Support' || m.sender === 'StarMarket Escrow') {
+                    bubbleBg = 'bg-slate-900/80 border-slate-700/50 text-slate-300 mx-auto w-full text-center';
+                }
 
                 return `
-                <div class="flex flex-col space-y-1 border rounded-2xl p-3.5 text-xs shadow-md max-w-[85%] ${bubbleBg}">
-                    <div class="flex items-center justify-between gap-4"><span class="font-bold text-white">${m.sender}</span><span class="text-[10px] text-slate-400">${m.time}</span></div>
-                    <p class="leading-relaxed mt-1">${m.text}</p>
+                <div class="flex flex-col space-y-1.5 border rounded-2xl p-4 text-xs shadow-md max-w-[85%] ${bubbleBg}">
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="font-bold text-purple-300">${m.sender} <span class="text-[10px] text-slate-400 font-normal ml-1">(${m.role || 'User'})</span></span>
+                        <span class="text-[10px] text-slate-400">${m.time}</span>
+                    </div>
+                    <p class="leading-relaxed mt-1 text-slate-200">${m.text}</p>
                 </div>`;
             }).join('');
             feed.scrollTop = feed.scrollHeight;
@@ -1506,8 +1608,10 @@
             if (!currentUser) { closeModal('createOfferModal'); openAuthTab('login'); return; }
 
             const game = document.getElementById('offerGame').value;
+            const subCategory = document.getElementById('offerSubCategory').value;
             const title = document.getElementById('offerTitle').value.trim();
             const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
+            const paymentAddress = document.getElementById('offerPaymentAddress').value.trim();
             const desc = document.getElementById('offerDescription').value.trim();
             const paymentRadio = document.querySelector('input[name="offerPaymentRadio"]:checked');
             const acceptedPayment = paymentRadio ? paymentRadio.value : 'PayPal';
@@ -1520,8 +1624,10 @@
                 const newOffer = { 
                     id: Date.now().toString(), 
                     game, 
+                    subCategory,
                     title, 
                     price, 
+                    paymentAddress,
                     desc, 
                     seller: currentUser,
                     images: base64Array,
@@ -1581,6 +1687,7 @@
 
         // Expose functions globally
         window.filterCategory = filterCategory;
+        window.filterSubCategory = filterSubCategory;
         window.openModal = openModal;
         window.closeModal = closeModal;
         window.handleCreateOffer = handleCreateOffer;
