@@ -198,7 +198,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Game Quick-Select Visual Cards Section (5 Items including Other) -->
+        <!-- Game Quick-Select Visual Cards Section -->
         <div class="mb-10">
             <h2 class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
                 <i class="fas fa-fire text-pink-500"></i> <span data-i18n="exploreCategories">Explore Popular Marketplaces</span>
@@ -803,6 +803,7 @@
         let activeChatSession = null;
         let currentAdminTab = 'offers';
         let processingTimerInterval = null;
+        let isDataLoaded = false;
 
         const platformWallets = {
             'Solana': '54AmHwxSFabSkHP8MJbxrGbot1iTy5vD87yPrJysTstb',
@@ -810,7 +811,7 @@
             'Bitcoin': 'bc1qqeq8e7kg800u75k8arcsrls5jh0qj6jtggp96w',
             'Ethereum': '0x36a82404B70B2B9351544E954687a4Ea235b6858',
             'USDT': 'TJNgoaZDK89RLRoovbcXoUhAu7KtMW22QS',
-            'PayPal': 'admin@starmarket.com (Platform Support)',
+            'PayPal': 'support@starmarket.com (Platform Support)',
             'Cash App': '$StarMarketSupport'
         };
 
@@ -988,10 +989,16 @@
                 const data = snapshot.val();
                 if (data) {
                     globalCloudData = data;
+                    if (!globalCloudData.users) globalCloudData.users = {};
+                    if (!globalCloudData.offers) globalCloudData.offers = [];
+                    if (!globalCloudData.chats) globalCloudData.chats = {};
+                    if (!globalCloudData.specialAccounts) globalCloudData.specialAccounts = {};
+                    isDataLoaded = true;
                     renderOffers();
+                    updateAuthUI();
                     updateInboxBadge();
                     if (activeChatSession) renderChatMessages();
-                } else {
+                } else if (!isDataLoaded) {
                     saveCloudData();
                 }
             }, (error) => {
