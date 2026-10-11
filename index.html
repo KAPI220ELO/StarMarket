@@ -389,6 +389,49 @@
         </div>
     </div>
 
+    <!-- Secure Escrow Checkout / Payment Processing Modal -->
+    <div id="paymentCheckoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
+            <button onclick="closeModal('paymentCheckoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
+            
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"><i class="fas fa-shield-halved text-purple-400"></i> Star Market Escrow Deposit</span>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2" id="checkoutOfferTitle">Order Checkout</h3>
+            <p class="text-xs text-slate-400 mb-6">Send the exact amount to the official platform escrow wallet below. Once paid, click confirm to open your secure order ticket.</p>
+
+            <div class="bg-[#060812] border border-purple-900/50 rounded-2xl p-4 mb-6 space-y-4">
+                <div class="flex justify-between items-center text-xs border-b border-purple-900/30 pb-3">
+                    <span class="text-slate-400 font-semibold">Total Amount:</span>
+                    <span class="text-lg font-extrabold text-purple-400" id="checkoutOfferPrice">$0.00</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-400 font-semibold">Selected Currency:</span>
+                    <span class="text-white font-bold" id="checkoutPaymentMethod">Solana</span>
+                </div>
+                <div>
+                    <span class="text-[11px] text-slate-400 font-semibold block mb-1.5">Official Deposit Wallet Address:</span>
+                    <div class="flex items-center gap-2 bg-[#0b0e1b] border border-purple-500/40 p-3 rounded-xl">
+                        <input type="text" id="checkoutWalletAddress" readonly class="w-full bg-transparent text-xs text-purple-300 font-mono focus:outline-none" value="">
+                        <button type="button" onclick="copyCheckoutWallet()" class="bg-purple-900/80 hover:bg-purple-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0 flex items-center gap-1">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold mb-6">
+                <i class="fas fa-circle-info text-purple-400 text-sm shrink-0"></i>
+                <span>After sending funds, click below to open your secure ticket and notify the seller.</span>
+            </div>
+
+            <button onclick="confirmPaymentAndChat()" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2">
+                <i class="fas fa-check-circle"></i> I Have Paid / Submit Payment Proof
+            </button>
+        </div>
+    </div>
+
     <!-- Admin Panel Modal -->
     <div id="adminPanelModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -467,7 +510,7 @@
 
                         <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
                             <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
-                            <span>Protected by Star Market Verified Escrow & 24/7 Support. Type <b>!details</b> in chat for payment address.</span>
+                            <span>Protected by Star Market Verified Escrow. Type <b>!details</b> in order chat to reveal payout destination.</span>
                         </div>
 
                         <div id="offerPageActionBtnContainer"></div>
@@ -485,7 +528,7 @@
                     <div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
                     <div>
                         <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Secure Order #839210</h3>
-                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Escrow Active • Verified Middleman Connected (Type !details for payment address)</p>
+                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Escrow Active • Type !details to view payout destination</p>
                     </div>
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-base"></i></button>
@@ -688,6 +731,16 @@
         let currentSellerViewing = null;
         let activeChatSession = null;
         let currentAdminTab = 'offers';
+
+        const platformWallets = {
+            'Solana': '54AmHwxSFabSkHP8MJbxrGbot1iTy5vD87yPrJysTstb',
+            'Litecoin': 'ltc1qvj82zqy8p7ljpw6ag9gr8p8d07htmvd26jy359',
+            'Bitcoin': 'bc1qqeq8e7kg800u75k8arcsrls5jh0qj6jtggp96w',
+            'Ethereum': '0x36a82404B70B2B9351544E954687a4Ea235b6858',
+            'USDT': 'TJNgoaZDK89RLRoovbcXoUhAu7KtMW22QS',
+            'PayPal': 'admin@starmarket.com (Platform Escrow)',
+            'Cash App': '$StarMarketEscrow'
+        };
 
         const translations = {
             en: {
@@ -1462,7 +1515,6 @@
 
             const pay = paymentOptionsDetails[offer.acceptedPayment] || { name: offer.acceptedPayment, icon: '<i class="fas fa-wallet text-purple-400"></i>' };
             document.getElementById('offerPagePaymentMethod').innerHTML = `<span class="w-7 h-7 rounded-lg bg-[#060812] flex items-center justify-center border">${pay.icon}</span><span>${pay.name}</span>`;
-            document.getElementById('offerPagePayoutDest').innerText = `Payout Destination: Hidden (Type !details in order chat)`;
 
             document.getElementById('offerPageMainImage').src = offer.images[0];
             document.getElementById('offerPageThumbnails').innerHTML = offer.images.map(img => `
@@ -1471,9 +1523,37 @@
             const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
             document.getElementById('offerPageActionBtnContainer').innerHTML = isAdmin ? `
                 <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition">Open & Join Conversation</button>` : `
-                <button onclick="startChatWithSeller()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
+                <button onclick="openPaymentCheckout()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
 
             document.getElementById('offerPageModal').classList.remove('hidden');
+        }
+
+        function openPaymentCheckout() {
+            if (!currentUser) { openAuthTab('login'); return; }
+            if (!currentActiveOffer) return;
+
+            document.getElementById('checkoutOfferTitle').innerText = currentActiveOffer.title;
+            document.getElementById('checkoutOfferPrice').innerText = `$${currentActiveOffer.price}`;
+            document.getElementById('checkoutPaymentMethod').innerText = currentActiveOffer.acceptedPayment;
+
+            let wallet = platformWallets[currentActiveOffer.acceptedPayment] || platformWallets['Solana'];
+            document.getElementById('checkoutWalletAddress').value = wallet;
+
+            closeModal('offerPageModal');
+            openModal('paymentCheckoutModal');
+        }
+
+        function copyCheckoutWallet() {
+            const input = document.getElementById('checkoutWalletAddress');
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value);
+            showMsg("Copied!", "Deposit wallet address copied to clipboard.", "fa-check-circle");
+        }
+
+        function confirmPaymentAndChat() {
+            closeModal('paymentCheckoutModal');
+            startChatWithSeller();
         }
 
         function adminJoinOfferChat(offerId) {
@@ -1498,19 +1578,20 @@
 
         function startChatWithSeller() {
             if (!currentUser) { openAuthTab('login'); return; }
-            closeModal('offerPageModal');
+            const activeOffer = currentActiveOffer;
+            if (!activeOffer) return;
 
-            const chatId = `chat_${currentActiveOffer.id}_${currentUser}`;
+            const chatId = `chat_${activeOffer.id}_${currentUser}`;
             if (!globalCloudData.chats) globalCloudData.chats = {};
 
             if (!globalCloudData.chats[chatId]) {
                 globalCloudData.chats[chatId] = {
-                    orderId: currentActiveOffer.id,
-                    offerTitle: currentActiveOffer.title,
-                    price: currentActiveOffer.price,
+                    orderId: activeOffer.id,
+                    offerTitle: activeOffer.title,
+                    price: activeOffer.price,
                     buyer: currentUser,
-                    seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket Escrow', role: 'Verified Middleman', text: `Secure transaction initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Type !details in chat to view payment destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    seller: activeOffer.seller,
+                    messages: [{ sender: 'StarMarket Escrow', role: 'Verified Middleman', text: `Secure order #${activeOffer.id.slice(-6)} initiated for "${activeOffer.title}" ($${activeOffer.price}). Buyer has submitted escrow deposit. Type !details in chat to reveal seller payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1593,7 +1674,7 @@
             // Check if user/admin typed !details
             if (text.toLowerCase() === '!details') {
                 let offer = getOffers().find(o => o.id === chat.orderId);
-                let payoutInfo = offer ? `💳 Payment Method: ${offer.acceptedPayment}\n📍 Payout Destination: ${offer.paymentAddress}` : `💳 Payment Method: Escrow\n📍 Payout Destination: Contact Support Agent`;
+                let payoutInfo = offer ? `💳 Payment Method: ${offer.acceptedPayment}\n📍 Seller Payout Destination: ${offer.paymentAddress}` : `💳 Payment Method: Escrow\n📍 Payout Destination: Contact Support Agent`;
                 
                 chat.messages.push({
                     sender: 'StarMarket Escrow',
@@ -1750,6 +1831,9 @@
         window.deleteOffer = deleteOffer;
         window.acceptCookies = acceptCookies;
         window.updatePaymentInputLabel = updatePaymentInputLabel;
+        window.openPaymentCheckout = openPaymentCheckout;
+        window.copyCheckoutWallet = copyCheckoutWallet;
+        window.confirmPaymentAndChat = confirmPaymentAndChat;
 
         window.onload = init;
     </script>
