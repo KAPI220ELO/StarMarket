@@ -191,6 +191,58 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full" id="offersGridContainer">
         
+        <!-- Game Quick-Select Visual Cards Section -->
+        <div class="mb-10">
+            <h2 class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
+                <i class="fas fa-fire text-pink-500"></i> <span data-i18n="exploreCategories">Explore Popular Marketplaces</span>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Roblox Card -->
+                <div onclick="filterCategory('Roblox')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-red-950/90 border border-red-500/40 flex items-center justify-center text-red-400 text-2xl group-hover:scale-110 transition shadow-lg shrink-0">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Roblox</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Korblox, Headless & Robux</p>
+                    </div>
+                </div>
+
+                <!-- Fortnite Card -->
+                <div onclick="filterCategory('Fortnite')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-950/90 border border-purple-500/40 flex items-center justify-center text-purple-400 text-2xl group-hover:scale-110 transition shadow-lg shrink-0">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Fortnite</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">OG Skins & Stacked Accounts</p>
+                    </div>
+                </div>
+
+                <!-- Brawl Stars Card -->
+                <div onclick="filterCategory('Brawl Stars')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-950/90 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl group-hover:scale-110 transition shadow-lg shrink-0">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Brawl Stars</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Maxed Brawlers & Trophies</p>
+                    </div>
+                </div>
+
+                <!-- Clash Royale Card -->
+                <div onclick="filterCategory('Clash Royale')" class="glass-panel p-5 rounded-3xl cursor-pointer flex items-center gap-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-950/90 border border-blue-500/40 flex items-center justify-center text-blue-400 text-2xl group-hover:scale-110 transition shadow-lg shrink-0">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base group-hover:text-purple-300 transition">Clash Royale</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Max Towers & Legendaries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Filter Chips -->
         <div class="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 text-sm font-medium border-b border-purple-900/30 scrollbar-none">
             <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-4 py-2.5 rounded-xl whitespace-nowrap transition flex items-center gap-2">
@@ -213,6 +265,22 @@
         <!-- Offers Grid -->
         <div id="offersGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-md bg-[#0b0e1b]/95 border border-purple-500/40 rounded-3xl p-5 z-50 backdrop-blur-2xl shadow-2xl hidden flex flex-col gap-4">
+        <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-purple-400 text-lg shrink-0 shadow-md">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+            <div>
+                <h4 class="font-bold text-white text-sm mb-1" data-i18n="cookieTitle">Cookie Notice</h4>
+                <p class="text-xs text-slate-300 leading-relaxed" data-i18n="cookieText">We use cookies to ensure secure middleman transactions, analyze traffic, and enhance your user experience.</p>
+            </div>
+        </div>
+        <div class="flex justify-end gap-2.5">
+            <button onclick="acceptCookies()" class="w-full gradient-btn font-bold py-2.5 rounded-xl text-xs transition shadow-md" data-i18n="cookieAccept">Accept All</button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-[#060812] border-t border-purple-900/30 py-8 mt-auto">
@@ -615,6 +683,7 @@
                 postNewOfferBtn: "Post New Offer",
                 browseMarket: "Browse Marketplace",
                 allGames: "All Games",
+                exploreCategories: "Explore Popular Marketplaces",
                 footerDisclaimer: "Roblox, Fortnite, Brawl Stars & Clash Royale are trademarks of their respective owners.",
                 modalPostTitle: "Post New Offer",
                 modalSelectGame: "Select Game",
@@ -644,7 +713,10 @@
                 changeAvatar: "Change profile picture",
                 verifiedSeller: "Verified Star Market Seller",
                 sellerActiveListings: "Seller Active Listings",
-                rateSeller: "Rate Seller:"
+                rateSeller: "Rate Seller:",
+                cookieTitle: "Cookie Notice",
+                cookieText: "We use cookies to ensure secure middleman transactions, analyze traffic, and enhance your user experience.",
+                cookieAccept: "Accept All"
             },
             pl: {
                 announcement: "⚡ Witaj w Star Market — Szybki i bezpośredni rynek kont w grach | 🛡️ Dostępni 100% zweryfikowani i zaufani pośrednicy | 🔥 Transakcje bez prowizji dla Roblox, Fortnite, Brawl Stars i Clash Royale | 🚀 Natychmiastowe przekazanie konta i wsparcie 24/7",
@@ -658,6 +730,7 @@
                 postNewOfferBtn: "Wystaw nową ofertę",
                 browseMarket: "Przeglądaj rynek",
                 allGames: "Wszystkie gry",
+                exploreCategories: "Przeglądaj popularne rynki",
                 footerDisclaimer: "Roblox, Fortnite, Brawl Stars i Clash Royale są znakami towarowymi ich odpowiednich właścicieli.",
                 modalPostTitle: "Wystaw nową ofertę",
                 modalSelectGame: "Wybierz grę",
@@ -687,7 +760,10 @@
                 changeAvatar: "Zmień zdjęcie profilowe",
                 verifiedSeller: "Zweryfikowany sprzedawca Star Market",
                 sellerActiveListings: "Aktywne oferty sprzedawcy",
-                rateSeller: "Oceń sprzedawcę:"
+                rateSeller: "Oceń sprzedawcę:",
+                cookieTitle: "Informacja o ciasteczkach",
+                cookieText: "Używamy plików cookie, aby zapewnić bezpieczne transakcje, analizować ruch i poprawiać komfort korzystania z serwisu.",
+                cookieAccept: "Zaakceptuj wszystkie"
             }
         };
 
@@ -752,6 +828,19 @@
             fetchCloudData();
             applyLanguage(currentLang);
             updateAuthUI();
+            checkCookieConsent();
+        }
+
+        function checkCookieConsent() {
+            const accepted = localStorage.getItem('sm_cookies_accepted');
+            if (!accepted) {
+                document.getElementById('cookieConsentBanner').classList.remove('hidden');
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('sm_cookies_accepted', 'true');
+            document.getElementById('cookieConsentBanner').classList.add('hidden');
         }
 
         function toggleLangDropdown() {
@@ -953,6 +1042,9 @@
             const selectedBtn = document.getElementById(`btn-${cat}`);
             if (selectedBtn) selectedBtn.classList.add('active');
             renderOffers();
+            
+            // Smooth scroll to offers grid
+            document.getElementById('offersGridContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
         function getGameBadgeColor(game) {
@@ -1032,7 +1124,6 @@
             });
         }
 
-        // Compress image to prevent Firebase payload crash
         function compressImage(file, maxWidth = 800, maxHeight = 800, quality = 0.7) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -1492,7 +1583,7 @@
             openModal('msgModal');
         }
 
-        // Expose functions globally for HTML inline onclick handlers
+        // Expose functions globally
         window.filterCategory = filterCategory;
         window.openModal = openModal;
         window.closeModal = closeModal;
@@ -1522,6 +1613,7 @@
         window.saveSocials = saveSocials;
         window.handleAvatarUpload = handleAvatarUpload;
         window.deleteOffer = deleteOffer;
+        window.acceptCookies = acceptCookies;
 
         window.onload = init;
     </script>
