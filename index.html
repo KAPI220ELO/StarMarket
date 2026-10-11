@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Banner Background Overlay Layout */
         .hero-banner-bg {
             position: relative;
             background: linear-gradient(180deg, rgba(3, 4, 9, 0.6) 0%, rgba(3, 4, 9, 0.9) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
@@ -567,14 +566,30 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic & Global Cloud Sync -->
-    <script>
+    <!-- Firebase & App Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBi8YdARBulyJCRH2N33LADX4uVkOEL4xY",
+            authDomain: "boobs-61181.firebaseapp.com",
+            databaseURL: "https://boobs-61181-default-rtdb.firebaseio.com",
+            projectId: "boobs-61181",
+            storageBucket: "boobs-61181.firebasestorage.app",
+            messagingSenderId: "25962349842",
+            appId: "1:25962349842:web:433776461555ac65489fcb",
+            measurementId: "G-KTV9MCJJZM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dataRef = ref(db, 'starmarket_data');
+
         let activeCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         
-        const CLOUD_SYNC_URL = 'https://api.npoint.io/1fb92f6b17ca17c160c4';
-
         let globalCloudData = {
             offers: [],
             users: {},
@@ -586,7 +601,6 @@
         let currentSellerViewing = null;
         let activeChatSession = null;
         let currentAdminTab = 'offers';
-        let lastSaveTime = 0;
 
         const translations = {
             en: {
@@ -686,40 +700,23 @@
             'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>' }
         };
 
-        async function fetchCloudData() {
-            if (Date.now() - lastSaveTime < 4000) return;
-
-            try {
-                const res = await fetch(CLOUD_SYNC_URL);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && data.offers && Date.now() - lastSaveTime > 4000) {
-                        globalCloudData = data;
-                        renderOffers();
-                        updateInboxBadge();
-                        if (activeChatSession) renderChatMessages();
-                    }
+        function fetchCloudData() {
+            onValue(dataRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    globalCloudData = data;
+                    renderOffers();
+                    updateInboxBadge();
+                    if (activeChatSession) renderChatMessages();
                 }
-            } catch (err) {
-                let localOffers = JSON.parse(localStorage.getItem('sm_offers'));
-                if (localOffers) globalCloudData.offers = localOffers;
-            }
+            });
         }
 
         async function saveCloudData() {
-            lastSaveTime = Date.now();
-            localStorage.setItem('sm_offers', JSON.stringify(globalCloudData.offers));
-            localStorage.setItem('sm_users_db', JSON.stringify(globalCloudData.users));
-            localStorage.setItem('sm_chats', JSON.stringify(globalCloudData.chats));
-
             try {
-                await fetch(CLOUD_SYNC_URL, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(globalCloudData)
-                });
+                await set(dataRef, globalCloudData);
             } catch (err) {
-                console.log('Cloud sync error');
+                console.log('Firebase save error:', err);
             }
         }
 
@@ -750,10 +747,6 @@
             fetchCloudData();
             applyLanguage(currentLang);
             updateAuthUI();
-
-            setInterval(() => {
-                fetchCloudData();
-            }, 3000);
         }
 
         function toggleLangDropdown() {
@@ -954,13 +947,9 @@
 
         function filterCategory(cat) {
             activeCategory = cat;
-            document.querySelectorAll('.category-chip').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.category-chip').forEach(btn => btn.classList.remove('active'));
             const selectedBtn = document.getElementById(`btn-${cat}`);
-            if (selectedBtn) {
-                selectedBtn.classList.add('active');
-            }
+            if (selectedBtn) selectedBtn.classList.add('active');
             renderOffers();
         }
 
@@ -986,24 +975,16 @@
         }
 
         function giveRep(username, type) {
-            if (!currentUser) {
-                openAuthTab('login');
-                return;
-            }
-            if (currentUser === username) {
-                showMsg("Error", currentLang === 'pl' ? "Nie możesz wystawić opinii samemu sobie." : "You cannot rate yourself.", "fa-triangle-exclamation");
-                return;
-            }
+            if (!currentUser) { openAuthTab('login'); return; }
+            if (currentUser === username) { showMsg("Error", "You cannot rate yourself.", "fa-triangle-exclamation"); return; }
 
             let users = getUsers();
             if (!users[username]) return;
 
-            if (!users[username].reputation) {
-                users[username].reputation = { pos: 0, neg: 0, voters: [] };
-            }
+            if (!users[username].reputation) users[username].reputation = { pos: 0, neg: 0, voters: [] };
 
             if (users[username].reputation.voters.includes(currentUser)) {
-                showMsg("Notice", currentLang === 'pl' ? "Już oceniłeś tego użytkownika." : "You have already voted for this seller.", "fa-info-circle");
+                showMsg("Notice", "You have already voted for this seller.", "fa-info-circle");
                 return;
             }
 
@@ -1014,17 +995,13 @@
             saveUsers(users);
             openSellerProfile(username);
             renderOffers();
-            showMsg("Success", currentLang === 'pl' ? "Opinia została dodana!" : "Reputation updated successfully!", "fa-check-circle");
+            showMsg("Success", "Reputation updated!", "fa-check-circle");
         }
 
         function previewImages(event) {
             let files = Array.from(event.target.files);
             files.forEach(file => {
-                if (selectedOfferFiles.length < 10) {
-                    selectedOfferFiles.push(file);
-                } else {
-                    showMsg("Limit", currentLang === 'pl' ? "Możesz dodać maksymalnie 10 zdjęć." : "Maximum 10 photos allowed.", "fa-triangle-exclamation");
-                }
+                if (selectedOfferFiles.length < 10) selectedOfferFiles.push(file);
             });
             renderImagePreviews();
             event.target.value = '';
@@ -1068,53 +1045,37 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500">
-                    <i class="fas fa-box-open text-5xl mb-3 block opacity-40"></i>
-                    ${currentLang === 'pl' ? 'Brak aktywnych ofert. Bądź pierwszy i wystaw ogłoszenie!' : 'No active offers found. Be the first to post an offer!'}
-                </div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500"><i class="fas fa-box-open text-5xl mb-3 block opacity-40"></i>No active offers found. Be the first to post!</div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(offer => {
                 const badgeStyle = getGameBadgeColor(offer.game);
                 const images = offer.images && offer.images.length > 0 ? offer.images : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
-                const mainImg = images[0];
-                const photoBadge = images.length > 1 ? `<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-lg"><i class="fas fa-images"></i> ${images.length}</div>` : '';
-
                 const sellerUser = users[offer.seller];
-                const sellerAvatarHtml = sellerUser && sellerUser.avatar 
-                    ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">`
-                    : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
+                const sellerAvatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">` : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
 
                 return `
                 <div class="glass-panel rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 group cursor-pointer" onclick="openOfferPage('${offer.id}')">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
-                        <img src="${mainImg}" alt="${offer.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute top-3 left-3">
-                            <span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border backdrop-blur-md shadow-lg ${badgeStyle}">${offer.game}</span>
-                        </div>
-                        ${photoBadge}
+                        <img src="${images[0]}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3"><span class="text-[11px] px-2.5 py-1 rounded-lg font-bold border backdrop-blur-md shadow-lg ${badgeStyle}">${offer.game}</span></div>
                     </div>
                     <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span onclick="event.stopPropagation(); openSellerProfile('${offer.seller}')" class="text-xs text-slate-300 hover:text-purple-400 font-semibold flex items-center gap-2 transition">
-                                    ${sellerAvatarHtml} ${offer.seller}
-                                </span>
-                            </div>
-                            <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1 group-hover:text-purple-300 transition">${offer.title}</h3>
-                            <p class="text-slate-400 text-xs mb-4 line-clamp-2 leading-relaxed">${offer.desc}</p>
+                            <span onclick="event.stopPropagation(); openSellerProfile('${offer.seller}')" class="text-xs text-slate-300 hover:text-purple-400 font-semibold flex items-center gap-2 mb-2">
+                                ${sellerAvatarHtml} ${offer.seller}
+                            </span>
+                            <h3 class="font-bold text-white text-base mb-1.5 line-clamp-1">${offer.title}</h3>
+                            <p class="text-slate-400 text-xs mb-4 line-clamp-2">${offer.desc}</p>
                         </div>
                         <div class="flex items-center justify-between pt-3 border-t border-purple-900/30">
-                            <div>
-                                <span class="text-[10px] text-slate-500 uppercase font-semibold block">${currentLang === 'pl' ? 'Cena' : 'Price'}</span>
-                                <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
-                            </div>
-                            <button onclick="event.stopPropagation(); openOfferPage('${offer.id}')" class="gradient-btn font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md hover:scale-105 active:scale-95">${t.viewAndBuy}</button>
+                            <span class="text-lg font-extrabold text-purple-400">$${offer.price}</span>
+                            <button onclick="event.stopPropagation(); openOfferPage('${offer.id}')" class="gradient-btn font-bold text-xs px-4 py-2.5 rounded-xl">${t.viewAndBuy}</button>
                         </div>
                     </div>
-                </div>
-            `}).join('');
+                </div>`;
+            }).join('');
         }
 
         function openSellerProfile(username) {
@@ -1127,32 +1088,21 @@
             document.getElementById('sellerModalAvatar').innerHTML = avatarHtml;
             document.getElementById('sellerModalRatingBadge').innerHTML = getSellerRatingBadgeHtml(username);
 
-            let socialsHtml = `<p><strong class="text-slate-200"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord:</strong> ${u.discord || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
-            socialsHtml += `<p><strong class="text-slate-200"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram:</strong> ${u.telegram || (currentLang === 'pl' ? 'Brak' : 'Not provided')}</p>`;
-            document.getElementById('sellerModalSocials').innerHTML = socialsHtml;
+            document.getElementById('sellerModalSocials').innerHTML = `
+                <p><strong class="text-slate-200"><i class="fab fa-discord text-indigo-400 mr-1"></i> Discord:</strong> ${u.discord || 'Not provided'}</p>
+                <p><strong class="text-slate-200"><i class="fab fa-telegram text-sky-400 mr-1"></i> Telegram:</strong> ${u.telegram || 'Not provided'}</p>`;
 
             const offers = getOffers().filter(o => o.seller === username);
             const offersList = document.getElementById('sellerModalOffers');
-            if (offers.length === 0) {
-                offersList.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">${currentLang === 'pl' ? 'Brak aktywnych ofert.' : 'No active listings.'}</p>`;
-            } else {
-                offersList.innerHTML = offers.map(o => {
-                    const imgs = o.images || ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
-                    return `
-                    <div onclick="closeModal('sellerProfileModal'); openOfferPage('${o.id}')" class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3 cursor-pointer hover:border-purple-500 transition">
-                        <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <p class="font-bold text-white truncate">${o.title}</p>
-                            <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
-                        </div>
-                    </div>
-                `;}).join('');
-            }
+            offersList.innerHTML = offers.length === 0 ? `<p class="text-xs text-slate-500 py-3 text-center">No active listings.</p>` : offers.map(o => `
+                <div onclick="closeModal('sellerProfileModal'); openOfferPage('${o.id}')" class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3 cursor-pointer hover:border-purple-500">
+                    <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price}</p></div>
+                </div>`).join('');
 
             openModal('sellerProfileModal');
         }
 
-        // Admin Panel Functions
         function openAdminPanel() {
             renderAdminOffers();
             renderAdminTickets();
@@ -1182,22 +1132,12 @@
         function renderAdminOffers() {
             const list = document.getElementById('adminOffersList');
             const offers = getOffers();
-            if (offers.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No active listings.</p>`;
-                return;
-            }
-            list.innerHTML = offers.map(o => {
-                const imgs = o.images || [''];
-                return `
-                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
-                    <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-white truncate">${o.title}</p>
-                        <p class="text-purple-400 font-semibold">$${o.price} • ${o.game} • Seller: ${o.seller}</p>
-                    </div>
-                    <button onclick="adminDeleteOffer('${o.id}')" class="bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-500/40 px-3 py-1.5 rounded-lg transition shrink-0 font-bold"><i class="fas fa-trash mr-1"></i> Delete</button>
-                </div>
-            `;}).join('');
+            list.innerHTML = offers.length === 0 ? `<p class="text-xs text-slate-500 text-center py-4">No active listings.</p>` : offers.map(o => `
+                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3">
+                    <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price} • ${o.game} • Seller: ${o.seller}</p></div>
+                    <button onclick="adminDeleteOffer('${o.id}')" class="bg-red-950 text-red-300 px-3 py-1.5 rounded font-bold">Delete</button>
+                </div>`).join('');
         }
 
         function adminDeleteOffer(id) {
@@ -1205,14 +1145,12 @@
             saveOffers(offers);
             renderAdminOffers();
             renderOffers();
-            showMsg("Success", "Offer deleted successfully by Admin.", "fa-check-circle");
         }
 
         function adminOpenTicket(e) {
             e.preventDefault();
             const targetUser = document.getElementById('adminTargetUser').value.trim();
             const subject = document.getElementById('adminTicketSubject').value.trim();
-
             if (!targetUser || !subject) return;
 
             const chatId = `admin_ticket_${Date.now()}`;
@@ -1224,17 +1162,13 @@
                 price: '0.00',
                 buyer: targetUser,
                 seller: 'StarMarket_Official',
-                middleman: 'StarMarket_Official',
-                messages: [
-                    { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Official Ticket opened for ${targetUser}. Subject: "${subject}". You can send your account details and secure screenshots here.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
-                ]
+                messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Official Ticket opened for ${targetUser}. Subject: "${subject}".`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
             };
 
             saveCloudData();
             document.getElementById('adminTargetUser').value = '';
             document.getElementById('adminTicketSubject').value = '';
             renderAdminTickets();
-            showMsg("Success", `Ticket successfully opened with ${targetUser}!`, "fa-check-circle");
         }
 
         function renderAdminTickets() {
@@ -1242,39 +1176,18 @@
             const chats = globalCloudData.chats || {};
             const chatIds = Object.keys(chats);
 
-            if (chatIds.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No order tickets opened yet.</p>`;
-                return;
-            }
-
-            list.innerHTML = chatIds.map(chatId => {
+            list.innerHTML = chatIds.length === 0 ? `<p class="text-xs text-slate-500 text-center py-4">No tickets opened.</p>` : chatIds.map(chatId => {
                 const c = chats[chatId];
                 return `
-                <div class="flex items-center justify-between bg-[#060812] p-3.5 rounded-xl border border-purple-900/40 text-xs gap-3">
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-white">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</p>
-                        <p class="text-purple-300">User / Buyer: ${c.buyer} | Support / Middleman: ${c.seller || c.middleman}</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="closeModal('adminPanelModal'); openChatModal('${chatId}')" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700/40 px-3 py-1.5 rounded-lg transition font-bold"><i class="fas fa-comments mr-1"></i> View Chat</button>
-                        <button onclick="adminDeleteTicket('${chatId}')" class="bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-500/40 px-3 py-1.5 rounded-lg transition font-bold"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `;}).join('');
-        }
-
-        function adminDeleteTicket(chatId) {
-            if (globalCloudData.chats && globalCloudData.chats[chatId]) {
-                delete globalCloudData.chats[chatId];
-                saveCloudData();
-                renderAdminTickets();
-                showMsg("Success", "Ticket deleted successfully.", "fa-check-circle");
-            }
+                <div class="flex items-center justify-between bg-[#060812] p-3.5 rounded-xl border text-xs gap-3">
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</p><p class="text-purple-300">User: ${c.buyer}</p></div>
+                    <button onclick="closeModal('adminPanelModal'); openChatModal('${chatId}')" class="bg-purple-900 text-purple-200 px-3 py-1.5 rounded font-bold">View Chat</button>
+                </div>`;
+            }).join('');
         }
 
         function openOfferPage(offerId) {
-            const offers = getOffers();
-            const offer = offers.find(o => o.id === offerId);
+            const offer = getOffers().find(o => o.id === offerId);
             if (!offer) return;
             currentActiveOffer = offer;
 
@@ -1286,56 +1199,28 @@
             badge.innerText = offer.game;
             badge.className = `text-xs px-3.5 py-1.5 rounded-xl font-extrabold border backdrop-blur-md shadow-lg ${getGameBadgeColor(offer.game)}`;
 
-            let users = getUsers();
+            const users = getUsers();
             const sellerUser = users[offer.seller];
-            const sellerAvatarHtml = sellerUser && sellerUser.avatar 
-                ? `<img src="${sellerUser.avatar}" class="w-10 h-10 rounded-full object-cover border border-purple-500/40">`
-                : `<div class="w-10 h-10 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
+            const avatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-10 h-10 rounded-full object-cover">` : `<div class="w-10 h-10 rounded-full bg-purple-950 flex items-center justify-center text-purple-400"><i class="fas fa-user"></i></div>`;
 
             document.getElementById('offerPageSellerBox').innerHTML = `
                 <div class="flex items-center gap-3.5 cursor-pointer" onclick="openSellerProfile('${offer.seller}')">
-                    ${sellerAvatarHtml}
-                    <div>
-                        <span class="text-xs text-slate-400 block">${currentLang === 'pl' ? 'Sprzedawca' : 'Seller'}</span>
-                        <span class="text-sm font-bold text-white hover:text-purple-300 transition">${offer.seller}</span>
-                    </div>
+                    ${avatarHtml}
+                    <div><span class="text-xs text-slate-400 block">Seller</span><span class="text-sm font-bold text-white">${offer.seller}</span></div>
                 </div>
-                <div>${getSellerRatingBadgeHtml(offer.seller)}</div>
-            `;
+                <div>${getSellerRatingBadgeHtml(offer.seller)}</div>`;
 
-            const paymentMethod = offer.acceptedPayment || 'PayPal';
-            const payDetails = paymentOptionsDetails[paymentMethod] || { name: paymentMethod, icon: '<i class="fas fa-wallet text-purple-400 text-lg"></i>' };
-            document.getElementById('offerPagePaymentMethod').innerHTML = `
-                <span class="w-9 h-9 rounded-xl bg-[#060812] flex items-center justify-center border border-purple-900/50 shadow-md">${payDetails.icon}</span>
-                <span class="text-base">${payDetails.name}</span>
-            `;
+            const pay = paymentOptionsDetails[offer.acceptedPayment] || { name: offer.acceptedPayment, icon: '<i class="fas fa-wallet text-purple-400"></i>' };
+            document.getElementById('offerPagePaymentMethod').innerHTML = `<span class="w-9 h-9 rounded-xl bg-[#060812] flex items-center justify-center border">${pay.icon}</span><span>${pay.name}</span>`;
 
-            const images = offer.images && offer.images.length > 0 ? offer.images : ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'];
-            document.getElementById('offerPageMainImage').src = images[0];
+            document.getElementById('offerPageMainImage').src = offer.images[0];
+            document.getElementById('offerPageThumbnails').innerHTML = offer.images.map(img => `
+                <button type="button" onclick="document.getElementById('offerPageMainImage').src='${img}'" class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-purple-900/50 bg-[#060812]"><img src="${img}" class="w-full h-full object-cover"></button>`).join('');
 
-            const thumbnailsContainer = document.getElementById('offerPageThumbnails');
-            thumbnailsContainer.innerHTML = images.map((img) => `
-                <button type="button" onclick="document.getElementById('offerPageMainImage').src='${img}'" class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-purple-900/50 shrink-0 hover:border-purple-500 transition shadow-lg bg-[#060812]">
-                    <img src="${img}" class="w-full h-full object-cover">
-                </button>
-            `).join('');
-
-            const actionBtnContainer = document.getElementById('offerPageActionBtnContainer');
             const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
-
-            if (isAdmin) {
-                actionBtnContainer.innerHTML = `
-                    <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5">
-                        <i class="fas fa-comments"></i> Open & Join Conversation
-                    </button>
-                `;
-            } else {
-                actionBtnContainer.innerHTML = `
-                    <button onclick="startChatWithSeller()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition text-base shadow-xl flex items-center justify-center gap-2.5 transform hover:scale-[1.02] active:scale-98">
-                        <i class="fas fa-arrow-right"></i> Proceed with Order
-                    </button>
-                `;
-            }
+            document.getElementById('offerPageActionBtnContainer').innerHTML = isAdmin ? `
+                <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition">Open & Join Conversation</button>` : `
+                <button onclick="startChatWithSeller()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
 
             document.getElementById('offerPageModal').classList.remove('hidden');
         }
@@ -1352,28 +1237,21 @@
                     price: currentActiveOffer.price,
                     buyer: currentActiveOffer.seller,
                     seller: currentActiveOffer.seller,
-                    middleman: 'StarMarket_Official',
-                    messages: [
-                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Admin joined conversation for listing "${currentActiveOffer.title}".`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
-                    ]
+                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Admin joined conversation.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
-
             activeChatSession = chatId;
             openChatModal(chatId);
         }
 
         function startChatWithSeller() {
-            if (!currentUser) {
-                openAuthTab('login');
-                return;
-            }
+            if (!currentUser) { openAuthTab('login'); return; }
             closeModal('offerPageModal');
-            
+
             const chatId = `chat_${currentActiveOffer.id}_${currentUser}`;
             if (!globalCloudData.chats) globalCloudData.chats = {};
-            
+
             if (!globalCloudData.chats[chatId]) {
                 globalCloudData.chats[chatId] = {
                     orderId: currentActiveOffer.id,
@@ -1381,87 +1259,61 @@
                     price: currentActiveOffer.price,
                     buyer: currentUser,
                     seller: currentActiveOffer.seller,
-                    middleman: 'StarMarket_Official',
-                    messages: [
-                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Order #${currentActiveOffer.id.slice(-6)} initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Buyer (${currentUser}), Seller (${currentActiveOffer.seller}), and Official Middleman are now connected. You can share account details securely here.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
-                    ]
+                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Order #${currentActiveOffer.id.slice(-6)} initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}).`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
-            
             activeChatSession = chatId;
             openChatModal(chatId);
         }
 
         function openPrivateMiddlemanChat() {
-            if (!currentUser) {
-                openAuthTab('login');
-                return;
-            }
+            if (!currentUser) { openAuthTab('login'); return; }
             const chatId = `private_support_${currentUser}`;
             if (!globalCloudData.chats) globalCloudData.chats = {};
 
             if (!globalCloudData.chats[chatId]) {
                 globalCloudData.chats[chatId] = {
                     orderId: 'SUPP-' + Math.floor(Math.random() * 90000 + 10000),
-                    offerTitle: 'Direct Middleman Support Ticket',
+                    offerTitle: 'Direct Support Ticket',
                     price: '0.00',
                     buyer: currentUser,
                     seller: 'StarMarket_Official',
-                    middleman: 'StarMarket_Official',
-                    messages: [
-                        { sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Hello ${currentUser}! You are connected directly with Star Market Official Support & Middleman team. You can send your account details and questions here securely.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
-                    ]
+                    messages: [{ sender: 'StarMarket_Official', role: 'Verified Middleman', text: `🛡️ Hello ${currentUser}! Connected with Star Market Support.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
-
             activeChatSession = chatId;
             openChatModal(chatId);
         }
 
         function openChatModal(chatId) {
             activeChatSession = chatId;
-            let chats = globalCloudData.chats || {};
-            let chat = chats[chatId];
+            const chat = globalCloudData.chats[chatId];
             if (!chat) return;
 
             document.getElementById('chatHeaderTitle').innerText = `Order #${chat.orderId.slice(-6)}`;
             document.getElementById('chatHeaderSubtitle').innerText = `${chat.offerTitle} • $${chat.price}`;
-            
             renderChatMessages();
             openModal('chatModal');
         }
 
         function renderChatMessages() {
-            let chats = globalCloudData.chats || {};
-            let chat = chats[activeChatSession];
+            const chat = globalCloudData.chats[activeChatSession];
             if (!chat) return;
 
             const feed = document.getElementById('chatMessageFeed');
             feed.innerHTML = chat.messages.map(m => {
                 const isMe = m.sender === currentUser;
-                let roleBadge = '';
                 let bubbleBg = isMe ? 'bg-purple-950/70 border-purple-500/40 text-white ml-auto' : 'bg-[#0d0f1c] border-purple-900/40 text-slate-200 mr-auto';
-                
-                if (m.role === 'Verified Middleman') {
-                    roleBadge = '<span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">🛡️ Middleman</span>';
-                    bubbleBg = 'bg-emerald-950/30 border-emerald-500/40 text-emerald-100 mx-auto w-full';
-                } else if (m.role === 'Seller') {
-                    roleBadge = '<span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">📦 Seller</span>';
-                } else {
-                    roleBadge = '<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold ml-2">👤 Buyer</span>';
-                }
+                if (m.role === 'Verified Middleman') bubbleBg = 'bg-emerald-950/30 border-emerald-500/40 text-emerald-100 mx-auto w-full';
 
                 return `
                 <div class="flex flex-col space-y-1 border rounded-2xl p-3.5 text-xs shadow-md max-w-[85%] ${bubbleBg}">
-                    <div class="flex items-center justify-between gap-4">
-                        <span class="font-bold text-white flex items-center">${m.sender} ${roleBadge}</span>
-                        <span class="text-[10px] text-slate-400">${m.time}</span>
-                    </div>
-                    <p class="leading-relaxed text-slate-200 mt-1">${m.text}</p>
-                </div>
-            `;}).join('');
+                    <div class="flex items-center justify-between gap-4"><span class="font-bold text-white">${m.sender}</span><span class="text-[10px] text-slate-400">${m.time}</span></div>
+                    <p class="leading-relaxed mt-1">${m.text}</p>
+                </div>`;
+            }).join('');
             feed.scrollTop = feed.scrollHeight;
         }
 
@@ -1471,19 +1323,13 @@
             const text = input.value.trim();
             if (!text || !activeChatSession) return;
 
-            if (!globalCloudData.chats) globalCloudData.chats = {};
             let chat = globalCloudData.chats[activeChatSession];
             if (!chat) return;
 
-            const senderName = currentUser || chat.buyer;
-            let senderRole = 'Buyer';
-            if (senderName === chat.seller) senderRole = 'Seller';
-            if (senderName === 'Admin' || senderName === chat.middleman) senderRole = 'Verified Middleman';
-
             chat.messages.push({
-                sender: senderName,
-                role: senderRole,
-                text: text,
+                sender: currentUser,
+                role: currentUser === chat.seller ? 'Seller' : 'Buyer',
+                text,
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             });
 
@@ -1495,63 +1341,47 @@
 
         function renderInboxChats() {
             const list = document.getElementById('inboxChatsList');
-            let chats = globalCloudData.chats || {};
-            const userChats = Object.keys(chats).filter(chatId => {
-                const c = chats[chatId];
+            const chats = globalCloudData.chats || {};
+            const userChats = Object.keys(chats).filter(id => {
+                const c = chats[id];
                 return c.buyer === currentUser || c.seller === currentUser || currentUser === 'Admin';
             });
 
             if (userChats.length === 0) {
-                list.innerHTML = `<div class="text-center py-10 text-slate-500">
-                    <i class="fas fa-inbox text-4xl mb-3 block opacity-40"></i>
-                    ${currentLang === 'pl' ? 'Brak wiadomości lub zamówień.' : 'No messages or order chats found.'}
-                </div>`;
+                list.innerHTML = `<div class="text-center py-10 text-slate-500"><i class="fas fa-inbox text-4xl mb-3 block opacity-40"></i>No messages found.</div>`;
                 return;
             }
 
-            list.innerHTML = userChats.map(chatId => {
-                const c = chats[chatId];
-                const lastMsg = c.messages[c.messages.length - 1] || { text: 'Started conversation', time: '' };
+            list.innerHTML = userChats.map(id => {
+                const c = chats[id];
+                const lastMsg = c.messages[c.messages.length - 1] || { text: '', time: '' };
                 return `
-                <div onclick="closeModal('inboxModal'); openChatModal('${chatId}')" class="bg-[#060812] hover:bg-purple-950/40 p-4 rounded-2xl border border-purple-900/50 cursor-pointer transition flex items-center justify-between gap-3 shadow-md">
+                <div onclick="closeModal('inboxModal'); openChatModal('${id}')" class="bg-[#060812] hover:bg-purple-950/40 p-4 rounded-2xl border border-purple-900/50 cursor-pointer transition flex items-center justify-between gap-3 shadow-md">
                     <div class="flex-1 min-w-0">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="font-bold text-white text-sm truncate">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</span>
-                            <span class="text-[10px] text-purple-400 font-semibold">${lastMsg.time}</span>
-                        </div>
-                        <p class="text-xs text-slate-400 truncate"><strong class="text-slate-300">${lastMsg.sender}:</strong> ${lastMsg.text}</p>
+                        <div class="flex items-center justify-between mb-1"><span class="font-bold text-white text-sm truncate">Order #${c.orderId.slice(-6)}: ${c.offerTitle}</span><span class="text-[10px] text-purple-400">${lastMsg.time}</span></div>
+                        <p class="text-xs text-slate-400 truncate"><strong>${lastMsg.sender}:</strong> ${lastMsg.text}</p>
                     </div>
-                    <i class="fas fa-chevron-right text-purple-400 text-xs"></i>
-                </div>
-            `;}).join('');
+                </div>`;
+            }).join('');
         }
 
         function handleCreateOffer(e) {
             e.preventDefault();
-            if (!currentUser) {
-                closeModal('createOfferModal');
-                openAuthTab('login');
-                return;
-            }
+            if (!currentUser) { closeModal('createOfferModal'); openAuthTab('login'); return; }
 
             const game = document.getElementById('offerGame').value;
             const title = document.getElementById('offerTitle').value.trim();
-            const priceStr = document.getElementById('offerPrice').value;
+            const price = parseFloat(document.getElementById('offerPrice').value).toFixed(2);
             const desc = document.getElementById('offerDescription').value.trim();
             const paymentRadio = document.querySelector('input[name="offerPaymentRadio"]:checked');
-            const selectedPayment = paymentRadio ? paymentRadio.value : 'PayPal';
-
-            if (!title || !priceStr || !desc) return;
-            const price = parseFloat(priceStr).toFixed(2);
+            const acceptedPayment = paymentRadio ? paymentRadio.value : 'PayPal';
 
             let promises = selectedOfferFiles.length > 0 
-                ? selectedOfferFiles.map(file => {
-                    return new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = (e) => resolve(e.target.result);
-                        reader.readAsDataURL(file);
-                    });
-                  })
+                ? selectedOfferFiles.map(file => new Promise(res => {
+                    const r = new FileReader();
+                    r.onload = e => res(e.target.result);
+                    r.readAsDataURL(file);
+                }))
                 : [Promise.resolve('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80')];
 
             Promise.all(promises).then(base64Array => {
@@ -1563,7 +1393,7 @@
                     desc, 
                     seller: currentUser,
                     images: base64Array,
-                    acceptedPayment: selectedPayment
+                    acceptedPayment
                 };
                 const offers = getOffers();
                 offers.unshift(newOffer);
@@ -1574,33 +1404,23 @@
                 document.getElementById('imagePreviewGrid').innerHTML = '';
                 closeModal('createOfferModal');
                 renderOffers();
-                showMsg("Success", currentLang === 'pl' ? "Twoja oferta została pomyślnie opublikowana!" : "Your offer has been published successfully!", "fa-check-circle");
-            }).catch(err => {
-                showMsg("Error", "Failed to process images. Please try smaller files.", "fa-triangle-exclamation");
+                showMsg("Success", "Offer published globally via Firebase!", "fa-check-circle");
             });
         }
 
         function renderUserOffers() {
             const list = document.getElementById('userOffersList');
             const offers = getOffers().filter(o => o.seller === currentUser);
-
             if (offers.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">${currentLang === 'pl' ? 'Nie wystawiłeś jeszcze żadnych ofert.' : "You haven't posted any offers yet."}</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-500 py-3 text-center">You haven't posted any offers yet.</p>`;
                 return;
             }
-
-            list.innerHTML = offers.map(o => {
-                const imgs = o.images || ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&auto=format&fit=crop&q=80'];
-                return `
-                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border border-purple-900/40 text-xs gap-3">
-                    <img src="${imgs[0]}" class="w-10 h-10 rounded-lg object-cover border border-purple-900/50 shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-white truncate">${o.title}</p>
-                        <p class="text-purple-400 font-semibold">$${o.price} • ${o.game}</p>
-                    </div>
-                    <button onclick="deleteOffer('${o.id}')" class="text-red-400 hover:text-red-300 p-2 rounded-lg hover:bg-red-950/30 transition shrink-0"><i class="fas fa-trash"></i></button>
-                </div>
-            `}).join('');
+            list.innerHTML = offers.map(o => `
+                <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3">
+                    <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price}</p></div>
+                    <button onclick="deleteOffer('${o.id}')" class="text-red-400 p-2"><i class="fas fa-trash"></i></button>
+                </div>`).join('');
         }
 
         function deleteOffer(id) {
@@ -1618,8 +1438,6 @@
 
         function closeModal(id) {
             document.getElementById(id).classList.add('hidden');
-            if (id === 'offerPageModal') document.getElementById('offerPageModal').classList.add('hidden');
-            if (id === 'adminPanelModal') document.getElementById('adminPanelModal').classList.add('hidden');
         }
 
         function showMsg(title, body, iconClass = "fa-info") {
@@ -1629,12 +1447,36 @@
             openModal('msgModal');
         }
 
-        window.onclick = function(event) {
-            if (!event.target.closest('.relative')) {
-                const dropdown = document.getElementById('langDropdown');
-                if (dropdown) dropdown.classList.add('hidden');
-            }
-        }
+        // Expose functions globally for HTML inline onclick handlers
+        window.filterCategory = filterCategory;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.handleCreateOffer = handleCreateOffer;
+        window.handleLogin = handleLogin;
+        window.handleSignup = handleSignup;
+        window.logout = logout;
+        window.setLanguage = setLanguage;
+        window.toggleLangDropdown = toggleLangDropdown;
+        window.openAuthTab = openAuthTab;
+        window.switchAuthTab = switchAuthTab;
+        window.openSellerProfile = openSellerProfile;
+        window.giveRep = giveRep;
+        window.previewImages = previewImages;
+        window.removeOfferImage = removeOfferImage;
+        window.openOfferPage = openOfferPage;
+        window.adminJoinOfferChat = adminJoinOfferChat;
+        window.startChatWithSeller = startChatWithSeller;
+        window.openPrivateMiddlemanChat = openPrivateMiddlemanChat;
+        window.openChatModal = openChatModal;
+        window.sendChatMessage = sendChatMessage;
+        window.openAdminPanel = openAdminPanel;
+        window.switchAdminTab = switchAdminTab;
+        window.adminDeleteOffer = adminDeleteOffer;
+        window.adminOpenTicket = adminOpenTicket;
+        window.adminDeleteTicket = adminDeleteTicket;
+        window.saveSocials = saveSocials;
+        window.handleAvatarUpload = handleAvatarUpload;
+        window.deleteOffer = deleteOffer;
 
         window.onload = init;
     </script>
