@@ -995,7 +995,6 @@
                 updateAuthUI();
                 updateInboxBadge();
 
-                // Listen for real-time updates from other clients without overwriting state destructively
                 onValue(dataRef, (snap) => {
                     const val = snap.val();
                     if (val) {
@@ -1634,14 +1633,49 @@
             const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
             const isSpecialBypass = globalCloudData.specialAccounts && globalCloudData.specialAccounts[currentUser];
 
+            // Check if there is an existing chat/order for this offer involving the current user
+            let existingChatId = null;
+            let chats = globalCloudData.chats || {};
+            for (let cid in chats) {
+                let c = chats[cid];
+                if (c.orderId === offer.id && (c.seller === currentUser || c.buyer === currentUser)) {
+                    existingChatId = cid;
+                    break;
+                }
+            }
+
+            const actionContainer = document.getElementById('offerPageActionBtnContainer');
+
             if (isAdmin) {
-                document.getElementById('offerPageActionBtnContainer').innerHTML = `
-                    <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition">Open & Join Conversation</button>`;
+                actionContainer.innerHTML = `
+                    <button onclick="adminJoinOfferChat('${offer.id}')" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition shadow-xl flex items-center justify-center gap-2">
+                        <i class="fas fa-headset"></i> Open & Join Conversation
+                    </button>`;
+            } else if (offer.seller === currentUser) {
+                if (existingChatId) {
+                    // Someone paid/ordered it! Change text to "Open Chat"
+                    actionContainer.innerHTML = `
+                        <button onclick="openChatModal('${existingChatId}')" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-2xl transition shadow-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-comments"></i> Open Chat
+                        </button>`;
+                } else {
+                    // It's the user's own offer and no one has paid yet
+                    actionContainer.innerHTML = `
+                        <button disabled class="w-full bg-purple-950/60 text-purple-300 border border-purple-500/30 font-bold py-4 rounded-2xl transition cursor-not-allowed shadow-inner flex items-center justify-center gap-2">
+                            <i class="fas fa-user-tag"></i> My Offer
+                        </button>`;
+                }
+            } else if (existingChatId) {
+                // Buyer already ordered this
+                actionContainer.innerHTML = `
+                    <button onclick="openChatModal('${existingChatId}')" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl flex items-center justify-center gap-2">
+                        <i class="fas fa-comments"></i> Open Chat
+                    </button>`;
             } else if (isSpecialBypass) {
-                document.getElementById('offerPageActionBtnContainer').innerHTML = `
+                actionContainer.innerHTML = `
                     <button onclick="startBypassOrder('${offer.id}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-2xl transition shadow-xl">Instant Ticket (Payment Bypassed)</button>`;
             } else {
-                document.getElementById('offerPageActionBtnContainer').innerHTML = `
+                actionContainer.innerHTML = `
                     <button onclick="openPaymentCheckout()" class="w-full gradient-btn font-bold py-4 rounded-2xl transition shadow-xl">Proceed with Order</button>`;
             }
 
@@ -1723,6 +1757,25 @@
         }
 
         function confirmPaymentAndChat() {
+            // Create order chat instantly upon checkout submission
+            if (currentUser && currentActiveOffer) {
+                const chatId = `chat_${currentActiveOffer.id}_${currentUser}`;
+                if (!globalCloudData.chats) globalCloudData.chats = {};
+                if (!globalCloudData.chats[chatId]) {
+                    globalCloudData.chats[chatId] = {
+                        orderId: currentActiveOffer.id,
+                        offerTitle: currentActiveOffer.title,
+                        price: currentActiveOffer.price,
+                        buyer: currentUser,
+                        seller: currentActiveOffer.seller,
+                        messages: [
+                            { sender: 'Support', role: 'Support Agent', text: `Payment submitted for order #${currentActiveOffer.id.slice(-6)} ("${currentActiveOffer.title}"). Support escrow active. Sellers and buyers can chat here.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+                        ]
+                    };
+                    saveCloudData();
+                }
+            }
+
             closeModal('paymentCheckoutModal');
             openModal('paymentProcessingModal');
 
