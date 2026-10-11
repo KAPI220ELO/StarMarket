@@ -352,23 +352,23 @@
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="USDT" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
-                            <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] border border-emerald-500/40">₮</span> <span class="font-bold">USDT (Tether)</span>
+                            <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=035" class="w-4 h-4 object-contain"> <span class="font-bold">USDT</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Bitcoin" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
-                            <i class="fab fa-bitcoin text-amber-400 text-sm"></i> <span class="font-bold">Bitcoin (BTC)</span>
+                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=035" class="w-4 h-4 object-contain"> <span class="font-bold">Bitcoin</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Ethereum" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
-                            <i class="fab fa-ethereum text-indigo-400 text-sm"></i> <span class="font-bold">Ethereum (ETH)</span>
+                            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=035" class="w-4 h-4 object-contain"> <span class="font-bold">Ethereum</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Solana" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
-                            <span class="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px] border border-purple-500/40">◎</span> <span class="font-bold">Solana (SOL)</span>
+                            <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=035" class="w-4 h-4 object-contain"> <span class="font-bold">Solana</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40">
                             <input type="radio" name="offerPaymentRadio" value="Litecoin" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
-                            <span class="w-4 h-4 rounded-full bg-slate-500/20 text-slate-300 flex items-center justify-center font-bold text-[10px] border border-slate-500/40">Ł</span> <span class="font-bold">Litecoin (LTC)</span>
+                            <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.svg?v=035" class="w-4 h-4 object-contain"> <span class="font-bold">Litecoin</span>
                         </label>
                         <label class="flex items-center gap-2.5 bg-[#060812] border-2 border-purple-900/50 p-2.5 rounded-2xl text-xs cursor-pointer hover:border-purple-500 transition text-slate-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40 col-span-2">
                             <input type="radio" name="offerPaymentRadio" value="Cash App" onchange="updatePaymentInputLabel(this.value)" class="accent-purple-600"> 
@@ -456,9 +456,8 @@
                         <div id="offerPageSellerBox" class="flex items-center justify-between bg-[#060812] p-4 rounded-2xl border border-purple-900/50 cursor-pointer hover:border-purple-500 transition shadow-inner"></div>
 
                         <div class="bg-[#060812] p-4 rounded-2xl border border-purple-900/50 shadow-inner space-y-2">
-                            <span class="text-xs text-slate-400 font-semibold block" data-i18n="acceptedPayment">Payment & Payout Information</span>
+                            <span class="text-xs text-slate-400 font-semibold block" data-i18n="acceptedPayment">Payment Method</span>
                             <div id="offerPagePaymentMethod" class="flex items-center gap-3 text-white font-bold text-sm"></div>
-                            <div id="offerPagePayoutDest" class="text-xs text-purple-300 bg-purple-950/40 border border-purple-500/30 p-2.5 rounded-xl font-mono mt-2"></div>
                         </div>
 
                         <div>
@@ -468,7 +467,7 @@
 
                         <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
                             <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
-                            <span>Protected by Star Market Verified Escrow & 24/7 Support.</span>
+                            <span>Protected by Star Market Verified Escrow & 24/7 Support. Type <b>!details</b> in chat for payment address.</span>
                         </div>
 
                         <div id="offerPageActionBtnContainer"></div>
@@ -486,7 +485,7 @@
                     <div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
                     <div>
                         <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Secure Order #839210</h3>
-                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Escrow Active • Verified Middleman Connected</p>
+                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Escrow Active • Verified Middleman Connected (Type !details for payment address)</p>
                     </div>
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-base"></i></button>
@@ -505,7 +504,7 @@
 
             <div class="bg-[#060812] p-4 border-t border-purple-900/50 shrink-0">
                 <form onsubmit="sendChatMessage(event)" class="flex gap-3">
-                    <input type="text" id="chatMessageInput" placeholder="Type secure message, payment proof, or account details..." required class="flex-1 bg-[#0d0f1c] border border-purple-900/50 rounded-2xl px-5 py-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 shadow-inner">
+                    <input type="text" id="chatMessageInput" placeholder="Type secure message or type !details to get payout address..." required class="flex-1 bg-[#0d0f1c] border border-purple-900/50 rounded-2xl px-5 py-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 shadow-inner">
                     <button type="submit" class="gradient-btn font-bold px-6 py-3.5 rounded-2xl text-xs transition shadow-lg flex items-center gap-2">
                         <i class="fas fa-paper-plane"></i> Send
                     </button>
@@ -728,7 +727,7 @@
                 msgGotIt: "Got it",
                 viewAndBuy: "View",
                 backToMarket: "Back to Marketplace",
-                acceptedPayment: "Payment & Payout Information",
+                acceptedPayment: "Payment Method",
                 accountDesc: "Account Description",
                 proceedBtn: "Proceed with Order",
                 changeAvatar: "Change profile picture",
@@ -781,7 +780,7 @@
                 msgGotIt: "Rozumiem",
                 viewAndBuy: "Zobacz",
                 backToMarket: "Powrót do rynku",
-                acceptedPayment: "Informacje o płatności i wypłacie",
+                acceptedPayment: "Metoda płatności",
                 accountDesc: "Opis konta",
                 proceedBtn: "Przejdź do zamówienia",
                 changeAvatar: "Zmień zdjęcie profilowe",
@@ -801,12 +800,12 @@
 
         const paymentOptionsDetails = {
             'PayPal': { name: 'PayPal', icon: '<i class="fab fa-paypal text-sky-400 text-lg"></i>' },
-            'USDT': { name: 'USDT (Tether)', icon: '<div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-extrabold text-xs border border-emerald-500/40">₮</div>' },
-            'Bitcoin': { name: 'Bitcoin (BTC)', icon: '<i class="fab fa-bitcoin text-amber-400 text-lg"></i>' },
-            'Ethereum': { name: 'Ethereum (ETH)', icon: '<i class="fab fa-ethereum text-indigo-400 text-lg"></i>' },
-            'Solana': { name: 'Solana (SOL)', icon: '<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-extrabold text-xs border border-purple-500/40">◎</div>' },
-            'Litecoin': { name: 'Litecoin (LTC)', icon: '<div class="w-6 h-6 rounded-full bg-slate-500/20 text-slate-300 flex items-center justify-center font-extrabold text-xs border border-slate-500/40">Ł</div>' },
-            'Cash App': { name: 'Cash App', icon: '<i class="fas fa-dollar-sign text-emerald-400 text-lg"></i>' }
+            'USDT': { name: 'USDT (Tether)', icon: '<img src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=035" class="w-6 h-6 object-contain">' },
+            'Bitcoin': { name: 'Bitcoin (BTC)', icon: '<img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=035" class="w-6 h-6 object-contain">' },
+            'Ethereum': { name: 'Ethereum (ETH)', icon: '<img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=035" class="w-6 h-6 object-contain">' },
+            'Solana': { name: 'Solana (SOL)', icon: '<img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=035" class="w-6 h-6 object-contain">' },
+            'Litecoin': { name: 'Litecoin (LTC)', icon: '<img src="https://cryptologos.cc/logos/litecoin-ltc-logo.svg?v=035" class="w-6 h-6 object-contain">' },
+            'Cash App': { name: 'Cash App', icon: '<div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs"><i class="fas fa-dollar-sign"></i></div>' }
         };
 
         function updatePaymentInputLabel(method) {
@@ -1272,7 +1271,6 @@
             const users = getUsers();
             const t = translations[currentLang];
 
-            // 1. Filter
             let filtered = offers.filter(o => {
                 const matchesCat = activeCategory === 'All' || o.game === activeCategory;
                 const matchesSub = activeSubCategory === 'All' || (o.subCategory || 'Accounts') === activeSubCategory;
@@ -1280,11 +1278,10 @@
                 return matchesCat && matchesSub && matchesSearch;
             });
 
-            // 2. Sort
             filtered.sort((a, b) => {
                 if (sortBy === 'price_low') return parseFloat(a.price) - parseFloat(b.price);
                 if (sortBy === 'price_high') return parseFloat(b.price) - parseFloat(a.price);
-                return parseInt(b.id) - parseInt(a.id); // Newest first
+                return parseInt(b.id) - parseInt(a.id);
             });
 
             if (filtered.length === 0) {
@@ -1405,7 +1402,7 @@
                 price: '0.00',
                 buyer: targetUser,
                 seller: 'StarMarket_Official',
-                messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Secure support ticket opened for ${targetUser}. Subject: "${subject}".`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Secure support ticket opened for ${targetUser}. Subject: "${subject}". Type !details to view payout info.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
             };
 
             saveCloudData();
@@ -1465,7 +1462,7 @@
 
             const pay = paymentOptionsDetails[offer.acceptedPayment] || { name: offer.acceptedPayment, icon: '<i class="fas fa-wallet text-purple-400"></i>' };
             document.getElementById('offerPagePaymentMethod').innerHTML = `<span class="w-7 h-7 rounded-lg bg-[#060812] flex items-center justify-center border">${pay.icon}</span><span>${pay.name}</span>`;
-            document.getElementById('offerPagePayoutDest').innerText = `Payout Destination: ${offer.paymentAddress || 'Not specified'}`;
+            document.getElementById('offerPagePayoutDest').innerText = `Payout Destination: Hidden (Type !details in order chat)`;
 
             document.getElementById('offerPageMainImage').src = offer.images[0];
             document.getElementById('offerPageThumbnails').innerHTML = offer.images.map(img => `
@@ -1491,7 +1488,7 @@
                     price: currentActiveOffer.price,
                     buyer: currentActiveOffer.seller,
                     seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Support agent joined conversation.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Support', role: 'Verified Middleman', text: `Support agent joined conversation. Type !details to view payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1513,7 +1510,7 @@
                     price: currentActiveOffer.price,
                     buyer: currentUser,
                     seller: currentActiveOffer.seller,
-                    messages: [{ sender: 'StarMarket Escrow', role: 'Verified Middleman', text: `Secure transaction initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Seller payout address: ${currentActiveOffer.paymentAddress}.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Escrow', role: 'Verified Middleman', text: `Secure transaction initialized for "${currentActiveOffer.title}" ($${currentActiveOffer.price}). Type !details in chat to view payment destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1593,6 +1590,19 @@
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             });
 
+            // Check if user/admin typed !details
+            if (text.toLowerCase() === '!details') {
+                let offer = getOffers().find(o => o.id === chat.orderId);
+                let payoutInfo = offer ? `💳 Payment Method: ${offer.acceptedPayment}\n📍 Payout Destination: ${offer.paymentAddress}` : `💳 Payment Method: Escrow\n📍 Payout Destination: Contact Support Agent`;
+                
+                chat.messages.push({
+                    sender: 'StarMarket Escrow',
+                    role: 'Verified Middleman',
+                    text: `📋 Secure Transaction Payout Details:\n${payoutInfo}`,
+                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                });
+            }
+
             saveCloudData();
             input.value = '';
             renderChatMessages();
@@ -1664,7 +1674,7 @@
                 document.getElementById('imagePreviewGrid').innerHTML = '';
                 closeModal('createOfferModal');
                 renderOffers();
-                showMsg("Success", "Offer published globally via Firebase!", "fa-check-circle");
+                showMsg("Success", "Posted!", "fa-check-circle");
             });
         }
 
