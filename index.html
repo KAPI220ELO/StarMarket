@@ -445,8 +445,8 @@
                 </div>
             </div>
 
-            <button onclick="confirmPaymentAndChat()" class="w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2">
-                <i class="fas fa-check-circle"></i> I Have Paid / Submit Payment Proof
+            <button id="checkoutSubmitBtn" onclick="confirmPaymentAndChat()" disabled class="w-full bg-purple-950/60 text-slate-400 font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2 cursor-not-allowed">
+                <i class="fas fa-clock"></i> Please wait (<span id="checkoutTimer">20</span>s) before confirming...
             </button>
         </div>
     </div>
@@ -471,7 +471,7 @@
                 </div>
                 <div class="flex items-center justify-between text-slate-300">
                     <span class="flex items-center gap-2"><i class="fas fa-spinner fa-spin text-purple-400" id="step2Icon"></i> <span id="processingStatusMessage">Awaiting validator confirmations</span></span>
-                    <span class="text-[10px] text-purple-400 font-mono" id="processingTimerText">Syncing...</span>
+                    <span class="text-[10px] text-purple-400 font-mono">Syncing...</span>
                 </div>
             </div>
 
@@ -1711,12 +1711,9 @@
 
             const priceUSD = parseFloat(currentActiveOffer.price);
             const method = currentActiveOffer.acceptedPayment;
-            const rate = cryptoRates[method] || 1;
-            const cryptoQty = (priceUSD / rate).toFixed(4);
-            const symbol = method === 'Solana' ? 'SOL' : method === 'Bitcoin' ? 'BTC' : method === 'Ethereum' ? 'ETH' : method === 'Litecoin' ? 'LTC' : method === 'USDT' ? 'USDT' : 'USD';
 
             document.getElementById('checkoutOfferTitle').innerText = currentActiveOffer.title;
-            document.getElementById('checkoutOfferPrice').innerHTML = `$${priceUSD.toFixed(2)} <span class="text-xs font-semibold text-purple-300">(~${cryptoQty} ${symbol})</span>`;
+            document.getElementById('checkoutOfferPrice').innerHTML = `$${priceUSD.toFixed(2)}`;
             document.getElementById('checkoutPaymentMethod').innerText = method;
 
             let wallet = platformWallets[method] || platformWallets['Solana'];
@@ -1724,6 +1721,27 @@
 
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(wallet)}`;
             document.getElementById('checkoutQrCode').src = qrUrl;
+
+            // 20-second button lock
+            const btn = document.getElementById('checkoutSubmitBtn');
+            const timerSpan = document.getElementById('checkoutTimer');
+            btn.disabled = true;
+            btn.className = "w-full bg-purple-950/60 text-slate-400 font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2 cursor-not-allowed";
+            
+            let timeLeft = 20;
+            timerSpan.innerText = timeLeft;
+
+            if (window.checkoutTimerInterval) clearInterval(window.checkoutTimerInterval);
+            window.checkoutTimerInterval = setInterval(() => {
+                timeLeft--;
+                timerSpan.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(window.checkoutTimerInterval);
+                    btn.disabled = false;
+                    btn.className = "w-full gradient-btn font-bold py-3.5 rounded-xl transition text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer";
+                    btn.innerHTML = `<i class="fas fa-check-circle"></i> I Have Paid / Submit Payment Proof`;
+                }
+            }, 1000);
 
             closeModal('offerPageModal');
             openModal('paymentCheckoutModal');
