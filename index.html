@@ -432,20 +432,31 @@
         </div>
     </div>
 
-    <!-- Blockchain Payment Processing / Detecting Payment Modal -->
-    <div id="paymentProcessingModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-[#0b0e1b] border border-emerald-500/40 rounded-3xl p-8 max-w-sm w-full shadow-2xl relative text-center space-y-5">
-            <div class="w-16 h-16 rounded-full bg-emerald-950 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-2xl mx-auto shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+    <!-- Upgraded Blockchain Payment Processing Modal -->
+    <div id="paymentProcessingModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#0b0e1b] border border-emerald-500/40 rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center space-y-6">
+            <div class="w-20 h-20 rounded-full bg-emerald-950/80 border-2 border-emerald-500/60 flex items-center justify-center text-emerald-400 text-3xl mx-auto shadow-[0_0_30px_rgba(16,185,129,0.4)] animate-pulse">
                 <i class="fas fa-circle-notch fa-spin"></i>
             </div>
             <div>
-                <h3 class="text-lg font-extrabold text-white mb-1" id="processingTitle">Detecting Payment...</h3>
-                <p class="text-xs text-slate-400 leading-relaxed" id="processingDesc">Scanning blockchain network for deposit confirmation. Please do not close this window.</p>
+                <h3 class="text-xl font-extrabold text-white mb-2" id="processingTitle">Processing Deposit...</h3>
+                <p class="text-xs text-slate-300 leading-relaxed max-w-xs mx-auto" id="processingDesc">Connecting to blockchain network & waiting for network confirmations.</p>
             </div>
-            <div class="w-full bg-[#060812] h-2 rounded-full overflow-hidden border border-emerald-500/30">
-                <div id="processingProgressBar" class="bg-emerald-500 h-full w-1/3 transition-all duration-1000"></div>
+            
+            <div class="space-y-2 text-left bg-[#060812] p-4 rounded-2xl border border-purple-900/40 text-xs">
+                <div class="flex items-center justify-between text-slate-300">
+                    <span class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> Transaction broadcasted</span>
+                    <span class="text-[10px] text-emerald-400 font-mono">DONE</span>
+                </div>
+                <div class="flex items-center justify-between text-slate-300">
+                    <span class="flex items-center gap-2"><i class="fas fa-spinner fa-spin text-purple-400"></i> Verifying block hash</span>
+                    <span class="text-[10px] text-purple-400 font-mono" id="processingStatusText">Pending...</span>
+                </div>
             </div>
-            <span class="text-[10px] text-emerald-400 font-mono block" id="processingStatusText">Confirmations: 0 / 1</span>
+
+            <div class="w-full bg-[#060812] h-2.5 rounded-full overflow-hidden border border-emerald-500/30">
+                <div id="processingProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-1/3 transition-all duration-1000"></div>
+            </div>
         </div>
     </div>
 
@@ -486,13 +497,16 @@
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full"></div>
 
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-purple-500/30 bg-[#060812]/95 backdrop-blur-2xl sticky top-0 z-40 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-            <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2.5 font-bold text-xs sm:text-sm bg-purple-950/60 border border-purple-500/40 px-4 py-2.5 rounded-xl transition hover:border-purple-400 shadow-lg">
-                <i class="fas fa-arrow-left text-purple-400"></i> <span data-i18n="backToMarket">Back to Marketplace</span>
-            </button>
-            <div class="flex items-center space-x-3 cursor-pointer group" onclick="filterCategory('All'); closeModal('offerPageModal');">
-                <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
-                <span class="font-extrabold text-xl tracking-wider gradient-text">STAR MARKET</span>
+        <!-- Fixed & Polished Navbar -->
+        <div class="bg-[#060812]/95 backdrop-blur-md border-b border-purple-900/40 sticky top-0 z-40 w-full shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+                <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2 font-bold text-xs sm:text-sm bg-[#0d0f1c] hover:bg-purple-950/50 border border-purple-900/50 px-4 py-2.5 rounded-xl transition">
+                    <i class="fas fa-arrow-left text-purple-400"></i> <span data-i18n="backToMarket">Back to Marketplace</span>
+                </button>
+                <div class="flex items-center space-x-3 cursor-pointer group" onclick="filterCategory('All'); closeModal('offerPageModal');">
+                    <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-8 h-8 object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] group-hover:scale-105 transition">
+                    <span class="font-extrabold text-xl tracking-wider gradient-text">STAR MARKET</span>
+                </div>
             </div>
         </div>
 
@@ -527,7 +541,7 @@
 
                         <div class="flex items-center gap-2.5 bg-purple-950/40 border border-purple-500/30 p-3.5 rounded-2xl text-[11px] text-purple-300 font-semibold">
                             <i class="fas fa-shield-halved text-purple-400 text-base shrink-0"></i>
-                            <span>Protected by Star Market Verified Middleman. Type <b>!details</b> in order chat to reveal seller payout destination.</span>
+                            <span>Protected by Star Market Verified Middleman. Admins can type <b>!details</b> in order chat to reveal seller payout destination.</span>
                         </div>
 
                         <div id="offerPageActionBtnContainer"></div>
@@ -545,7 +559,7 @@
                     <div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
                     <div>
                         <h3 class="font-bold text-white text-sm" id="chatHeaderTitle">Secure Order #839210</h3>
-                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Secure Middleman Active • Type !details to view payout destination</p>
+                        <p class="text-[11px] text-slate-400 font-medium mt-0.5" id="chatHeaderSubtitle">Secure Middleman Active</p>
                     </div>
                 </div>
                 <button onclick="closeModal('chatModal')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-base"></i></button>
@@ -564,7 +578,7 @@
 
             <div class="bg-[#060812] p-4 border-t border-purple-900/50 shrink-0">
                 <form onsubmit="sendChatMessage(event)" class="flex gap-3">
-                    <input type="text" id="chatMessageInput" placeholder="Type secure message or type !details to get payout address..." required class="flex-1 bg-[#0d0f1c] border border-purple-900/50 rounded-2xl px-5 py-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 shadow-inner">
+                    <input type="text" id="chatMessageInput" placeholder="Type secure message..." required class="flex-1 bg-[#0d0f1c] border border-purple-900/50 rounded-2xl px-5 py-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 shadow-inner">
                     <button type="submit" class="gradient-btn font-bold px-6 py-3.5 rounded-2xl text-xs transition shadow-lg flex items-center gap-2">
                         <i class="fas fa-paper-plane"></i> Send
                     </button>
@@ -1599,7 +1613,7 @@
             bar.style.width = '33%';
             setTimeout(() => {
                 bar.style.width = '75%';
-                statusText.innerText = 'Confirmations: 1 / 1 (Verified)';
+                statusText.innerText = '1 / 1 (Verified)';
                 title.innerText = 'Payment Detected!';
                 desc.innerText = 'Funds secured in middleman escrow. Initializing secure order ticket...';
             }, 2500);
@@ -1607,9 +1621,9 @@
             setTimeout(() => {
                 closeModal('paymentProcessingModal');
                 bar.style.width = '33%';
-                title.innerText = 'Detecting Payment...';
-                desc.innerText = 'Scanning blockchain network for deposit confirmation. Please do not close this window.';
-                statusText.innerText = 'Confirmations: 0 / 1';
+                title.innerText = 'Processing Deposit...';
+                desc.innerText = 'Connecting to blockchain network & waiting for network confirmations.';
+                statusText.innerText = 'Pending...';
                 
                 startChatWithSeller();
             }, 4500);
@@ -1650,7 +1664,7 @@
                     price: activeOffer.price,
                     buyer: currentUser,
                     seller: activeOffer.seller,
-                    messages: [{ sender: 'StarMarket Secure', role: 'Verified Middleman', text: `Secure order #${activeOffer.id.slice(-6)} initiated for "${activeOffer.title}" ($${activeOffer.price}). Buyer has submitted payment deposit. Type !details in chat to reveal seller payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
+                    messages: [{ sender: 'StarMarket Secure', role: 'Verified Middleman', text: `Secure order #${activeOffer.id.slice(-6)} initiated for "${activeOffer.title}" ($${activeOffer.price}). Buyer has submitted payment deposit. Admins can type !details in chat to reveal seller payout destination.`, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]
                 };
                 saveCloudData();
             }
@@ -1730,16 +1744,38 @@
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             });
 
+            // Check if !details command is used and if current user is Admin
             if (text.toLowerCase() === '!details') {
-                let offer = getOffers().find(o => o.id === chat.orderId);
-                let payoutInfo = offer ? `💳 Payment Method: ${offer.acceptedPayment}\n📍 Seller Payout Destination: ${offer.paymentAddress}` : `💳 Payment Method: Secure Deposit\n📍 Payout Destination: Contact Support Agent`;
-                
-                chat.messages.push({
-                    sender: 'StarMarket Secure',
-                    role: 'Verified Middleman',
-                    text: `📋 Secure Transaction Payout Details:\n${payoutInfo}`,
-                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-                });
+                const users = getUsers();
+                const isAdmin = users[currentUser] && users[currentUser].role === 'admin';
+
+                if (isAdmin) {
+                    let offer = getOffers().find(o => o.id === chat.orderId);
+                    let payoutMethod = offer ? offer.acceptedPayment : 'Escrow Deposit';
+                    let payoutAddress = offer ? offer.paymentAddress : 'N/A';
+
+                    // Clean stacked professional format (No emojis)
+                    let detailsCard = `SECURE TRANSACTION PAYOUT DETAILS\n` +
+                                      `----------------------------------------\n` +
+                                      `Payment Method: ${payoutMethod}\n` +
+                                      `Destination Address: ${payoutAddress}\n` +
+                                      `Status: Verified & Protected`;
+                    
+                    chat.messages.push({
+                        sender: 'StarMarket Secure',
+                        role: 'Verified Middleman',
+                        text: detailsCard,
+                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                    });
+                } else {
+                    // Non-admin tried using command
+                    chat.messages.push({
+                        sender: 'StarMarket Secure',
+                        role: 'Verified Middleman',
+                        text: `Unauthorized command. Only verified administrators can retrieve payout details.`,
+                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                    });
+                }
             }
 
             saveCloudData();
