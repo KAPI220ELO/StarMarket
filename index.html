@@ -202,7 +202,7 @@
                     </div>
                 </div>
 
-                <!-- 3. RIGHT: Live Support, Language, Post Offer, Auth -->
+                <!-- 3. RIGHT: Live Support, Language & Currency Modal, Post Offer, Auth -->
                 <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
                     <button onclick="openPrivateMiddlemanChat()" class="text-slate-300 hover:text-white flex items-center gap-1.5 transition text-xs font-semibold px-2 py-1.5 rounded-lg hover:bg-purple-950/40">
                         <i class="fa-regular fa-bell text-purple-400"></i>
@@ -211,20 +211,11 @@
 
                     <span class="text-purple-900/60 font-light hidden sm:inline">|</span>
 
-                    <div class="relative">
-                        <button onclick="toggleLangDropdown()" class="text-slate-300 hover:text-white flex items-center gap-1.5 transition text-xs font-semibold px-2 py-1.5 rounded-lg hover:bg-purple-950/40">
-                            <i class="fa-solid fa-globe text-purple-400"></i>
-                            <span id="currentLangLabel" class="hidden sm:inline">English | PLN - zł</span>
-                        </button>
-                        <div id="langDropdown" class="absolute right-0 mt-2 w-44 bg-[#0b0e1b] border border-purple-900/50 rounded-2xl shadow-2xl hidden z-50 overflow-hidden backdrop-blur-md">
-                            <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2 font-semibold transition">
-                                <span>🇺🇸</span> English (PLN - zł)
-                            </button>
-                            <button onclick="setLanguage('pl')" class="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-purple-950/60 flex items-center gap-2 font-semibold transition">
-                                <span>🇵🇱</span> Polski (PLN - zł)
-                            </button>
-                        </div>
-                    </div>
+                    <!-- Language & Currency Picker Trigger Button -->
+                    <button onclick="openLangCurrencyModal()" class="text-slate-300 hover:text-white flex items-center gap-1.5 transition text-xs font-semibold px-2.5 py-1.5 rounded-xl hover:bg-purple-950/40 border border-purple-900/40" title="Choose language and currency">
+                        <i class="fa-solid fa-globe text-purple-400"></i>
+                        <span id="currentLangLabel" class="hidden sm:inline">English (EN) | USD - $</span>
+                    </button>
 
                     <button id="admin-panel-btn" onclick="openAdminPanel()" class="hidden bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/50 px-2.5 py-1.5 rounded-xl text-xs font-bold items-center gap-1 transition shadow-md">
                         <i class="fas fa-shield-halved text-purple-400"></i> Admin
@@ -300,9 +291,8 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Filter Chips: NO SCROLLBAR, FITS ALL CHIPS CLEANLY -->
+        <!-- Filter Chips -->
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-4 mb-6 border-b border-purple-900/30">
-            <!-- Wrapped Chips Container without any scrollbar -->
             <div class="flex flex-wrap items-center gap-2 text-xs font-semibold w-full lg:w-auto">
                 <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
                     <i class="fas fa-gamepad text-purple-300"></i> <span data-i18n="allGames">All Games</span>
@@ -360,11 +350,11 @@
         <div id="offersGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
 
-    <!-- Redesigned Dark Gaming Theme Trust Cards (Matches the Site Perfectly) -->
+    <!-- Trust Cards Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- 1. Money-Back Guarantee Card (Dark Cyberpunk Glass) -->
+            <!-- 1. Money-Back Guarantee Card -->
             <div class="glass-panel rounded-3xl p-7 sm:p-9 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-amber-500/30 hover:border-amber-400/70 shadow-[0_10px_35px_rgba(245,158,11,0.1)] group">
                 <div class="shrink-0 flex items-center justify-center p-3 rounded-2xl bg-amber-950/40 border border-amber-500/30 shadow-[0_0_25px_rgba(245,158,11,0.25)] group-hover:scale-105 transition duration-300">
                     <svg class="w-16 h-16 drop-shadow-[0_4px_12px_rgba(245,158,11,0.5)]" viewBox="0 0 100 100" fill="none">
@@ -392,7 +382,7 @@
                 </div>
             </div>
 
-            <!-- 2. 24/7 Live Support Card (Dark Cyberpunk Glass) -->
+            <!-- 2. 24/7 Live Support Card -->
             <div class="glass-panel rounded-3xl p-7 sm:p-9 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-purple-500/30 hover:border-purple-400/70 shadow-[0_10px_35px_rgba(168,85,247,0.1)] group">
                 <div class="shrink-0 flex items-center justify-center p-3 rounded-2xl bg-purple-950/40 border border-purple-500/30 shadow-[0_0_25px_rgba(168,85,247,0.25)] group-hover:scale-105 transition duration-300">
                     <svg class="w-16 h-16 drop-shadow-[0_4px_12px_rgba(168,85,247,0.5)]" viewBox="0 0 100 100" fill="none">
@@ -453,15 +443,76 @@
     </footer>
 
     <!-- =========================================================================
-         ELDORADO-STYLE PROFESSIONAL "POST OFFER" MODAL
+         CHOOSE YOUR LANGUAGE AND CURRENCY MODAL (EXACT SCREENSHOT UI)
          ========================================================================= -->
-    <div id="createOfferModal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5 z-50">
-        <div class="modal-glass rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[92vh] overflow-y-auto border border-purple-500/40">
-            
+    <div id="langCurrencyModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-[#121624] border border-slate-800 rounded-2xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl relative text-left">
             <!-- Close Button -->
-            <button onclick="closeModal('createOfferModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2.5 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-lg"></i></button>
+            <button onclick="closeModal('langCurrencyModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg p-1">
+                <i class="fas fa-times"></i>
+            </button>
 
             <!-- Header -->
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-globe text-white text-xl"></i>
+                <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Choose your language and currency</h3>
+            </div>
+
+            <!-- Form -->
+            <div class="space-y-4">
+                <!-- Language Selector -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Language</label>
+                    <div class="relative">
+                        <select id="modalLanguageSelect" class="w-full bg-[#1b2033] hover:bg-[#20263d] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-400 appearance-none cursor-pointer transition shadow-inner">
+                            <option value="en">English (EN)</option>
+                            <option value="pl">Polski (PL)</option>
+                            <option value="de">Deutsch (DE)</option>
+                            <option value="es">Español (ES)</option>
+                            <option value="fr">Français (FR)</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                            <i class="fas fa-caret-down text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currency Selector -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Currency</label>
+                    <div class="relative">
+                        <select id="modalCurrencySelect" class="w-full bg-[#1b2033] hover:bg-[#20263d] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-400 appearance-none cursor-pointer transition shadow-inner">
+                            <option value="USD">USD - $</option>
+                            <option value="PLN">PLN - zł</option>
+                            <option value="EUR">EUR - €</option>
+                            <option value="GBP">GBP - £</option>
+                            <option value="CAD">CAD - CA$</option>
+                            <option value="AUD">AUD - AU$</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                            <i class="fas fa-caret-down text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons: Exact Gold 'Save' and Charcoal 'Cancel' -->
+                <div class="pt-3 space-y-2.5">
+                    <button onclick="saveLangCurrency()" class="w-full bg-[#f6be48] hover:bg-[#eab308] text-slate-950 font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg flex items-center justify-center">
+                        Save
+                    </button>
+                    <button onclick="closeModal('langCurrencyModal')" class="w-full bg-[#1b2033] hover:bg-[#252c46] text-slate-200 font-bold py-3.5 rounded-xl transition text-sm border border-slate-700/40">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST OFFER MODAL -->
+    <div id="createOfferModal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5 z-50">
+        <div class="modal-glass rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[92vh] overflow-y-auto border border-purple-500/40">
+            <button onclick="closeModal('createOfferModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2.5 rounded-xl hover:bg-white/5 transition"><i class="fas fa-times text-lg"></i></button>
+
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-purple-900/40">
                 <div>
                     <h3 class="text-xl sm:text-2xl font-black gradient-text flex items-center gap-2.5">
@@ -475,8 +526,6 @@
             </div>
 
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-6">
-                
-                <!-- 1. STEP 1: Select Game (Pill Grid) -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-purple-300 mb-2.5">1. Select Game</label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold" id="offerGameGrid">
@@ -492,7 +541,6 @@
                     <input type="hidden" id="offerGame" value="Roblox">
                 </div>
 
-                <!-- 2. STEP 2: Category Segment Switcher -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-purple-300 mb-2.5">2. Category / Listing Type</label>
                     <div class="grid grid-cols-3 gap-2 bg-[#060812] p-1.5 rounded-2xl border border-purple-900/60">
@@ -503,14 +551,13 @@
                     <input type="hidden" id="offerSubCategory" value="Accounts">
                 </div>
 
-                <!-- 3. Title & Price -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="sm:col-span-2">
                         <label class="block text-xs font-bold text-slate-300 mb-1.5">Listing Title</label>
                         <input type="text" id="offerTitle" placeholder="e.g. Stacked OG Account with rare items" required class="w-full bg-[#060812] border border-purple-900/60 rounded-xl p-3 text-slate-100 text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1.5">Price ($ USD)</label>
+                        <label class="block text-xs font-bold text-slate-300 mb-1.5">Base Price ($ USD)</label>
                         <div class="relative">
                             <span class="absolute left-3.5 top-3 text-purple-400 font-bold text-sm">$</span>
                             <input type="number" step="0.01" id="offerPrice" placeholder="49.99" required class="w-full bg-[#060812] border border-purple-900/60 rounded-xl py-3 pl-8 pr-3 text-slate-100 text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20">
@@ -518,7 +565,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Screenshots Drag & Drop Area -->
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">Account Proof Screenshots (Max 10)</label>
                     <label class="flex flex-col items-center justify-center border-2 border-dashed border-purple-900/60 hover:border-purple-500 rounded-2xl p-6 bg-[#060812]/80 cursor-pointer transition group shadow-inner">
@@ -530,7 +576,6 @@
                     <div id="imagePreviewGrid" class="flex flex-wrap gap-2.5 mt-3"></div>
                 </div>
 
-                <!-- 5. Payment Selection Grid (Eldorado style cards) -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-purple-300 mb-2">3. Preferred Payout Method</label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -575,7 +620,6 @@
                     <textarea id="offerDescription" rows="3" placeholder="Describe skins, level, trophies, rank, and features..." required class="w-full bg-[#060812] border border-purple-900/60 rounded-xl p-3 text-slate-100 text-xs sm:text-sm focus:outline-none focus:border-purple-500"></textarea>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="w-full gradient-btn font-extrabold py-4 rounded-2xl transition text-sm shadow-xl flex items-center justify-center gap-2">
                     <i class="fas fa-check-circle"></i> Publish Offer to Marketplace
                 </button>
@@ -583,8 +627,7 @@
         </div>
     </div>
 
-    <!-- Modals: Payment Checkout, Processing, Admin Panel, Offer Page, Chat, Inbox, Seller Profile, Auth, Profile, Msg -->
-    <!-- (Retained all standard escrow, chat, and admin modals) -->
+    <!-- Payment Checkout Modal -->
     <div id="paymentCheckoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="modal-glass rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative text-center">
             <button onclick="closeModal('paymentCheckoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2.5 rounded-xl hover:bg-white/5 transition text-lg"><i class="fas fa-times"></i></button>
@@ -619,6 +662,7 @@
         </div>
     </div>
 
+    <!-- Processing Modal -->
     <div id="paymentProcessingModal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl hidden flex items-center justify-center p-4 z-50">
         <div class="modal-glass rounded-3xl p-8 max-w-md w-full shadow-[0_0_60px_rgba(147,51,234,0.25)] relative text-center space-y-6">
             <div id="processingIconBox" class="w-20 h-20 rounded-full bg-purple-950/80 border-2 border-purple-500/60 flex items-center justify-center text-purple-400 text-3xl mx-auto shadow-[0_0_30px_rgba(168,85,247,0.4)] animate-pulse">
@@ -885,7 +929,10 @@
         let activeCategory = 'All';
         let activeSubCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
+
+        // DEFAULT LANGUAGE = ENGLISH (EN), DEFAULT CURRENCY = USD ($)
         let currentLang = localStorage.getItem('sm_lang') || 'en';
+        let currentCurrency = localStorage.getItem('sm_currency') || 'USD';
         
         let globalCloudData = {
             offers: [],
@@ -902,6 +949,15 @@
         let activeChatSession = null;
         let currentAdminTab = 'offers';
         let processingTimerInterval = null;
+
+        const currencyRates = {
+            'USD': { symbol: '$', rate: 1.0, label: 'USD - $', suffix: false },
+            'PLN': { symbol: 'zł', rate: 4.0, label: 'PLN - zł', suffix: true },
+            'EUR': { symbol: '€', rate: 0.92, label: 'EUR - €', suffix: false },
+            'GBP': { symbol: '£', rate: 0.79, label: 'GBP - £', suffix: false },
+            'CAD': { symbol: 'CA$', rate: 1.38, label: 'CAD - CA$', suffix: false },
+            'AUD': { symbol: 'AU$', rate: 1.53, label: 'AUD - AU$', suffix: false }
+        };
 
         const platformWallets = {
             'Solana': '54AmHwxSFabSkHP8MJbxrGbot1iTy5vD87yPrJysTstb',
@@ -1008,7 +1064,47 @@
             'Cash App': { name: 'Cash App', icon: '<div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs"><i class="fas fa-dollar-sign"></i></div>' }
         };
 
-        // UI Helpers for Eldorado-style Post Offer
+        // Format raw USD price into active user-selected currency
+        function formatPrice(usdPrice) {
+            const curr = currencyRates[currentCurrency] || currencyRates['USD'];
+            const converted = (parseFloat(usdPrice) * curr.rate).toFixed(2);
+            if (curr.suffix) {
+                return `${converted} ${curr.symbol}`;
+            }
+            return `${curr.symbol}${converted}`;
+        }
+
+        // Language & Currency Modal Handlers
+        function openLangCurrencyModal() {
+            document.getElementById('modalLanguageSelect').value = currentLang;
+            document.getElementById('modalCurrencySelect').value = currentCurrency;
+            openModal('langCurrencyModal');
+        }
+
+        function saveLangCurrency() {
+            const lang = document.getElementById('modalLanguageSelect').value;
+            const curr = document.getElementById('modalCurrencySelect').value;
+            currentLang = lang;
+            currentCurrency = curr;
+
+            localStorage.setItem('sm_lang', lang);
+            localStorage.setItem('sm_currency', curr);
+
+            applyLanguage(lang);
+            updateLangCurrencyLabel();
+            renderOffers();
+            closeModal('langCurrencyModal');
+        }
+
+        function updateLangCurrencyLabel() {
+            const labelEl = document.getElementById('currentLangLabel');
+            if (!labelEl) return;
+            const langNames = { en: 'English (EN)', pl: 'Polski (PL)', de: 'Deutsch (DE)', es: 'Español (ES)', fr: 'Français (FR)' };
+            const currObj = currencyRates[currentCurrency] || currencyRates['USD'];
+            const langText = langNames[currentLang] || 'English (EN)';
+            labelEl.innerText = `${langText} | ${currObj.label}`;
+        }
+
         function setPostOfferGame(game) {
             document.getElementById('offerGame').value = game;
             document.querySelectorAll('.post-game-btn').forEach(btn => {
@@ -1139,6 +1235,7 @@
         function init() {
             initFirebase();
             applyLanguage(currentLang);
+            updateLangCurrencyLabel();
             updateAuthUI();
             checkCookieConsent();
         }
@@ -1155,25 +1252,8 @@
             document.getElementById('cookieConsentBanner').classList.add('hidden');
         }
 
-        function toggleLangDropdown() {
-            const dropdown = document.getElementById('langDropdown');
-            dropdown.classList.toggle('hidden');
-        }
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('sm_lang', lang);
-            applyLanguage(lang);
-            toggleLangDropdown();
-            renderOffers();
-        }
-
         function applyLanguage(lang) {
-            const t = translations[lang];
-            const labelEl = document.getElementById('currentLangLabel');
-            if (labelEl) {
-                labelEl.innerText = lang === 'pl' ? 'Polski | PLN - zł' : 'English | PLN - zł';
-            }
+            const t = translations[lang] || translations['en'];
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -1498,7 +1578,7 @@
             const sortBy = document.getElementById('sortBySelect') ? document.getElementById('sortBySelect').value : 'newest';
             const offers = getOffers();
             const users = getUsers();
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations['en'];
 
             let filtered = offers.filter(o => {
                 const matchesCat = activeCategory === 'All' || o.game === activeCategory;
@@ -1538,7 +1618,7 @@
                             <p class="text-slate-400 text-xs mb-4 line-clamp-2">${offer.desc}</p>
                         </div>
                         <div class="flex items-center justify-between pt-3 border-t border-purple-900/30">
-                            <span class="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">$${offer.price}</span>
+                            <span class="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">${formatPrice(offer.price)}</span>
                             <button onclick="event.stopPropagation(); openOfferPage('${offer.id}')" class="gradient-btn font-extrabold text-xs px-4.5 py-2.5 rounded-xl shadow-md">${t.viewAndBuy}</button>
                         </div>
                     </div>
@@ -1565,7 +1645,7 @@
             offersList.innerHTML = offers.length === 0 ? `<p class="text-xs text-slate-500 py-3 text-center">No active listings.</p>` : offers.map(o => `
                 <div onclick="closeModal('sellerProfileModal'); openOfferPage('${o.id}')" class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3 cursor-pointer hover:border-purple-500">
                     <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
-                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price}</p></div>
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">${formatPrice(o.price)}</p></div>
                 </div>`).join('');
 
             openModal('sellerProfileModal');
@@ -1650,7 +1730,7 @@
             list.innerHTML = offers.length === 0 ? `<p class="text-xs text-slate-500 text-center py-4">No active listings.</p>` : offers.map(o => `
                 <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3">
                     <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
-                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price} • ${o.game} • Seller: ${o.seller}</p></div>
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">${formatPrice(o.price)} • ${o.game} • Seller: ${o.seller}</p></div>
                     <button onclick="adminDeleteOffer('${o.id}')" class="bg-red-950 text-red-300 px-3 py-1.5 rounded font-bold">Delete</button>
                 </div>`).join('');
         }
@@ -1719,7 +1799,7 @@
             currentActiveOffer = offer;
 
             document.getElementById('offerPageTitle').innerText = offer.title;
-            document.getElementById('offerPagePrice').innerText = `$${offer.price}`;
+            document.getElementById('offerPagePrice').innerText = formatPrice(offer.price);
             document.getElementById('offerPageDesc').innerText = offer.desc;
 
             const users = getUsers();
@@ -1820,7 +1900,7 @@
             const method = currentActiveOffer.acceptedPayment;
 
             document.getElementById('checkoutOfferTitle').innerText = currentActiveOffer.title;
-            document.getElementById('checkoutOfferPrice').innerHTML = `$${priceUSD.toFixed(2)}`;
+            document.getElementById('checkoutOfferPrice').innerHTML = formatPrice(priceUSD);
             document.getElementById('checkoutPaymentMethod').innerText = method;
 
             let wallet = platformWallets[method] || platformWallets['Solana'];
@@ -2002,7 +2082,7 @@
             if (!chat) return;
 
             document.getElementById('chatHeaderTitle').innerText = `Secure Order #${chat.orderId.slice(-6)}`;
-            document.getElementById('chatHeaderSubtitle').innerText = `${chat.offerTitle} • $${chat.price}`;
+            document.getElementById('chatHeaderSubtitle').innerText = `${chat.offerTitle} • ${formatPrice(chat.price)}`;
             document.getElementById('chatSessionIdDisplay').innerText = `SEC-${chat.orderId.slice(-4)}`;
             renderChatMessages();
             openModal('chatModal');
@@ -2204,7 +2284,7 @@
             list.innerHTML = offers.map(o => `
                 <div class="flex items-center justify-between bg-[#060812] p-3 rounded-xl border text-xs gap-3">
                     <img src="${o.images[0]}" class="w-10 h-10 rounded-lg object-cover">
-                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">$${o.price}</p></div>
+                    <div class="flex-1 min-w-0"><p class="font-bold text-white truncate">${o.title}</p><p class="text-purple-400">${formatPrice(o.price)}</p></div>
                     <button onclick="deleteOffer('${o.id}')" class="text-red-400 p-2"><i class="fas fa-trash"></i></button>
                 </div>`).join('');
         }
@@ -2233,7 +2313,7 @@
             openModal('msgModal');
         }
 
-        // Global functions
+        // Global exports
         window.filterCategory = filterCategory;
         window.filterSubCategory = filterSubCategory;
         window.selectCategoryItem = selectCategoryItem;
@@ -2245,8 +2325,9 @@
         window.handleLogin = handleLogin;
         window.handleSignup = handleSignup;
         window.logout = logout;
-        window.setLanguage = setLanguage;
-        window.toggleLangDropdown = toggleLangDropdown;
+        window.openLangCurrencyModal = openLangCurrencyModal;
+        window.saveLangCurrency = saveLangCurrency;
+        window.formatPrice = formatPrice;
         window.openAuthTab = openAuthTab;
         window.switchAuthTab = switchAuthTab;
         window.openSellerProfile = openSellerProfile;
@@ -2281,3 +2362,4 @@
     </script>
 </body>
 </html>
+
