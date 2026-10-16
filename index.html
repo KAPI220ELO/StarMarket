@@ -101,11 +101,11 @@
             position: absolute;
             top: 100%;
             left: 0;
-            min-width: 210px;
+            min-width: 230px;
             background-color: #0b0e1b;
             border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 1rem;
-            padding: 0.5rem 0;
+            border-radius: 1.25rem;
+            padding: 0.5rem;
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.85);
             z-index: 100;
             backdrop-filter: blur(20px);
@@ -115,16 +115,32 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.65rem 1.15rem;
+            padding: 0.6rem 0.85rem;
             color: #cbd5e1;
             font-size: 0.82rem;
             font-weight: 600;
+            border-radius: 0.75rem;
             transition: all 0.2s ease;
         }
         .nav-dropdown-item:hover {
             background-color: rgba(168, 85, 247, 0.18);
-            color: #d8b4fe;
-            padding-left: 1.4rem;
+            color: #ffffff;
+            padding-left: 1.05rem;
+        }
+
+        /* Custom Logo Badge Container (Matches the Screenshot) */
+        .game-badge-icon {
+            width: 1.45rem;
+            height: 1.45rem;
+            border-radius: 0.45rem;
+            background: #141828;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
         }
     </style>
 </head>
@@ -143,52 +159,109 @@
                     </div>
 
                     <div class="hidden md:flex items-center space-x-1 text-slate-200">
-                        <!-- ACCOUNTS DROPDOWN -->
+                        <!-- ACCOUNTS DROPDOWN WITH CUSTOM LOGOS -->
                         <div class="nav-dropdown">
                             <button class="flex items-center gap-1.5 hover:text-purple-300 font-bold text-xs py-2 px-2.5 rounded-xl hover:bg-purple-950/40 transition">
                                 <span>Accounts</span>
                                 <i class="fas fa-chevron-down text-[9px] text-purple-400"></i>
                             </button>
-                            <div class="nav-dropdown-menu">
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Brawl Stars', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-shield-cat text-purple-400"></i> Brawl Stars</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-cube text-purple-400"></i> Roblox</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Minecraft', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-cubes-stacked text-purple-400"></i> Minecraft</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Fortnite', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-person-rifle text-purple-400"></i> Fortnite</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash Royale', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-crown text-purple-400"></i> Clash Royale</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash of Clans', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-chess-rook text-purple-400"></i> Clash of Clans</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Valorant', 'Accounts')" class="nav-dropdown-item"><i class="fas fa-crosshairs text-purple-400"></i> Valorant</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Discord', 'Accounts')" class="nav-dropdown-item"><i class="fab fa-discord text-purple-400"></i> Discord</a>
+                            <div class="nav-dropdown-menu space-y-0.5">
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Brawl Stars', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-full h-full object-contain"></div>
+                                    <span>Brawl Stars</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="roblox.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/roblox/white';" class="w-full h-full object-contain"></div>
+                                    <span>Roblox</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Minecraft', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="minecraft.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/minecraft/54A942';" class="w-full h-full object-contain"></div>
+                                    <span>Minecraft</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Fortnite', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="fortnite.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/fortnite/white';" class="w-full h-full object-contain"></div>
+                                    <span>Fortnite</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash Royale', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-full h-full object-contain"></div>
+                                    <span>Clash Royale</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash of Clans', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="clashofclans.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-of-clans.png';" class="w-full h-full object-contain"></div>
+                                    <span>Clash of Clans</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Valorant', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="valorant.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/valorant/FF4655';" class="w-full h-full object-contain"></div>
+                                    <span>Valorant</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Discord', 'Accounts')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="discord.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/discord/5865F2';" class="w-full h-full object-contain"></div>
+                                    <span>Discord</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- TOP UPS DROPDOWN -->
+                        <!-- TOP UPS DROPDOWN WITH LOGOS -->
                         <div class="nav-dropdown">
                             <button class="flex items-center gap-1.5 hover:text-purple-300 font-bold text-xs py-2 px-2.5 rounded-xl hover:bg-purple-950/40 transition">
                                 <span>Top Ups</span>
                                 <i class="fas fa-chevron-down text-[9px] text-purple-400"></i>
                             </button>
-                            <div class="nav-dropdown-menu">
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Currency', 'Robux')" class="nav-dropdown-item"><i class="fas fa-coins text-purple-400"></i> Robux</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Brawl Stars', 'Currency', 'Gems')" class="nav-dropdown-item"><i class="fas fa-gem text-purple-400"></i> Brawl Stars Gems</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash Royale', 'Currency', 'Gems')" class="nav-dropdown-item"><i class="fas fa-gem text-purple-400"></i> Clash Royale Gems</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash of Clans', 'Currency', 'Gems')" class="nav-dropdown-item"><i class="fas fa-gem text-purple-400"></i> Clash of Clans Gems</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Fortnite', 'Currency', 'V-Bucks')" class="nav-dropdown-item"><i class="fas fa-bolt text-purple-400"></i> V-Bucks</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Discord', 'Currency', 'Nitro')" class="nav-dropdown-item"><i class="fab fa-discord text-purple-400"></i> Discord Nitro</a>
+                            <div class="nav-dropdown-menu space-y-0.5">
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Currency', 'Robux')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="robux.png" onerror="this.onerror=null; this.src='https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/external-roblox-a-massively-multiplayer-online-and-game-creation-system-platform-logo-color-tal-revivo.png';" class="w-full h-full object-contain"></div>
+                                    <span>Robux</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Brawl Stars', 'Currency', 'Gems')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="gems.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/emerald.png';" class="w-full h-full object-contain"></div>
+                                    <span>Brawl Stars Gems</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash Royale', 'Currency', 'Gems')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="gems.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/emerald.png';" class="w-full h-full object-contain"></div>
+                                    <span>Clash Royale Gems</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Clash of Clans', 'Currency', 'Gems')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="gems.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/emerald.png';" class="w-full h-full object-contain"></div>
+                                    <span>Clash of Clans Gems</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Fortnite', 'Currency', 'V-Bucks')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="vbucks.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/v-bucks.png';" class="w-full h-full object-contain"></div>
+                                    <span>V-Bucks</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Discord', 'Currency', 'Nitro')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="nitro.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/discord/FF73FA';" class="w-full h-full object-contain"></div>
+                                    <span>Discord Nitro</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- ITEMS DROPDOWN -->
+                        <!-- ITEMS DROPDOWN WITH LOGOS -->
                         <div class="nav-dropdown">
                             <button class="flex items-center gap-1.5 hover:text-purple-300 font-bold text-xs py-2 px-2.5 rounded-xl hover:bg-purple-950/40 transition">
                                 <span>Items</span>
                                 <i class="fas fa-chevron-down text-[9px] text-purple-400"></i>
                             </button>
-                            <div class="nav-dropdown-menu">
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Robux')" class="nav-dropdown-item"><i class="fas fa-coins text-purple-400"></i> Robux</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Murder Mystery 2')" class="nav-dropdown-item"><i class="fas fa-skull text-purple-400"></i> Murder Mystery 2</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Adopt Me')" class="nav-dropdown-item"><i class="fas fa-paw text-purple-400"></i> Adopt Me</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Blox Fruit')" class="nav-dropdown-item"><i class="fas fa-apple-whole text-purple-400"></i> Blox Fruit</a>
-                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Steal a Brainrot')" class="nav-dropdown-item"><i class="fas fa-brain text-purple-400"></i> Steal a Brainrot</a>
+                            <div class="nav-dropdown-menu space-y-0.5">
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Robux')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="robux.png" onerror="this.onerror=null; this.src='https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/external-roblox-a-massively-multiplayer-online-and-game-creation-system-platform-logo-color-tal-revivo.png';" class="w-full h-full object-contain"></div>
+                                    <span>Robux</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Murder Mystery 2')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="mm2.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/skull.png';" class="w-full h-full object-contain"></div>
+                                    <span>Murder Mystery 2</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Adopt Me')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="adoptme.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/dog.png';" class="w-full h-full object-contain"></div>
+                                    <span>Adopt Me</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Blox Fruit')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="bloxfruits.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/citrus.png';" class="w-full h-full object-contain"></div>
+                                    <span>Blox Fruit</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="selectCategoryItem('Roblox', 'Items', 'Steal a Brainrot')" class="nav-dropdown-item">
+                                    <div class="game-badge-icon"><img src="brainrot.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brain.png';" class="w-full h-full object-contain"></div>
+                                    <span>Steal a Brainrot</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -291,38 +364,48 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Filter Chips -->
+        <!-- Filter Chips with exact icon badges as shown in your screenshot -->
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-4 mb-6 border-b border-purple-900/30">
             <div class="flex flex-wrap items-center gap-2 text-xs font-semibold w-full lg:w-auto">
-                <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-gamepad text-purple-300"></i> <span data-i18n="allGames">All Games</span>
+                <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><i class="fas fa-gamepad text-purple-300 text-xs"></i></div>
+                    <span data-i18n="allGames">All Games</span>
                 </button>
-                <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-cube text-purple-400"></i> Roblox
+                <button onclick="filterCategory('Roblox')" id="btn-Roblox" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="roblox.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/roblox/white';" class="w-full h-full object-contain"></div>
+                    <span>Roblox</span>
                 </button>
-                <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-person-rifle text-purple-400"></i> Fortnite
+                <button onclick="filterCategory('Fortnite')" id="btn-Fortnite" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="fortnite.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/fortnite/white';" class="w-full h-full object-contain"></div>
+                    <span>Fortnite</span>
                 </button>
-                <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-shield-cat text-purple-400"></i> Brawl Stars
+                <button onclick="filterCategory('Brawl Stars')" id="btn-Brawl Stars" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-full h-full object-contain"></div>
+                    <span>Brawl Stars</span>
                 </button>
-                <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-crown text-purple-400"></i> Clash Royale
+                <button onclick="filterCategory('Clash Royale')" id="btn-Clash Royale" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-full h-full object-contain"></div>
+                    <span>Clash Royale</span>
                 </button>
-                <button onclick="filterCategory('Minecraft')" id="btn-Minecraft" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-cubes-stacked text-purple-400"></i> Minecraft
+                <button onclick="filterCategory('Minecraft')" id="btn-Minecraft" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="minecraft.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/minecraft/54A942';" class="w-full h-full object-contain"></div>
+                    <span>Minecraft</span>
                 </button>
-                <button onclick="filterCategory('Clash of Clans')" id="btn-Clash of Clans" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-chess-rook text-purple-400"></i> Clash of Clans
+                <button onclick="filterCategory('Clash of Clans')" id="btn-Clash of Clans" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="clashofclans.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-of-clans.png';" class="w-full h-full object-contain"></div>
+                    <span>Clash of Clans</span>
                 </button>
-                <button onclick="filterCategory('Valorant')" id="btn-Valorant" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-crosshairs text-purple-400"></i> Valorant
+                <button onclick="filterCategory('Valorant')" id="btn-Valorant" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="valorant.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/valorant/FF4655';" class="w-full h-full object-contain"></div>
+                    <span>Valorant</span>
                 </button>
-                <button onclick="filterCategory('Discord')" id="btn-Discord" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fab fa-discord text-purple-400"></i> Discord
+                <button onclick="filterCategory('Discord')" id="btn-Discord" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="discord.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/discord/5865F2';" class="w-full h-full object-contain"></div>
+                    <span>Discord</span>
                 </button>
-                <button onclick="filterCategory('Other')" id="btn-Other" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fas fa-cubes text-emerald-400"></i> Other
+                <button onclick="filterCategory('Other')" id="btn-Other" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <div class="game-badge-icon"><img src="other.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/box.png';" class="w-full h-full object-contain"></div>
+                    <span>Other</span>
                 </button>
             </div>
 
@@ -354,7 +437,6 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- 1. Money-Back Guarantee Card -->
             <div class="glass-panel rounded-3xl p-7 sm:p-9 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-amber-500/30 hover:border-amber-400/70 shadow-[0_10px_35px_rgba(245,158,11,0.1)] group">
                 <div class="shrink-0 flex items-center justify-center p-3 rounded-2xl bg-amber-950/40 border border-amber-500/30 shadow-[0_0_25px_rgba(245,158,11,0.25)] group-hover:scale-105 transition duration-300">
                     <svg class="w-16 h-16 drop-shadow-[0_4px_12px_rgba(245,158,11,0.5)]" viewBox="0 0 100 100" fill="none">
@@ -382,7 +464,6 @@
                 </div>
             </div>
 
-            <!-- 2. 24/7 Live Support Card -->
             <div class="glass-panel rounded-3xl p-7 sm:p-9 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-purple-500/30 hover:border-purple-400/70 shadow-[0_10px_35px_rgba(168,85,247,0.1)] group">
                 <div class="shrink-0 flex items-center justify-center p-3 rounded-2xl bg-purple-950/40 border border-purple-500/30 shadow-[0_0_25px_rgba(168,85,247,0.25)] group-hover:scale-105 transition duration-300">
                     <svg class="w-16 h-16 drop-shadow-[0_4px_12px_rgba(168,85,247,0.5)]" viewBox="0 0 100 100" fill="none">
@@ -442,25 +523,19 @@
         </div>
     </footer>
 
-    <!-- =========================================================================
-         CHOOSE YOUR LANGUAGE AND CURRENCY MODAL (EXACT SCREENSHOT UI)
-         ========================================================================= -->
+    <!-- LANGUAGE & CURRENCY MODAL -->
     <div id="langCurrencyModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#121624] border border-slate-800 rounded-2xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl relative text-left">
-            <!-- Close Button -->
             <button onclick="closeModal('langCurrencyModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg p-1">
                 <i class="fas fa-times"></i>
             </button>
 
-            <!-- Header -->
             <div class="flex items-center gap-3 mb-6">
                 <i class="fa-solid fa-globe text-white text-xl"></i>
                 <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Choose your language and currency</h3>
             </div>
 
-            <!-- Form -->
             <div class="space-y-4">
-                <!-- Language Selector -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-2">Language</label>
                     <div class="relative">
@@ -477,7 +552,6 @@
                     </div>
                 </div>
 
-                <!-- Currency Selector -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-2">Currency</label>
                     <div class="relative">
@@ -495,7 +569,6 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons: Exact Gold 'Save' and Charcoal 'Cancel' -->
                 <div class="pt-3 space-y-2.5">
                     <button onclick="saveLangCurrency()" class="w-full bg-[#f6be48] hover:bg-[#eab308] text-slate-950 font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg flex items-center justify-center">
                         Save
@@ -526,17 +599,42 @@
             </div>
 
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-6">
+                <!-- 1. SELECT GAME (WITH CUSTOM PNG BADGES) -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-purple-300 mb-2.5">1. Select Game</label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold" id="offerGameGrid">
-                        <button type="button" onclick="setPostOfferGame('Roblox')" class="post-game-btn active bg-purple-900/80 text-white border-2 border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-cube text-purple-300"></i> Roblox</button>
-                        <button type="button" onclick="setPostOfferGame('Fortnite')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-person-rifle text-purple-400"></i> Fortnite</button>
-                        <button type="button" onclick="setPostOfferGame('Brawl Stars')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-shield-cat text-purple-400"></i> Brawl Stars</button>
-                        <button type="button" onclick="setPostOfferGame('Clash Royale')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-crown text-purple-400"></i> Clash Royale</button>
-                        <button type="button" onclick="setPostOfferGame('Minecraft')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-cubes-stacked text-purple-400"></i> Minecraft</button>
-                        <button type="button" onclick="setPostOfferGame('Clash of Clans')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-chess-rook text-purple-400"></i> Clash of Clans</button>
-                        <button type="button" onclick="setPostOfferGame('Valorant')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fas fa-crosshairs text-purple-400"></i> Valorant</button>
-                        <button type="button" onclick="setPostOfferGame('Discord')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition"><i class="fab fa-discord text-purple-400"></i> Discord</button>
+                        <button type="button" onclick="setPostOfferGame('Roblox')" class="post-game-btn active bg-purple-900/80 text-white border-2 border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="roblox.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/roblox/white';" class="w-full h-full object-contain"></div>
+                            <span>Roblox</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Fortnite')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="fortnite.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/fortnite/white';" class="w-full h-full object-contain"></div>
+                            <span>Fortnite</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Brawl Stars')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="brawlstars.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/brawl-stars.png';" class="w-full h-full object-contain"></div>
+                            <span>Brawl Stars</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Clash Royale')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="clashroyale.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-royale.png';" class="w-full h-full object-contain"></div>
+                            <span>Clash Royale</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Minecraft')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="minecraft.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/minecraft/54A942';" class="w-full h-full object-contain"></div>
+                            <span>Minecraft</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Clash of Clans')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="clashofclans.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/clash-of-clans.png';" class="w-full h-full object-contain"></div>
+                            <span>Clash of Clans</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Valorant')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="valorant.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/valorant/FF4655';" class="w-full h-full object-contain"></div>
+                            <span>Valorant</span>
+                        </button>
+                        <button type="button" onclick="setPostOfferGame('Discord')" class="post-game-btn bg-[#060812] text-slate-300 border border-purple-900/60 hover:border-purple-500 p-2.5 rounded-xl flex items-center gap-2 transition">
+                            <div class="game-badge-icon"><img src="discord.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/discord/5865F2';" class="w-full h-full object-contain"></div>
+                            <span>Discord</span>
+                        </button>
                     </div>
                     <input type="hidden" id="offerGame" value="Roblox">
                 </div>
@@ -627,7 +725,7 @@
         </div>
     </div>
 
-    <!-- Payment Checkout Modal -->
+    <!-- Modals (Payment Checkout, Processing, Admin Panel, Offer Page, Chat, Inbox, Seller Profile, Auth, Profile, Msg) -->
     <div id="paymentCheckoutModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="modal-glass rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative text-center">
             <button onclick="closeModal('paymentCheckoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2.5 rounded-xl hover:bg-white/5 transition text-lg"><i class="fas fa-times"></i></button>
@@ -662,7 +760,6 @@
         </div>
     </div>
 
-    <!-- Processing Modal -->
     <div id="paymentProcessingModal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl hidden flex items-center justify-center p-4 z-50">
         <div class="modal-glass rounded-3xl p-8 max-w-md w-full shadow-[0_0_60px_rgba(147,51,234,0.25)] relative text-center space-y-6">
             <div id="processingIconBox" class="w-20 h-20 rounded-full bg-purple-950/80 border-2 border-purple-500/60 flex items-center justify-center text-purple-400 text-3xl mx-auto shadow-[0_0_30px_rgba(168,85,247,0.4)] animate-pulse">
@@ -930,7 +1027,6 @@
         let activeSubCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
 
-        // DEFAULT LANGUAGE = ENGLISH (EN), DEFAULT CURRENCY = USD ($)
         let currentLang = localStorage.getItem('sm_lang') || 'en';
         let currentCurrency = localStorage.getItem('sm_currency') || 'USD';
         
@@ -949,6 +1045,19 @@
         let activeChatSession = null;
         let currentAdminTab = 'offers';
         let processingTimerInterval = null;
+
+        // Game logo mappings with fallback URLs
+        const gameLogos = {
+            'Roblox': { file: 'roblox.png', fallback: 'https://cdn.simpleicons.org/roblox/white' },
+            'Fortnite': { file: 'fortnite.png', fallback: 'https://cdn.simpleicons.org/fortnite/white' },
+            'Brawl Stars': { file: 'brawlstars.png', fallback: 'https://img.icons8.com/color/48/brawl-stars.png' },
+            'Clash Royale': { file: 'clashroyale.png', fallback: 'https://img.icons8.com/color/48/clash-royale.png' },
+            'Minecraft': { file: 'minecraft.png', fallback: 'https://cdn.simpleicons.org/minecraft/54A942' },
+            'Clash of Clans': { file: 'clashofclans.png', fallback: 'https://img.icons8.com/color/48/clash-of-clans.png' },
+            'Valorant': { file: 'valorant.png', fallback: 'https://cdn.simpleicons.org/valorant/FF4655' },
+            'Discord': { file: 'discord.png', fallback: 'https://cdn.simpleicons.org/discord/5865F2' },
+            'Other': { file: 'other.png', fallback: 'https://img.icons8.com/color/48/box.png' }
+        };
 
         const currencyRates = {
             'USD': { symbol: '$', rate: 1.0, label: 'USD - $', suffix: false },
@@ -1064,7 +1173,6 @@
             'Cash App': { name: 'Cash App', icon: '<div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs"><i class="fas fa-dollar-sign"></i></div>' }
         };
 
-        // Format raw USD price into active user-selected currency
         function formatPrice(usdPrice) {
             const curr = currencyRates[currentCurrency] || currencyRates['USD'];
             const converted = (parseFloat(usdPrice) * curr.rate).toFixed(2);
@@ -1074,7 +1182,6 @@
             return `${curr.symbol}${converted}`;
         }
 
-        // Language & Currency Modal Handlers
         function openLangCurrencyModal() {
             document.getElementById('modalLanguageSelect').value = currentLang;
             document.getElementById('modalCurrencySelect').value = currentCurrency;
@@ -1603,11 +1710,18 @@
                 const sellerUser = users[offer.seller];
                 const sellerAvatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">` : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
 
+                const logoData = gameLogos[offer.game] || gameLogos['Other'];
+
                 return `
                 <div class="glass-panel rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer" onclick="openOfferPage('${offer.id}')">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
                         <img src="${images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <span class="absolute top-3 left-3 bg-[#030409]/80 backdrop-blur-md border border-purple-500/30 text-purple-300 text-[10px] font-extrabold px-2.5 py-1 rounded-lg">${offer.game}</span>
+                        <span class="absolute top-3 left-3 bg-[#030409]/90 backdrop-blur-md border border-purple-500/30 text-slate-100 text-[11px] font-bold px-2.5 py-1 rounded-xl flex items-center gap-1.5 shadow-md">
+                            <div class="w-4 h-4 rounded bg-[#141828] p-0.5 flex items-center justify-center shrink-0">
+                                <img src="${logoData.file}" onerror="this.onerror=null; this.src='${logoData.fallback}';" class="w-full h-full object-contain">
+                            </div>
+                            <span>${offer.game}</span>
+                        </span>
                     </div>
                     <div class="p-5 flex flex-col justify-between flex-1">
                         <div>
@@ -2362,4 +2476,3 @@
     </script>
 </body>
 </html>
-
