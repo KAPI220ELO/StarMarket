@@ -276,6 +276,7 @@
 
                     <span class="text-purple-900/60 font-light hidden sm:inline">|</span>
 
+                    <!-- Language & Currency Picker Trigger Button (Strictly English & USD) -->
                     <button onclick="openLangCurrencyModal()" class="text-slate-300 hover:text-white flex items-center gap-1.5 transition text-xs font-semibold px-2.5 py-1.5 rounded-xl hover:bg-purple-950/40 border border-purple-900/40" title="Choose language and currency">
                         <i class="fa-solid fa-globe text-purple-400"></i>
                         <span id="currentLangLabel" class="hidden sm:inline">English (EN) | USD - $</span>
@@ -325,34 +326,28 @@
         </button>
     </div>
 
-    <!-- =========================================================================
-         REDESIGNED HERO BANNER (ACCOUNTS, ITEMS & SKINS + ZERO FEES)
-         ========================================================================= -->
+    <!-- Hero Banner -->
     <section class="hero-banner-bg border-b border-purple-900/40 py-24 sm:py-36 mb-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-t from-[#030409] via-transparent to-transparent pointer-events-none"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-purple-600/18 blur-[150px] pointer-events-none rounded-full"></div>
         
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             
-            <!-- Brand Badge -->
             <div class="inline-flex items-center gap-2 mb-4">
                 <span class="gradient-text font-black text-xs sm:text-sm tracking-[0.35em] uppercase px-4 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/30 shadow-lg shadow-purple-950/50 backdrop-blur-md">
                     STAR MARKET PLATFORM
                 </span>
             </div>
 
-            <!-- Main Headline Mentioning Accounts, Rare Items & Skins -->
             <h1 class="text-3xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.15] mb-6 max-w-5xl mx-auto drop-shadow-xl">
                 Buy & Sell Game Accounts, <br class="hidden sm:inline">
                 <span class="gradient-text">Rare Items & Skins</span>
             </h1>
 
-            <!-- Descriptive Text -->
             <p data-i18n="heroDesc" class="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-medium">
                 Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, in-game currency, and maxed accounts directly from verified sellers with zero platform fees.
             </p>
 
-            <!-- Call to Actions -->
             <div class="flex flex-wrap justify-center gap-4 mb-10">
                 <button onclick="openModal('createOfferModal')" class="gradient-btn font-extrabold px-8 py-4 rounded-2xl flex items-center gap-3 transition transform hover:scale-105 active:scale-95 text-sm sm:text-base shadow-[0_10px_35px_rgba(168,85,247,0.55)] group">
                     <i class="fas fa-plus-circle text-lg sm:text-xl group-hover:rotate-90 transition duration-300"></i> 
@@ -363,7 +358,6 @@
                 </a>
             </div>
 
-            <!-- Verified Metrics Highlights -->
             <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 pt-2 text-xs font-bold text-slate-300">
                 <div class="flex items-center gap-2 bg-[#090c1a]/80 border border-purple-900/40 px-3.5 py-1.5 rounded-xl shadow-sm">
                     <div class="w-5 h-5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-[10px]"><i class="fas fa-percent"></i></div>
@@ -385,7 +379,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 flex-1 w-full" id="offersGridContainer">
         
-        <!-- Filter Chips with exact icon badges -->
+        <!-- Filter Chips (With 3-dots icon for Other) -->
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-4 mb-6 border-b border-purple-900/30">
             <div class="flex flex-wrap items-center gap-2 text-xs font-semibold w-full lg:w-auto">
                 <button onclick="filterCategory('All')" id="btn-All" class="category-chip active px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
@@ -424,8 +418,10 @@
                     <div class="game-badge-icon"><img src="discord.png" onerror="this.onerror=null; this.src='https://cdn.simpleicons.org/discord/5865F2';" class="w-full h-full object-contain"></div>
                     <span>Discord</span>
                 </button>
+                
+                <!-- "Other" Chip with 3 dots icon instead of orange box -->
                 <button onclick="filterCategory('Other')" id="btn-Other" class="category-chip px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
-                    <div class="game-badge-icon"><img src="other.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/48/box.png';" class="w-full h-full object-contain"></div>
+                    <div class="game-badge-icon"><i class="fas fa-ellipsis text-purple-300 text-xs"></i></div>
                     <span>Other</span>
                 </button>
             </div>
@@ -544,7 +540,7 @@
         </div>
     </footer>
 
-    <!-- LANGUAGE & CURRENCY MODAL -->
+    <!-- LANGUAGE & CURRENCY MODAL (STRICTLY ENGLISH & USD ONLY) -->
     <div id="langCurrencyModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
         <div class="bg-[#121624] border border-slate-800 rounded-2xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-2xl relative text-left">
             <button onclick="closeModal('langCurrencyModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg p-1">
@@ -557,15 +553,12 @@
             </div>
 
             <div class="space-y-4">
+                <!-- Strictly English (EN) -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-2">Language</label>
                     <div class="relative">
-                        <select id="modalLanguageSelect" class="w-full bg-[#1b2033] hover:bg-[#20263d] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-400 appearance-none cursor-pointer transition shadow-inner">
-                            <option value="en">English (EN)</option>
-                            <option value="pl">Polski (PL)</option>
-                            <option value="de">Deutsch (DE)</option>
-                            <option value="es">Español (ES)</option>
-                            <option value="fr">Français (FR)</option>
+                        <select id="modalLanguageSelect" class="w-full bg-[#1b2033] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none appearance-none cursor-default shadow-inner">
+                            <option value="en" selected>English (EN)</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                             <i class="fas fa-caret-down text-sm"></i>
@@ -573,16 +566,12 @@
                     </div>
                 </div>
 
+                <!-- Strictly USD - $ -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-2">Currency</label>
                     <div class="relative">
-                        <select id="modalCurrencySelect" class="w-full bg-[#1b2033] hover:bg-[#20263d] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-400 appearance-none cursor-pointer transition shadow-inner">
-                            <option value="USD">USD - $</option>
-                            <option value="PLN">PLN - zł</option>
-                            <option value="EUR">EUR - €</option>
-                            <option value="GBP">GBP - £</option>
-                            <option value="CAD">CAD - CA$</option>
-                            <option value="AUD">AUD - AU$</option>
+                        <select id="modalCurrencySelect" class="w-full bg-[#1b2033] border border-slate-700/60 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-slate-100 font-semibold focus:outline-none appearance-none cursor-default shadow-inner">
+                            <option value="USD" selected>USD - $</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                             <i class="fas fa-caret-down text-sm"></i>
@@ -847,11 +836,10 @@
         </div>
     </div>
 
-    <!-- Redesigned Transparent Offer Top-Bar (Not a Heavy Layer) -->
+    <!-- Transparent Offer Top-Bar -->
     <div id="offerPageModal" class="fixed inset-0 bg-[#030409] hidden z-50 overflow-y-auto">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full"></div>
         
-        <!-- Clean, seamless transparent header bar -->
         <div class="bg-gradient-to-b from-[#030409]/90 via-[#030409]/40 to-transparent backdrop-blur-md border-b border-white/5 sticky top-0 z-40 w-full transition">
             <div class="w-full px-4 sm:px-8 h-16 flex justify-between items-center">
                 <button onclick="closeModal('offerPageModal')" class="text-slate-300 hover:text-white flex items-center gap-2 font-bold text-xs sm:text-sm bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-md transition shadow-sm">
@@ -1051,8 +1039,9 @@
         let activeSubCategory = 'All';
         let currentUser = localStorage.getItem('sm_user') || null;
 
-        let currentLang = localStorage.getItem('sm_lang') || 'en';
-        let currentCurrency = localStorage.getItem('sm_currency') || 'USD';
+        // STRICTLY ENGLISH & USD
+        let currentLang = 'en';
+        let currentCurrency = 'USD';
         
         let globalCloudData = {
             offers: [],
@@ -1078,17 +1067,11 @@
             'Minecraft': { file: 'minecraft.png', fallback: 'https://cdn.simpleicons.org/minecraft/54A942' },
             'Clash of Clans': { file: 'clashofclans.png', fallback: 'https://img.icons8.com/color/48/clash-of-clans.png' },
             'Valorant': { file: 'valorant.png', fallback: 'https://cdn.simpleicons.org/valorant/FF4655' },
-            'Discord': { file: 'discord.png', fallback: 'https://cdn.simpleicons.org/discord/5865F2' },
-            'Other': { file: 'other.png', fallback: 'https://img.icons8.com/color/48/box.png' }
+            'Discord': { file: 'discord.png', fallback: 'https://cdn.simpleicons.org/discord/5865F2' }
         };
 
         const currencyRates = {
-            'USD': { symbol: '$', rate: 1.0, label: 'USD - $', suffix: false },
-            'PLN': { symbol: 'zł', rate: 4.0, label: 'PLN - zł', suffix: true },
-            'EUR': { symbol: '€', rate: 0.92, label: 'EUR - €', suffix: false },
-            'GBP': { symbol: '£', rate: 0.79, label: 'GBP - £', suffix: false },
-            'CAD': { symbol: 'CA$', rate: 1.38, label: 'CAD - CA$', suffix: false },
-            'AUD': { symbol: 'AU$', rate: 1.53, label: 'AUD - AU$', suffix: false }
+            'USD': { symbol: '$', rate: 1.0, label: 'USD - $', suffix: false }
         };
 
         const platformWallets = {
@@ -1140,45 +1123,6 @@
                 sortPriceLow: "Price: Low to High",
                 sortPriceHigh: "Price: High to Low",
                 typeLabel: "Type:"
-            },
-            pl: {
-                searchPlaceholder: "Szukaj Roblox, Fortnite, skinów, zadymiarzy...",
-                postOffer: "Wystaw ofertę",
-                logIn: "Zaloguj się",
-                signUp: "Zarejestruj się",
-                heroDesc: "Znajdź rzadkie przedmioty w Roblox, konta OG Fortnite, wymaksowanych zadymiarzy w Brawl Stars, waluty i konta bezpośrednio od zweryfikowanych sprzedawców bez prowizji.",
-                postNewOfferBtn: "Wystaw nową ofertę",
-                browseMarket: "Przeglądaj rynek",
-                allGames: "Wszystkie gry",
-                footerDisclaimer: "Roblox, Fortnite, Brawl Stars i Clash Royale są znakami towarowymi ich odpowiednich właścicieli.",
-                buyLater: "Kup później / Przeglądaj",
-                loginUserLabel: "Nazwa użytkownika lub e-mail",
-                loginPassLabel: "Hasło",
-                signupUserLabel: "Nazwa użytkownika",
-                signupEmailLabel: "Adres e-mail",
-                signupDobLabel: "Data urodzenia",
-                createAccountBtn: "Utwórz konto",
-                profileSocialsHeader: "Połączone media społecznościowe",
-                profileSaveBtn: "Zapisz profile",
-                profileActiveListings: "Twoje aktywne ogłoszenia",
-                msgGotIt: "Rozumiem",
-                viewAndBuy: "Zobacz",
-                backToMarket: "Powrót do rynku",
-                acceptedPayment: "Metoda płatności",
-                accountDesc: "Opis konta",
-                proceedBtn: "Przejdź do zamówienia",
-                changeAvatar: "Zmień zdjęcie profilowe",
-                verifiedSeller: "Zweryfikowany sprzedawca Star Market",
-                sellerActiveListings: "Aktywne oferty sprzedawcy",
-                rateSeller: "Oceń sprzedawcę:",
-                cookieTitle: "Informacja o ciasteczkach",
-                cookieText: "Używamy plików cookie, aby zapewnić bezpieczne transakcje, analizować ruch i poprawiać komfort korzystania z serwisu.",
-                cookieAccept: "Zaakceptuj wszystkie",
-                sortBy: "Sortuj:",
-                sortNewest: "Najnowsze",
-                sortPriceLow: "Cena: od najniższej",
-                sortPriceHigh: "Cena: od najwyższej",
-                typeLabel: "Typ:"
             }
         };
 
@@ -1193,42 +1137,23 @@
         };
 
         function formatPrice(usdPrice) {
-            const curr = currencyRates[currentCurrency] || currencyRates['USD'];
-            const converted = (parseFloat(usdPrice) * curr.rate).toFixed(2);
-            if (curr.suffix) {
-                return `${converted} ${curr.symbol}`;
-            }
-            return `${curr.symbol}${converted}`;
+            return `$${parseFloat(usdPrice).toFixed(2)}`;
         }
 
         function openLangCurrencyModal() {
-            document.getElementById('modalLanguageSelect').value = currentLang;
-            document.getElementById('modalCurrencySelect').value = currentCurrency;
+            document.getElementById('modalLanguageSelect').value = 'en';
+            document.getElementById('modalCurrencySelect').value = 'USD';
             openModal('langCurrencyModal');
         }
 
         function saveLangCurrency() {
-            const lang = document.getElementById('modalLanguageSelect').value;
-            const curr = document.getElementById('modalCurrencySelect').value;
-            currentLang = lang;
-            currentCurrency = curr;
-
-            localStorage.setItem('sm_lang', lang);
-            localStorage.setItem('sm_currency', curr);
-
-            applyLanguage(lang);
-            updateLangCurrencyLabel();
-            renderOffers();
             closeModal('langCurrencyModal');
+            showMsg("Saved", "Settings configured for English (EN) | USD - $", "fa-check-circle");
         }
 
         function updateLangCurrencyLabel() {
             const labelEl = document.getElementById('currentLangLabel');
-            if (!labelEl) return;
-            const langNames = { en: 'English (EN)', pl: 'Polski (PL)', de: 'Deutsch (DE)', es: 'Español (ES)', fr: 'Français (FR)' };
-            const currObj = currencyRates[currentCurrency] || currencyRates['USD'];
-            const langText = langNames[currentLang] || 'English (EN)';
-            labelEl.innerText = `${langText} | ${currObj.label}`;
+            if (labelEl) labelEl.innerText = "English (EN) | USD - $";
         }
 
         function setPostOfferGame(game) {
@@ -1360,7 +1285,7 @@
 
         function init() {
             initFirebase();
-            applyLanguage(currentLang);
+            applyLanguage('en');
             updateLangCurrencyLabel();
             updateAuthUI();
             checkCookieConsent();
@@ -1379,7 +1304,7 @@
         }
 
         function applyLanguage(lang) {
-            const t = translations[lang] || translations['en'];
+            const t = translations['en'];
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -1452,7 +1377,7 @@
                     saveUsers(users);
                     updateAuthUI();
                     renderOffers();
-                    showMsg("Success", currentLang === 'pl' ? "Zdjęcie profilowe zostało zaktualizowane!" : "Profile picture updated successfully!", "fa-check-circle");
+                    showMsg("Success", "Profile picture updated successfully!", "fa-check-circle");
                 }
             });
         }
@@ -1492,7 +1417,7 @@
 
             let users = getUsers();
             if (users[username]) {
-                showMsg("Error", currentLang === 'pl' ? "Nazwa użytkownika już istnieje." : "Username already exists.", "fa-triangle-exclamation");
+                showMsg("Error", "Username already exists.", "fa-triangle-exclamation");
                 return;
             }
 
@@ -1504,7 +1429,7 @@
             updateAuthUI();
             closeModal('authModal');
             document.getElementById('signupForm').reset();
-            showMsg("Success", currentLang === 'pl' ? "Konto zostało pomyślnie utworzone." : "Your account has been successfully created.", "fa-check-circle");
+            showMsg("Success", "Your account has been successfully created.", "fa-check-circle");
         }
 
         function handleLogin(e) {
@@ -1538,7 +1463,7 @@
                 closeModal('authModal');
                 document.getElementById('loginForm').reset();
             } else {
-                showMsg("Error", currentLang === 'pl' ? "Nieprawidłowy login lub hasło." : "Invalid username/email or password.", "fa-triangle-exclamation");
+                showMsg("Error", "Invalid username/email or password.", "fa-triangle-exclamation");
             }
         }
 
@@ -1555,7 +1480,7 @@
                 users[currentUser].discord = document.getElementById('profileDiscord').value.trim();
                 users[currentUser].telegram = document.getElementById('profileTelegram').value.trim();
                 saveUsers(users);
-                showMsg("Success", currentLang === 'pl' ? "Zapisano profile społecznościowe!" : "Social handles saved successfully!", "fa-check-circle");
+                showMsg("Success", "Social handles saved successfully!", "fa-check-circle");
             }
         }
 
@@ -1704,7 +1629,7 @@
             const sortBy = document.getElementById('sortBySelect') ? document.getElementById('sortBySelect').value : 'newest';
             const offers = getOffers();
             const users = getUsers();
-            const t = translations[currentLang] || translations['en'];
+            const t = translations['en'];
 
             let filtered = offers.filter(o => {
                 const matchesCat = activeCategory === 'All' || o.game === activeCategory;
@@ -1729,16 +1654,24 @@
                 const sellerUser = users[offer.seller];
                 const sellerAvatarHtml = sellerUser && sellerUser.avatar ? `<img src="${sellerUser.avatar}" class="w-6 h-6 rounded-full object-cover border border-purple-500/40">` : `<i class="fas fa-user-circle text-purple-400/90 text-base"></i>`;
 
-                const logoData = gameLogos[offer.game] || gameLogos['Other'];
+                // Badge display for offer cards: use 3-dots for Other
+                let badgeLogoHtml = '';
+                if (offer.game === 'Other' || !gameLogos[offer.game]) {
+                    badgeLogoHtml = `<div class="w-4 h-4 rounded bg-[#141828] flex items-center justify-center shrink-0 text-purple-300 text-[10px]"><i class="fas fa-ellipsis"></i></div>`;
+                } else {
+                    const logoData = gameLogos[offer.game];
+                    badgeLogoHtml = `
+                    <div class="w-4 h-4 rounded bg-[#141828] p-0.5 flex items-center justify-center shrink-0">
+                        <img src="${logoData.file}" onerror="this.onerror=null; this.src='${logoData.fallback}';" class="w-full h-full object-contain">
+                    </div>`;
+                }
 
                 return `
                 <div class="glass-panel rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer" onclick="openOfferPage('${offer.id}')">
                     <div class="relative overflow-hidden aspect-video bg-[#060812]">
                         <img src="${images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <span class="absolute top-3 left-3 bg-[#030409]/90 backdrop-blur-md border border-purple-500/30 text-slate-100 text-[11px] font-bold px-2.5 py-1 rounded-xl flex items-center gap-1.5 shadow-md">
-                            <div class="w-4 h-4 rounded bg-[#141828] p-0.5 flex items-center justify-center shrink-0">
-                                <img src="${logoData.file}" onerror="this.onerror=null; this.src='${logoData.fallback}';" class="w-full h-full object-contain">
-                            </div>
+                            ${badgeLogoHtml}
                             <span>${offer.game}</span>
                         </span>
                     </div>
