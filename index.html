@@ -26,7 +26,7 @@
 
         .hero-banner-bg {
             position: relative;
-            background: linear-gradient(180deg, rgba(3, 4, 9, 0.4) 0%, rgba(3, 4, 9, 0.85) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
+            background: linear-gradient(180deg, rgba(3, 4, 9, 0.45) 0%, rgba(3, 4, 9, 0.88) 70%, #030409 100%), url('starbanner.png') center/cover no-repeat;
         }
 
         .glass-panel { 
@@ -151,7 +151,7 @@
         <div class="w-full px-2.5 sm:px-4 lg:px-6">
             <div class="flex items-center justify-between h-14 py-1.5 gap-2 lg:gap-4">
                 
-                <!-- 1. LEFT: Logo way more to the top left corner (No Glow) + Dropdown Menus -->
+                <!-- 1. LEFT: Logo flush in the top-left corner (No Glow) + Dropdown Menus -->
                 <div class="flex items-center gap-2 lg:gap-5 shrink-0 pl-0">
                     <div class="flex items-center space-x-2 cursor-pointer group" onclick="filterCategory('All')">
                         <img src="starmarket.png" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/star.png';" alt="Star Market" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-contain group-hover:scale-105 transition duration-300">
@@ -325,33 +325,60 @@
         </button>
     </div>
 
-    <!-- Hero Section (Removed Badge, STAR MARKET Placed Above Headline) -->
-    <section class="hero-banner-bg border-b border-purple-900/40 py-20 sm:py-32 mb-12 relative overflow-hidden">
+    <!-- =========================================================================
+         REDESIGNED HERO BANNER (ACCOUNTS, ITEMS & SKINS + ZERO FEES)
+         ========================================================================= -->
+    <section class="hero-banner-bg border-b border-purple-900/40 py-24 sm:py-36 mb-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-t from-[#030409] via-transparent to-transparent pointer-events-none"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-purple-600/15 blur-[140px] pointer-events-none rounded-full"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-purple-600/18 blur-[150px] pointer-events-none rounded-full"></div>
         
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             
-            <!-- Headline layout with STAR MARKET above on its own distinct line -->
-            <div class="mb-6">
-                <span class="gradient-text font-black text-xl sm:text-3xl tracking-[0.25em] uppercase block mb-3 drop-shadow-md">STAR MARKET</span>
-                <h1 class="text-3xl sm:text-6xl font-black text-white tracking-tight leading-tight">
-                    Buy & Sell Game Accounts
-                </h1>
+            <!-- Brand Badge -->
+            <div class="inline-flex items-center gap-2 mb-4">
+                <span class="gradient-text font-black text-xs sm:text-sm tracking-[0.35em] uppercase px-4 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/30 shadow-lg shadow-purple-950/50 backdrop-blur-md">
+                    STAR MARKET PLATFORM
+                </span>
             </div>
 
-            <p data-i18n="heroDesc" class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-medium">
-                Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers with zero fees.
+            <!-- Main Headline Mentioning Accounts, Rare Items & Skins -->
+            <h1 class="text-3xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.15] mb-6 max-w-5xl mx-auto drop-shadow-xl">
+                Buy & Sell Game Accounts, <br class="hidden sm:inline">
+                <span class="gradient-text">Rare Items & Skins</span>
+            </h1>
+
+            <!-- Descriptive Text -->
+            <p data-i18n="heroDesc" class="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-medium">
+                Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, in-game currency, and maxed accounts directly from verified sellers with zero platform fees.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button onclick="openModal('createOfferModal')" class="gradient-btn font-extrabold px-8 py-4 rounded-2xl flex items-center gap-3 transition transform hover:scale-105 active:scale-95 text-base shadow-[0_10px_30px_rgba(168,85,247,0.5)] group">
-                    <i class="fas fa-plus-circle text-xl group-hover:rotate-90 transition duration-300"></i> 
+
+            <!-- Call to Actions -->
+            <div class="flex flex-wrap justify-center gap-4 mb-10">
+                <button onclick="openModal('createOfferModal')" class="gradient-btn font-extrabold px-8 py-4 rounded-2xl flex items-center gap-3 transition transform hover:scale-105 active:scale-95 text-sm sm:text-base shadow-[0_10px_35px_rgba(168,85,247,0.55)] group">
+                    <i class="fas fa-plus-circle text-lg sm:text-xl group-hover:rotate-90 transition duration-300"></i> 
                     <span data-i18n="postNewOfferBtn">Post New Offer</span>
                 </button>
-                <a href="#offersGridContainer" class="bg-[#0d0f1c]/90 hover:bg-purple-950/50 text-slate-200 px-8 py-4 rounded-2xl text-base font-semibold border border-purple-900/60 transition backdrop-blur-md flex items-center gap-2.5 shadow-lg">
+                <a href="#offersGridContainer" class="bg-[#0d0f1c]/90 hover:bg-purple-950/50 text-slate-200 px-8 py-4 rounded-2xl text-sm sm:text-base font-semibold border border-purple-900/60 transition backdrop-blur-md flex items-center gap-2.5 shadow-lg">
                     <i class="fas fa-compass text-purple-400"></i> <span data-i18n="browseMarket">Browse Marketplace</span>
                 </a>
             </div>
+
+            <!-- Verified Metrics Highlights -->
+            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 pt-2 text-xs font-bold text-slate-300">
+                <div class="flex items-center gap-2 bg-[#090c1a]/80 border border-purple-900/40 px-3.5 py-1.5 rounded-xl shadow-sm">
+                    <div class="w-5 h-5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-[10px]"><i class="fas fa-percent"></i></div>
+                    <span>0% Seller Fees</span>
+                </div>
+                <div class="flex items-center gap-2 bg-[#090c1a]/80 border border-purple-900/40 px-3.5 py-1.5 rounded-xl shadow-sm">
+                    <div class="w-5 h-5 rounded-md bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-[10px]"><i class="fas fa-shield-halved"></i></div>
+                    <span>100% Escrow Protection</span>
+                </div>
+                <div class="flex items-center gap-2 bg-[#090c1a]/80 border border-purple-900/40 px-3.5 py-1.5 rounded-xl shadow-sm">
+                    <div class="w-5 h-5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-[10px]"><i class="fas fa-bolt"></i></div>
+                    <span>Instant Account Delivery</span>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -593,6 +620,7 @@
             </div>
 
             <form id="offerForm" onsubmit="handleCreateOffer(event)" class="space-y-6">
+                <!-- SELECT GAME -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-purple-300 mb-2.5">1. Select Game</label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold" id="offerGameGrid">
@@ -1079,7 +1107,7 @@
                 postOffer: "Post Offer",
                 logIn: "Log In",
                 signUp: "Sign Up",
-                heroDesc: "Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, and maxed Clash Royale accounts directly from verified sellers with zero fees.",
+                heroDesc: "Find rare Roblox items, OG Fortnite accounts, stacked Brawl Stars brawlers, in-game currency, and maxed accounts directly from verified sellers with zero platform fees.",
                 postNewOfferBtn: "Post New Offer",
                 browseMarket: "Browse Marketplace",
                 allGames: "All Games",
@@ -1118,7 +1146,7 @@
                 postOffer: "Wystaw ofertę",
                 logIn: "Zaloguj się",
                 signUp: "Zarejestruj się",
-                heroDesc: "Znajdź rzadkie przedmioty w Roblox, konta OG Fortnite, wymaksowanych zadymiarzy w Brawl Stars i konta Clash Royale bezpośrednio od zweryfikowanych sprzedawców bez prowizji.",
+                heroDesc: "Znajdź rzadkie przedmioty w Roblox, konta OG Fortnite, wymaksowanych zadymiarzy w Brawl Stars, waluty i konta bezpośrednio od zweryfikowanych sprzedawców bez prowizji.",
                 postNewOfferBtn: "Wystaw nową ofertę",
                 browseMarket: "Przeglądaj rynek",
                 allGames: "Wszystkie gry",
